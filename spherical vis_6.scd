@@ -2,10 +2,10 @@
 
 
 (
-var  sph1,sph2,sph3,order_x=3,order_y=2,order_z=5;
+var  sph1,sph2,sph3,order_x=2,order_y=4,order_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
-~az = 30000.collect{
+~az = (360*100).collect{
 
 		az1=(az1+(360/360)).wrap(180.neg,180);
 
@@ -15,7 +15,7 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
 	};
 
-~el = 30000.collect{
+~el = (360*100).collect{
 
 		az2=(az2+(360/360)).wrap(180.neg,180);
 
@@ -25,32 +25,34 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
 	};
 
-~mag = 30000.collect{
+~mag = (360*100).collect{
 
 	az3=(az3+(360/360)).wrap(180.neg,180);
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph3=Spherical(600,az3.degrad,el3.degrad);
+	sph3=Spherical(500,az3.degrad,el3.degrad);
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
-	mag_x=(Complex(cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi)),0).rho*Complex(0,cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;///x axis   ambi/// for order0 for sphere phi*0 else torus, samw in y
+	mag_x=(Complex(cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi))).rho*
+	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+	///x axis   ambi/// for order0 for sphere phi*0 else torus, samw in y
 
-//	mag_y=(Complex(sin((sph3.theta.round(0.00001)*order_y).wrap(pi.neg,pi)),0).rho*Complex(0,cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))).rho)*sph3.rho;///y axis  ambi
-
+//	mag_y=(Complex(sin((sph3.theta.round(0.00001)*order_y).wrap(pi.neg,pi)),sin((sph3.theta.round(0.00001)*order_y).wrap(pi.neg,pi))).rho*
+//		Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+///y axis  ambi
 
 //if(
-//	order_z.even,mag_z=Complex(0,cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho,
-//	Complex(0,sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
+//	order_z.even,mag_z=Complex(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi///2)))).rho*sph3.rho,
+//	Complex(sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
 //	);
-//mag_z=Complex(0,sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho;////z axis   ambi..  sin for odd numbers, cos for even
+////z axis   ambi..  sin for odd numbers, cos for even
 
 	//mag=mag_x+mag_y+mag_z;
 
 
 	};
-
 )
 (
 var data;
@@ -58,7 +60,7 @@ var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
 var r1,harm1,r2,harm2,rad;
 
-data = 30000.collect{
+data = (360*100).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
@@ -98,39 +100,94 @@ Slider(w, Rect(920, 10, 10, 450)).action_{|me|
 
 (
 var data;
-var az=0,el=0,rad=0;
+var az=0,el=0,mag=0;
 var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt,0),k = Quaternion(0, 0, 0, (1/3).sqrt);
-var q,v,angle=0,r,d,m=1,rot,sph,az1,el1,rot1,dd,i1,j1,k1,q1,v1,r1,pl=0,daz,del,harm,daz1,del1,dd1;
+var q,v,vr,angle=0,r,d,m=1,sph,pl=0,harm;
 
-r1=[600,0,0];
-v1=Quaternion(0,r1.[0],r1.[1],r1.[2]);
+r=[0,1,0].normalizeSum;
 angle=(360-(360/1.6180339887499));
+i=Quaternion(0, r.[0], 0, 0);
+j=Quaternion(0, 0, r.[1], 0);
+k=Quaternion(0, 0, 0, r.[2]);
 
-data = 30000.collect{
+data = (360*100).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
+	mag=~mag.[pl];
+	pl=pl+1;
+
+	sph=Spherical(mag,az,el);
+
+	v=Quaternion(0,sph.x,sph.y,sph.z);
+
+	q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+v=q*v*q.conjugate;
+
+	harm=Cartesian(v.b,v.c,v.d).asArray
+
+
+};
+
+w = Window.new("3D Scatterplot", Rect(40,40, 1000, 800)).front;
+a = ScatterView3d(w, Rect(0,0, 800,800), data, [-1000, 1000].asSpec,[-1000, 1000].asSpec,[-1000, 1000].asSpec);
+a.drawMethod = \fillRect;
+a.symbolSize = 1;
+a.symbolColor = Color.white;
+a.background = Color.black;
+
+// Y Slider
+Slider(w, Rect(820, 10, 10, 450)).action_{|me|
+    a.rotY = me.value * 2pi;
+    w.refresh;
+};
+// X Slider
+Slider(w, Rect(870, 10, 10, 450)).action_{|me|
+    a.rotX = me.value * 2pi;
+    w.refresh;
+};
+// Z Slider
+Slider(w, Rect(920, 10, 10, 450)).action_{|me|
+    a.rotZ = me.value * 2pi;
+    w.refresh;
+};
+)
+/////////////////////////////////choas
+
+(
+var data;
+var az=0,el=0,mag=0;
+var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt,0),k = Quaternion(0, 0, 0, (1/3).sqrt);
+var q,v,angle=0,r,d,m=1,rot,sph,pl=0,daz,del,harm,daz1;
+
+r=[1,0,0];
+v=Quaternion(0,r.[0],r.[1],r.[2]);
+angle=(360-(360/1.6180339887499));
+
+data = (360*100).collect{
+
+	az=~az.[pl];
+	el=~el.[pl];
+	mag=~mag.[pl];
 	pl=pl+1;
 
 
 	sph=Spherical(1,az,el).asCartesian;
 
-	rot1=[sph.x,sph.y,sph.z];
+	rot=[sph.x,sph.y,sph.z];
 
-	i1=Quaternion(0, rot1.[0], 0, 0);
-	j1=Quaternion(0, 0, rot1.[1], 0);
-	k1=Quaternion(0, 0, 0, rot1.[2]);
+	i=Quaternion(0, rot.[0], 0, 0);
+	j=Quaternion(0, 0, rot.[1], 0);
+	k=Quaternion(0, 0, 0, rot.[2]);
 
-q1=(cos(angle.degrad)+(sin(angle.degrad)*(i1+j1+k1)));
-	    v1=q1*v1*q1.conjugate;
+q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+	    v=q*v*q.conjugate;
 
-	dd=Cartesian(v1.b.round(0.0001)*m,v1.c.round(0.0001)*m,v1.d.round(0.0001)*m);
+	daz=Cartesian(v.b.round(0.0001),v.c.round(0.0001),v.d.round(0.0001)).theta;
 
-	daz=Cartesian(v1.b.round(0.0001)*m,v1.c.round(0.0001)*m,v1.d.round(0.0001)*m).theta;
+	del=Cartesian(v.b.round(0.0001),v.c.round(0.0001),v.d.round(0.0001)).phi;
 
-	del=Cartesian(v1.b.round(0.0001)*m,v1.c.round(0.0001)*m,v1.d.round(0.0001)*m).phi;
-
-	harm=Spherical(Complex(dd.y,dd.y).abs,daz,del).asCartesian.asArray
+	harm=Spherical(mag,daz,del).asCartesian.asArray
 
 
 };
