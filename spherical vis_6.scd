@@ -643,17 +643,15 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1,mag2;
 
 	sph3=Spherical(600,az3,el3);
 
-	//az4=(az4+(360/(30000*1))).wrap(180.neg,180);
+	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
-	//el4=(el4+(360-(360/1.6180339887499))).wrap(90.neg,90);
+	///mag1=(sin((sph3.theta.round(0.00001)*1).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)*1).wrap((pi/2).neg,(pi/2))))*sph3.rho;///y axis  ambi
 
-	//sph4=Spherical(300,az4,el4);
+	//mag1=(cos((sph3.theta.round(0.00001)*1).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)*4).wrap((pi/2).neg,(pi/2))))*sph3.rho;///x axis   ambi
 
-	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);
+	//mag2=(sin((sph3.phi.round(0.00001)*2).wrap((pi/2).neg,(pi/2))))*sph3.rho;////z axis   ambi
 
-mag1=(sin((sph3.phi.round(0.00001)*3).wrap((pi/2).neg,(pi/2)))*sph3.rho)
 
-	//mag1=Complex(cos((sph3.phi.round(0.00001)*1).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*1).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
 	};
 
 )
