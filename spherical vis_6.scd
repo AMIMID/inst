@@ -2,7 +2,7 @@
 
 
 (
-var  sph1,sph2,sph3,order_x=2,order_y=4,order_z=2;
+var  sph1,sph2,sph3,order_x=3,order_y=4,order_z=2;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
 ~az = (360*100).collect{
@@ -35,18 +35,18 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
-	mag_x=(Complex(cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi))).rho*
-	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+//	mag_x=(Complex(cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi))).rho*
+//	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 	///x axis   ambi/// for order0 for sphere phi*0 else torus, samw in y
 
 //	mag_y=(Complex(sin((sph3.theta.round(0.00001)*order_y).wrap(pi.neg,pi)),sin((sph3.theta.round(0.00001)*order_y).wrap(pi.neg,pi))).rho*
 //		Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 ///y axis  ambi
 
-//if(
-//	order_z.even,mag_z=Complex(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi///2)))).rho*sph3.rho,
-//	Complex(sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
-//	);
+if(
+	order_z.even,mag_z=Complex(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho,
+	Complex(sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
+	);
 ////z axis   ambi..  sin for odd numbers, cos for even
 
 	//mag=mag_x+mag_y+mag_z;
