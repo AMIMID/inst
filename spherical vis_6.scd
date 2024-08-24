@@ -612,12 +612,12 @@ Slider(w, Rect(920, 10, 10, 450)).action_{|me|
 
 
 (
-var  sph1,sph2,sph3,sph4;
-var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1;
+var  sph1,sph2,sph3,sph4,m=1;
+var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1,mag2;
 
 ~az = 30000.collect{
 
-		az1=(az1+(360/(30000*1))).wrap(180.neg,180);
+		az1=(az1+(360/30000)).wrap(180.neg,180);
 
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
@@ -637,7 +637,7 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1;
 
 ~mag = 30000.collect{
 
-	az3=(az3+(360/(30000*1))).wrap(180.neg,180);
+	az3=(az3+(360/30000)).wrap(180.neg,180);
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
@@ -651,10 +651,10 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1;
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);
 
-	mag=Complex(cos(sph3.theta),cos(sph3.theta*0)).rho*600
+mag1=(sin((sph3.phi.round(0.00001)*3).wrap((pi/2).neg,(pi/2)))*sph3.rho)
 
+	//mag1=Complex(cos((sph3.phi.round(0.00001)*1).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*1).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
 	};
-
 
 )
 
@@ -663,7 +663,7 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1;
 var data;
 var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
-var r1,harm1,r2,harm2;
+var r1,harm1,r2,harm2,rad;
 
 data = 30000.collect{
 
