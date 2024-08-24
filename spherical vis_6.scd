@@ -612,8 +612,8 @@ Slider(w, Rect(920, 10, 10, 450)).action_{|me|
 
 
 (
-var  sph1,sph2,sph3,m1=1,m2=1,m3=1;
-var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag1,mag2,mag3;
+var  sph1,sph2,sph3,order_x=1,order_y=2,order_z=3;
+var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
 ~az = 30000.collect{
 
@@ -645,13 +645,20 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag1,mag2,mag3;
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
-	//mag3=(sin((sph3.theta.round(0.00001)*1).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)*1).wrap((pi/2).neg,(pi/2))))*sph3.rho;///y axis  ambi
 
-	//mag1=(cos((sph3.theta.round(0.00001)*1).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)*3).wrap((pi/2).neg,(pi/2))))*sph3.rho;///x axis   ambi
+	//mag_x=(cos((sph3.theta.round(0.00001)*order_x).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))*sph3.rho;///x axis   ambi
 
-	mag2=(sin((sph3.phi.round(0.00001)*3).wrap((pi/2).neg,(pi/2))))*sph3.rho;////z axis   ambi..  sin for odd numbers, cos for even
+	//mag_y=(sin((sph3.theta.round(0.00001)*order_y).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))*sph3.rho;///y axis  ambi
 
-//mag=mag1+mag2+mag3;
+
+if(
+	order_z.even,mag_z=(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))))*sph3.rho,
+	mag_z=(sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))))*sph3.rho
+	);
+//mag_z=(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))))*sph3.rho;////z axis   ambi..  sin for odd numbers, cos for even
+
+	//mag=mag_x+mag_y+mag_z;
+
 	};
 
 )
