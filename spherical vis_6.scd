@@ -2,58 +2,56 @@
 
 
 (
-var  sph1,sph2,sph3,order_x=3,order_y=3,order_z=3;
+var  sph1,sph2,sph3,order_x=3,order_y=2,order_z=5;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 
 ~az = 30000.collect{
 
-		az1=(az1+(360/30000)).wrap(180.neg,180);
+		az1=(az1+(360/360)).wrap(180.neg,180);
 
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph1=Spherical(1,az1,el1).theta.round(0.00001);
+	sph1=Spherical(1,az1.degrad,el1.degrad).theta.round(0.00001);
 
 	};
 
 ~el = 30000.collect{
 
-		az2=(az2+(360/30000)).wrap(180.neg,180);
+		az2=(az2+(360/360)).wrap(180.neg,180);
 
 	el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph2=Spherical(1,az2,el2).phi.round(0.00001);
+	sph2=Spherical(1,az2.degrad,el2.degrad).phi.round(0.00001);
 
 	};
 
 ~mag = 30000.collect{
 
-	az3=(az3+(360/30000)).wrap(180.neg,180);
+	az3=(az3+(360/360)).wrap(180.neg,180);
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph3=Spherical(600,az3,el3);
+	sph3=Spherical(600,az3.degrad,el3.degrad);
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
+	mag_x=(Complex(cos((sph3.theta.round(0.00001)*order_x).wrap(pi.neg,pi)),0).rho*Complex(0,cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho).rho*sph3.rho;///x axis   ambi
 
-	//mag_x=(cos((sph3.theta.round(0.00001)*order_x).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))*sph3.rho;///x axis   ambi
-
-	mag_y=(sin((sph3.theta.round(0.00001)*order_y).wrap((pi/1).neg,(pi/1)))*cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))*sph3.rho;///y axis  ambi
+//	mag_y=(Complex(sin((sph3.theta.round(0.00001)*order_y).wrap(pi.neg,pi)),0).rho*Complex(0,cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))))).rho).rho*sph3.rho;///y axis  ambi
 
 
 //if(
-//	order_z.even,mag_z=(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))))*sph3.rho,
-//	mag_z=(sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))))*sph3.rho
+//	order_z.even,mag_z=Complex(0,cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho,
+//	Complex(0,sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
 //	);
-//mag_z=(cos((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2))))*sph3.rho;////z axis   ambi..  sin for odd numbers, cos for even
+//mag_z=Complex(0,sin((sph3.phi.round(0.00001)*order_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho;////z axis   ambi..  sin for odd numbers, cos for even
 
 	//mag=mag_x+mag_y+mag_z;
+
 
 	};
 
 )
-
-
 (
 var data;
 var az=0,el=0;
