@@ -613,7 +613,7 @@ Slider(w, Rect(920, 10, 10, 450)).action_{|me|
 
 (
 var  sph1,sph2,sph3,sph4;
-var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag;
+var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag,mag1;
 
 ~az = 30000.collect{
 
@@ -621,7 +621,7 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag;
 
 	el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph1=Spherical(1,az1,el1).theta
+	sph1=Spherical(1,az1,el1).theta.round(0.00001);
 
 	};
 
@@ -631,7 +631,7 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag;
 
 	el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph2=Spherical(1,az2,el2).phi
+	sph2=Spherical(1,az2,el2).phi.round(0.00001);
 
 	};
 
@@ -649,9 +649,12 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,az4=0,el4=0,mag;
 
 	//sph4=Spherical(300,az4,el4);
 
-	mag=Complex(sph3.y,sph3.y).rho.round(0.00001);
+	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);
+
+	mag=Complex(cos(sph3.theta),cos(sph3.theta*0)).rho*600
 
 	};
+
 
 )
 
@@ -669,17 +672,8 @@ data = 30000.collect{
 	mag=~mag.[pl];
 	pl=pl+1;
 
-sph=Spherical(mag,az,el);
-//sph=Spherical(mag,az,el).asCartesian.asArray;
+	sph=Spherical(mag,az,el).asCartesian.asArray;
 
-
-	r=Complex(sph.x,sph.x).rho.round(0.00001);
-
-	harm=Spherical(r,az,el).asCartesian.asArray
-	//harm=Spherical(r,az,el);
-
-	//r1=Complex(harm.y,harm.y).rho.round(0.00001);
-	//harm1=Spherical(r1,az,el).asCartesian.asArray
 
 };
 
@@ -706,6 +700,7 @@ Slider(w, Rect(920, 10, 10, 450)).action_{|me|
     w.refresh;
 };
 )
+
 
 
 (
