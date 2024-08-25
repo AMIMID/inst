@@ -36,8 +36,8 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
 
-	mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
-	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+//	mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
+//	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
 ////for between harmonics multiply sin(phi) after cos, when m is 2 then harm 3/2 is formed in oder 3, when m is 3 harm 4/3 is formed in oder 4 and when m is 3 for theta and 2 for phi harm 4/2 is formed for order4
 	//mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(sin((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho*
@@ -49,15 +49,15 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 /////y axis  ambi
 
 //if(
-//order_z.even,
-//mag_z=Complex(cos((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho,
-//mag_z=Complex(sin((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
-//	);
+//m_z.even,
+//mag_z=Complex(cos((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho,mag_z=Complex(sin((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
+	);
 ////z axis   ambi..  sin for odd numbers, cos for even
 
 //	mag=mag_x+mag_z+mag_y;
 
 
+///for stereo file application of the system use .real part (not rho) and real for L, real.neg for R
 	};
 )
 (
