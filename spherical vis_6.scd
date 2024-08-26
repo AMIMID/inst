@@ -51,7 +51,7 @@ var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 //if(
 //m_z.even,
 //mag_z=Complex(cos((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho,mag_z=Complex(sin((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph3.rho
-	);
+//	);
 ////z axis   ambi..  sin for odd numbers, cos for even
 
 //	mag=mag_x+mag_z+mag_y;
