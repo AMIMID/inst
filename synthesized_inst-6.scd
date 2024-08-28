@@ -40,7 +40,6 @@ sig.plot;
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 )
 
-
 (
 (
 SynthDef.new(\ob, {
@@ -78,10 +77,10 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:m.reciprocal);
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:SinOsc.ar(freq:rad.reciprocal,phase:phase,mul:rad),phase:SinOsc.ar(freq:rad.reciprocal,phase:phase)),
+Osc.ar(~w,(freq*m),mul:SinOsc.ar(freq:sphere.rho.reciprocal,phase:phase,mul:sphere.rho),phase:SinOsc.ar(freq:sphere.rho.reciprocal,phase:phase)),
 ~b.bufnum,
-LFSaw.ar(freq:rad,phase:sphere.theta.linlin(pi.neg,pi,0,2),mul:180),
-LFSaw.ar(freq:rad,phase:sphere.phi.linlin((pi/2).neg,(pi/2),0,2),mul:90)
+LFSaw.ar(freq:sphere.rho.reciprocal,iphase:sphere.theta.linlin(pi.neg,pi,0,2),mul:180),
+LFSaw.ar(freq:sphere.rho.reciprocal,iphase:sphere.phi.linlin((pi/2).neg,(pi/2),0,2),mul:90)
 		);
 m=m+1;
 
@@ -125,10 +124,10 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:m.reciprocal);
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:SinOsc.ar(freq:rad.reciprocal,phase:phase,mul:rad),phase:SinOsc.ar(freq:rad.reciprocal,phase:phase)),
+Osc.ar(~w,(freq*m),mul:SinOsc.ar(freq:sphere.rho.reciprocal,phase:phase,mul:sphere.rho),phase:SinOsc.ar(freq:sphere.rho.reciprocal,phase:phase)),
 ~b.bufnum,
-LFSaw.ar(freq:rad,phase:sphere.theta.linlin(pi.neg,pi,0,2),mul:180),
-LFSaw.ar(freq:rad,phase:sphere.phi.linlin((pi/2).neg,(pi/2),0,2),mul:90)
+LFSaw.ar(freq:sphere.rho.reciprocal,iphase:sphere.theta.linlin(pi.neg,pi,0,2),mul:180),
+LFSaw.ar(freq:sphere.rho.reciprocal,iphase:sphere.phi.linlin((pi/2).neg,(pi/2),0,2),mul:90)
 		);
 m=m+1;
 
@@ -172,10 +171,10 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:m.reciprocal);
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:SinOsc.ar(freq:rad.reciprocal,phase:phase,mul:rad),phase:SinOsc.ar(freq:rad.reciprocal,phase:phase)),
+Osc.ar(~w,(freq*m),mul:SinOsc.ar(freq:sphere.rho.reciprocal,phase:phase,mul:sphere.rho),phase:SinOsc.ar(freq:sphere.rho.reciprocal,phase:phase)),
 ~b.bufnum,
-LFSaw.ar(freq:rad,phase:sphere.theta.linlin(pi.neg,pi,0,2),mul:180),
-LFSaw.ar(freq:rad,phase:sphere.phi.linlin((pi/2).neg,(pi/2),0,2),mul:90)
+LFSaw.ar(freq:sphere.rho.reciprocal,iphase:sphere.theta.linlin(pi.neg,pi,0,2),mul:180),
+LFSaw.ar(freq:sphere.rho.reciprocal,iphase:sphere.phi.linlin((pi/2).neg,(pi/2),0,2),mul:90)
 		);
 m=m+1;
 
