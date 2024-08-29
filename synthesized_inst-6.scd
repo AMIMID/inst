@@ -313,7 +313,7 @@ var mag1,mag2,mag3;
 	};
 
 ~n2 = 100.collect{
-	mag1=~magx[pl4]+~magy[pl4]+~magz[pl4];
+	mag1=Cartesian(~magx[pl4],~magy[pl4],~magz[pl4]).rho;
 	sph1=Spherical(mag1,~az.[pl4],~el.[pl4]).x;
 	//sph1=~magx.[pl4];
 	pl4=pl4+1;
@@ -321,7 +321,7 @@ var mag1,mag2,mag3;
 	};
 
 ~n3 = 100.collect{
-	mag2=~magx[pl5]+~magy[pl5]+~magz[pl5];
+	mag2=Cartesian(~magx[pl5],~magy[pl5],~magz[pl5]).rho;
 	sph2=Spherical(mag2,~az.[pl5],~el.[pl5]).y;
 	//sph2=~magy.[pl5];
 	pl5=pl5+1;
@@ -329,7 +329,7 @@ var mag1,mag2,mag3;
 	};
 
 ~n4 = 100.collect{
-	mag3=~magx[pl6]+~magy[pl6]+~magz[pl6];
+	mag3=Cartesian(~magx[pl6],~magy[pl6],~magz[pl6]).rho;
 	sph3=Spherical(mag3,~az.[pl6],~el.[pl6]).z;
 	//sph3=~magz.[pl6];
 	pl6=pl6+1;
