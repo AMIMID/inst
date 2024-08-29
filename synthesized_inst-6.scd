@@ -98,8 +98,8 @@ Osc.ar(~w,(freq*m),
 mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
 phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+SinOsc.ar(1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+SinOsc.ar(1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -147,8 +147,8 @@ Osc.ar(~w,(freq*m),
 mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
 phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+SinOsc.ar(1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+SinOsc.ar(1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -196,8 +196,8 @@ Osc.ar(~w,(freq*m),
 mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
 phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+SinOsc.ar(1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+SinOsc.ar(1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
