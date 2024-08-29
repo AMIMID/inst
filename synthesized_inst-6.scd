@@ -57,7 +57,7 @@ signal.plot;
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
 )
 
-/////synths
+/////synths////for rotation axis a scrambled version of az and el in spherical wuth mag=1 to derive x,y,z for i,j,k, can be used
 (
 (
 SynthDef.new(\ob, {
@@ -143,10 +143,12 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:m.reciprocal);
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
+Osc.ar(~w,(freq*m),
+mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
+phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~w,1/3,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t,1/3,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -190,10 +192,12 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:m.reciprocal);
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
+Osc.ar(~w,(freq*m),
+mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
+phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~w,1/3,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t,1/3,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
