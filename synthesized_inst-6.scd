@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/60);
+TempoClock.default.tempo_(60/120);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -62,7 +62,7 @@ signal.plot;
 (
 SynthDef.new(\ob, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
-	var phase,scale=8,pl=0,ang,osc,r,sph,v,q,sphere;
+	var phase,scale=4,pl=0,ang,osc,r,sph,v,q,sphere;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -98,20 +98,20 @@ Osc.ar(~w,(freq*m),
 mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
 phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1/3,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/3,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~w,1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t,1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
-//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
-		Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
+wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
+	//	Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
 }).add;
 );
 (
 SynthDef.new(\oc, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
-	var phase,scale=8,pl=0,ang,osc,r,sph,v,q,sphere;
+	var phase,scale=4,pl=0,ang,osc,r,sph,v,q,sphere;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -147,20 +147,20 @@ Osc.ar(~w,(freq*m),
 mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
 phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1/3,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/3,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~w,1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t,1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
-//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
-		Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
+wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
+		//Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
 }).add;
 );
 (
 SynthDef.new(\od, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
-	var phase,scale=8,pl=0,ang,osc,r,sph,v,q,sphere;
+	var phase,scale=4,pl=0,ang,osc,r,sph,v,q,sphere;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -196,13 +196,12 @@ Osc.ar(~w,(freq*m),
 mul:SinOsc.ar(sphere.rho.reciprocal,phase,mul:sphere.rho,add:1),
 phase:SinOsc.ar(sphere.rho.reciprocal,phase)),
 ~b.bufnum,
-Osc.ar(~w,1/3,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/3,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~w,1/1,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t,1/1,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
-
-//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
-		Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
+wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
+		//Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
 }).add;
 )
@@ -211,7 +210,7 @@ m=m+1;
 (
 ~time=2;
 (
-var  sph1,sph2,m_x=1,m_y=1,m_z=1,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
+var  sph1,sph2,m_x=4,m_y=4,m_z=4,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
 var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 
 ~az = (360*~time).collect{
@@ -355,7 +354,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\az,Pseq(~az,inf),
 	\el,Pseq(~el,inf),
 	\mag,Pseq(~magx,inf),
-	\decay,Pbrown(2,8,1,inf);
+	\decay,Pbrown(2,4,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
 	\dur,Pseq(~phase3,1),
@@ -365,7 +364,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\az,Pseq(~az,inf),
 	\el,Pseq(~el,inf),
 	\mag,Pseq(~magy,inf),
-	\decay,Pbrown(2,8,1,inf);
+	\decay,Pbrown(2,4,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	\dur,Pseq(~phase4,1),
@@ -375,7 +374,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 \az,Pseq(~az,inf),
 	\el,Pseq(~el,inf),
 	\mag,Pseq(~magz,inf),
-	\decay,Pbrown(2,8,1,inf);
+	\decay,Pbrown(2,4,1,inf);
 ));
 )
 
@@ -388,7 +387,7 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 \az,Pseq(~az.reverse,inf),
 	\el,Pseq(~el.reverse,inf),
 	\mag,Pseq(~magx.reverse,inf),
-	\decay,Pbrown(2,8,1,inf);
+	\decay,Pbrown(2,4,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
 	\dur,Pseq(~phase3.reverse,1),
@@ -398,7 +397,7 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 	\az,Pseq(~az.reverse,inf),
 	\el,Pseq(~el.reverse,inf),
 	\mag,Pseq(~magy.reverse,inf),
-	\decay,Pbrown(2,8,1,inf);
+	\decay,Pbrown(2,4,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
 	\dur,Pseq(~phase4.reverse,1),
@@ -408,7 +407,7 @@ g=Pdef(\44, Pbind(\instrument, \od,
 \az,Pseq(~az.reverse,inf),
 	\el,Pseq(~el.reverse,inf),
 	\mag,Pseq(~magz.reverse,inf),
-	\decay,Pbrown(2,8,1,inf);
+	\decay,Pbrown(2,4,1,inf);
 ));
 )
 

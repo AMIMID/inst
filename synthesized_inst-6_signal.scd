@@ -119,8 +119,8 @@ env=EnvGen.ar(Env([1,2],[360]),doneAction:2,levelScale:pitch.reciprocal);
 
 osc=VBAP.ar(4,
 Osc.ar(~w,(freq*m),
-mul:SinOsc.ar(~magx.[pl].reciprocal,phase,mul:~magx.[pl],add:1),
-phase:SinOsc.ar(~magx.[pl],phase)),
+mul:SinOsc.ar(~magy.[pl].reciprocal,phase,mul:~magy.[pl],add:1),
+phase:SinOsc.ar(~magy.[pl],phase)),
 ~b.bufnum,
 SinOsc.ar(1/3,phase:~az.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 SinOsc.ar(1/3,phase:~el.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -155,8 +155,8 @@ env=EnvGen.ar(Env([1,2],[360]),doneAction:2,levelScale:pitch.reciprocal);
 
 osc=VBAP.ar(4,
 Osc.ar(~w,(freq*m),
-mul:SinOsc.ar(~magx.[pl].reciprocal,phase,mul:~magx.[pl],add:1),
-phase:SinOsc.ar(~magx.[pl],phase)),
+mul:SinOsc.ar(~magz.[pl].reciprocal,phase,mul:~magz.[pl],add:1),
+phase:SinOsc.ar(~magz.[pl],phase)),
 ~b.bufnum,
 SinOsc.ar(1/3,phase:~az.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 SinOsc.ar(1/3,phase:~el.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
