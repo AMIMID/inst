@@ -33,10 +33,10 @@ sig.plot;
 )
 
 (
-var signal,wt,m=1,amp;
+var signal,wt,m=0,amp;
 
 ~level=360.collect{m=m+1;amp=m.reciprocal};
-~phase=360.collect{2pi/2};
+~phase=360.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
@@ -211,8 +211,8 @@ raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta;
 var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
 var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
 var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r=[0,0,1];
-var v1=Quaternion(0,r.[0],r.[1],r.[2]),v2=Quaternion(0,r.[0],r.[1],r.[2]),v3=Quaternion(0,r.[0],r.[1],r.[2]);
+var r1=[0,0,1],r2=[0,0,1],r3=[0,0,1];
+var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),v3=Quaternion(0,r3.[0],r3.[1],r3.[2]);
 var angle=(360-(360/1.6180339887499));
 
 ~el_x=(360*~time).collect{
@@ -295,7 +295,7 @@ var mag1,mag2,mag3;
 	};
 
 ~n2 = (360*~time).collect{
-	mag1=~magx[pl4];
+	mag1=Cartesian(~magx[pl4],~magy[pl4],~magz[pl4]).rho;
 	sph1=Spherical(mag1,~az_x.[pl4],~el_x.[pl4]).x;
 	//sph1=~magx.[pl4];
 	pl4=pl4+1;
@@ -303,7 +303,7 @@ var mag1,mag2,mag3;
 	};
 
 ~n3 = (360*~time).collect{
-	mag2=~magy[pl5];
+	mag2=Cartesian(~magx[pl5],~magy[pl5],~magz[pl5]).rho;
 	sph2=Spherical(mag2,~az_y.[pl5],~el_y.[pl5]).y;
 	//sph2=~magy.[pl5];
 	pl5=pl5+1;
@@ -311,13 +311,22 @@ var mag1,mag2,mag3;
 	};
 
 ~n4 = (360*~time).collect{
-	mag3=~magz[pl6];
+	mag3=Cartesian(~magx[pl6],~magy[pl6],~magz[pl6]).rho;
 	sph3=Spherical(mag3,~az_z.[pl6],~el_z.[pl6]).z;
 	//sph3=~magz.[pl6];
 	pl6=pl6+1;
 	n3=(sph3*mult).round(1);
 	};
 
+);
+
+(
+~az_x=~az_x.scramble;
+~az_y=~az_y.scramble;
+~az_z=~az_z.scramble;
+~el_x=~el_x.scramble;
+~el_y=~el_y.scramble;
+~el_z=~el_z.scramble;
 )
 
 )

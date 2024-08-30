@@ -18,10 +18,10 @@ Buffer.freeAll
 )
 
 (
-var signal,wt,m=1,amp;
+var signal,wt,m=0,amp;
 
 ~level=360.collect{m=m+1;amp=m.reciprocal};
-~phase=360.collect{2pi/2};
+~phase=360.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
@@ -131,186 +131,6 @@ mag_z=Complex(sin((sphz.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 
 )
 
-////////////////////////az
-
-(
-var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
-var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
-var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r1=[0,0,1],r2=[0,0,1],r3=[0,0,1];
-var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),v3=Quaternion(0,r3.[0],r3.[1],r3.[2]);
-var angle=(360-(360/1.6180339887499));
-
-~az_x=(360*~time).collect{
-
-	az1=~az.[pl1];el1=~el.[pl1];
-	pl1=pl1+1;
-sph1=Spherical(1,az1,el1).asCartesian;
-
-	rot1=[sph1.x,sph1.y,sph1.z];
-
-	i1=Quaternion(0, rot1.[0], 0, 0);
-	j1=Quaternion(0, 0, rot1.[1], 0);
-	k1=Quaternion(0, 0, 0, rot1.[2]);
-
-q1=(cos(angle.degrad)+(sin(angle.degrad)*(i1+j1+k1)));
-v1=q1*v1*q1.conjugate;
-
-raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).theta;
-};
-
-~az_y=(360*~time).collect{
-
-	az2=~az.[pl2];el2=~el.[pl2];
-	pl2=pl2+1;
-sph2=Spherical(1,az2,el2).asCartesian;
-
-	rot2=[sph2.x,sph2.y,sph2.z];
-
-	i2=Quaternion(0, rot2.[0], 0, 0);
-	j2=Quaternion(0, 0, rot2.[1], 0);
-	k2=Quaternion(0, 0, 0, rot2.[2]);
-
-q2=(cos(angle.degrad)+(sin(angle.degrad)*(i2+j2+k2)));
-v2=q2*v2*q2.conjugate;
-
-raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).theta;
-};
-
-~az_z=(360*~time).collect{
-
-	az3=~az.[pl3];el3=~el.[pl3];
-	pl3=pl3+1;
-sph3=Spherical(1,az3,el3).asCartesian;
-
-	rot3=[sph3.x,sph3.y,sph3.z];
-
-	i3=Quaternion(0, rot3.[0], 0, 0);
-	j3=Quaternion(0, 0, rot3.[1], 0);
-	k3=Quaternion(0, 0, 0, rot3.[2]);
-
-q3=(cos(angle.degrad)+(sin(angle.degrad)*(i3+j3+k3)));
-v3=q3*v3*q3.conjugate;
-
-raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta;
-};
-
-)
-
-///////////////////////el
-(
-var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
-var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
-var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r=[0,0,1];
-var v1=Quaternion(0,r.[0],r.[1],r.[2]),v2=Quaternion(0,r.[0],r.[1],r.[2]),v3=Quaternion(0,r.[0],r.[1],r.[2]);
-var angle=(360-(360/1.6180339887499));
-
-~el_x=(360*~time).collect{
-
-	az1=~az.[pl1];el1=~el.[pl1];
-	pl1=pl1+1;
-sph1=Spherical(1,az1,el1).asCartesian;
-
-	rot1=[sph1.x,sph1.y,sph1.z];
-
-	i1=Quaternion(0, rot1.[0], 0, 0);
-	j1=Quaternion(0, 0, rot1.[1], 0);
-	k1=Quaternion(0, 0, 0, rot1.[2]);
-
-q1=(cos(angle.degrad)+(sin(angle.degrad)*(i1+j1+k1)));
-v1=q1*v1*q1.conjugate;
-
-raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).phi;
-};
-
-~el_y=(360*~time).collect{
-
-	az2=~az.[pl2];el2=~el.[pl2];
-	pl2=pl2+1;
-sph2=Spherical(1,az2,el2).asCartesian;
-
-	rot2=[sph2.x,sph2.y,sph2.z];
-
-	i2=Quaternion(0, rot2.[0], 0, 0);
-	j2=Quaternion(0, 0, rot2.[1], 0);
-	k2=Quaternion(0, 0, 0, rot2.[2]);
-
-q2=(cos(angle.degrad)+(sin(angle.degrad)*(i2+j2+k2)));
-v2=q2*v2*q2.conjugate;
-
-raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).phi;
-};
-
-~el_z=(360*~time).collect{
-
-	az3=~az.[pl3];el3=~el.[pl3];
-	pl3=pl3+1;
-sph3=Spherical(1,az3,el3).asCartesian;
-
-	rot3=[sph3.x,sph3.y,sph3.z];
-
-	i3=Quaternion(0, rot3.[0], 0, 0);
-	j3=Quaternion(0, 0, rot3.[1], 0);
-	k3=Quaternion(0, 0, 0, rot3.[2]);
-
-q3=(cos(angle.degrad)+(sin(angle.degrad)*(i3+j3+k3)));
-v3=q3*v3*q3.conjugate;
-
-raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi;
-};
-
-)
-/////////////////notes and durs
-
-(
-var dur=1,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=12;
-var mag1,mag2,mag3;
-
-~phase2 = (360*~time).collect{
-	ph1=~magx.[pl1];
-	pl1=pl1+1;
-	ph1=(ph1/dur).round(1/32);
-	};
-
-~phase3 = (360*~time).collect{
-	ph2=~magy.[pl2];
-	pl2=pl2+1;
-	ph2=(ph2/dur).round(1/32);
-	};
-
-~phase4 = (360*~time).collect{
-	ph3=~magz.[pl3];
-	pl3=pl3+1;
-	ph3=(ph3/dur).round((1/32));
-	};
-
-~n2 = 100.collect{
-	mag1=~magx[pl4];
-	sph1=Spherical(mag1,~az_x.[pl4],~el_x.[pl4]).x;
-	//sph1=~magx.[pl4];
-	pl4=pl4+1;
-	n1=(sph1*mult).round(1);
-	};
-
-~n3 = 100.collect{
-	mag2=~magy[pl5];
-	sph2=Spherical(mag2,~az_y.[pl5],~el_y.[pl5]).y;
-	//sph2=~magy.[pl5];
-	pl5=pl5+1;
-	n2=(sph2*mult).round(1);
-	};
-
-~n4 = 100.collect{
-	mag3=~magz[pl6];
-	sph3=Spherical(mag3,~az_z.[pl6],~el_z.[pl6]).z;
-	//sph3=~magz.[pl6];
-	pl6=pl6+1;
-	n3=(sph3*mult).round(1);
-	};
-
-)
-
 )
 
 ////////////synth
@@ -338,29 +158,29 @@ SynthDef.new(\o1, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -375,29 +195,29 @@ SynthDef.new(\o2, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -412,29 +232,29 @@ SynthDef.new(\o3, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -449,29 +269,29 @@ SynthDef.new(\o4, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -486,29 +306,29 @@ SynthDef.new(\o5, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -523,29 +343,29 @@ SynthDef.new(\o6, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -560,29 +380,29 @@ SynthDef.new(\o7, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
@@ -597,29 +417,29 @@ SynthDef.new(\o8, {
 	chainx = FFT(LocalBuf(1024), in1);
 	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
 		az1=~az.[pl];
 		el1=~el.[pl];
 		az2=~az.reverse.[pl];
 		el2=~el.reverse.[pl];
 
-		~az1=250.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el1=250.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-		~az2=250.collect{az2=(az2+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-		~el2=250.collect{el2=(el2+(360-(360/1.6180339887499))).wrap(90.neg,90)};
-
-pl=pl+1;
-
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
    chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
-		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env.circle(~az1,[1])),EnvGen.ar(Env.circle(~el1,[1]))));
-		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,EnvGen.ar(Env.circle(~az2,[1])),EnvGen.ar(Env.circle(~el2,[1]))));
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
+		pl=pl+1;
 	}
 }).add;
 );
