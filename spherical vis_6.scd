@@ -2,7 +2,7 @@
 
 
 (
-var  sph1,sph2,sph3,sph4,sph5,m_x=2,m_y=1,m_z=3;
+var  sph1,sph2,sph3,sph4,sph5,m_x=4,m_y=1,m_z=3;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0;
 
@@ -45,7 +45,6 @@ var az4=0,el4=0,az5=0,el5=0;
 //Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 	///x axis   ambi/// for order0 for sphere phi*0 else torus, same in y
-	mag_x=mag_x/(2.sqrt);
 };
 ~magy = (360*100).collect{
 
@@ -62,7 +61,6 @@ var az4=0,el4=0,az5=0,el5=0;
 //		mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
 //Complex(sin((sph4.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2))),sin((sph4.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
-	mag_y=mag_y/(2.sqrt);
 };
 
 ~magz = (360*100).collect{
@@ -79,7 +77,6 @@ mag_z=Complex(cos((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sp
 mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sph5.rho
 	);
 ////z axis   ambi..  sin for odd numbers, cos for even
-	mag_z=mag_z/(2.sqrt);
 	};
 )
 //~mag=~mag_x+~mag_z+~mag_y;
@@ -90,12 +87,12 @@ var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
 var r1,harm1,r2,harm2,rad;
 
-data = (360*50).collect{
+data = (360*100).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
-	//mag=~magx.[pl];
-	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho;
+	//mag=~magz.[pl];
+	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt);
 	pl=pl+1;
 
 	sph=Spherical(mag,az,el).asCartesian.asArray;

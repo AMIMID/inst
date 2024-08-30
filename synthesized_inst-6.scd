@@ -101,7 +101,6 @@ var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 //Complex(sin((sphx.phi.round(0.000000001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sphx.phi.round(0.000000001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sphx.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2))),cos((sphx.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2)))).rho)*sphx.rho;
 
-	mag_x=mag_x/(2.sqrt);
 	};
 
 ~magy = (360*~time).collect{
@@ -119,7 +118,6 @@ var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 //Complex(sin((sphy.phi.round(0.000000001)*(m_y-1)).wrap((pi/2).neg,(pi/2))),sin((sphy.phi.round(0.000000001)*(m_y-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sphy.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2))),cos((sphy.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2)))).rho)*sphy.rho;
 
-mag_y=mag_y/(2.sqrt);
 	};
 
 ~magz = (360*~time).collect{
@@ -135,7 +133,6 @@ m_z.even,
 mag_z=Complex(cos((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sphz.rho,
 mag_z=Complex(sin((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sphz.rho
 	);
-	mag_z=mag_z/(2.sqrt);
 	};
 
 )
@@ -274,43 +271,43 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi;
 /////////////////notes and durs
 
 (
-var dur=2,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=10;
+var dur=4,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=10;
 var mag1,mag2,mag3;
 
 ~phase2 = (360*~time).collect{
-	ph1=~magx.[pl1];
+	ph1=~magx.[pl1]/(2.sqrt);
 	pl1=pl1+1;
-	ph1=(ph1*dur).round(1/32);
+	ph1=(ph1*dur).round(1/256);
 	};
 
 ~phase3 = (360*~time).collect{
-	ph2=~magy.[pl2];
+	ph2=~magy.[pl2]/(2.sqrt);
 	pl2=pl2+1;
-	ph2=(ph2*dur).round(1/32);
+	ph2=(ph2*dur).round(1/256);
 	};
 
 ~phase4 = (360*~time).collect{
-	ph3=~magz.[pl3];
+	ph3=~magz.[pl3]/(2.sqrt);
 	pl3=pl3+1;
-	ph3=(ph3*dur).round((1/32));
+	ph3=(ph3*dur).round((1/256));
 	};
 
 ~n2 = (360*~time).collect{
-	mag1=Cartesian(~magx[pl4],~magy[pl4],~magz[pl4]).rho/(2.sqrt);
+	mag1=Cartesian(~magx[pl4]/(2.sqrt),~magy[pl4]/(2.sqrt),~magz[pl4]/(2.sqrt)).rho/(2.sqrt);
 	sph1=Spherical(mag1*mult,~az_x.[pl4],~el_x.[pl4]).x;
 	pl4=pl4+1;
 	n1=(sph1).round(1);
 	};
 
 ~n3 = (360*~time).collect{
-	mag2=Cartesian(~magx[pl5],~magy[pl5],~magz[pl5]).rho/(2.sqrt);
+	mag2=Cartesian(~magx[pl5]/(2.sqrt),~magy[pl5]/(2.sqrt),~magz[pl5]/(2.sqrt)).rho/(2.sqrt);
 	sph2=Spherical(mag2*mult,~az_y.[pl5],~el_y.[pl5]).y;
 	pl5=pl5+1;
 	n2=(sph2).round(1);
 	};
 
 ~n4 = (360*~time).collect{
-	mag3=Cartesian(~magx[pl6],~magy[pl6],~magz[pl6]).rho/(2.sqrt);
+	mag3=Cartesian(~magx[pl6]/(2.sqrt),~magy[pl6]/(2.sqrt),~magz[pl6]/(2.sqrt)).rho/(2.sqrt);
 	sph3=Spherical(mag3*mult,~az_z.[pl6],~el_z.[pl6]).z;
 	pl6=pl6+1;
 	n3=(sph3).round(1);
