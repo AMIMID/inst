@@ -194,93 +194,9 @@ raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta;
 )
 
 ///////////////////////el
-(
-var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
-var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
-var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r=[0,0,1];
-var v1=Quaternion(0,r.[0],r.[1],r.[2]),v2=Quaternion(0,r.[0],r.[1],r.[2]),v3=Quaternion(0,r.[0],r.[1],r.[2]);
-var angle=(360-(360/1.6180339887499));
 
-~el_x=(360*~time).collect{
-
-	az1=~az.[pl1];el1=~el.[pl1];
-	pl1=pl1+1;
-sph1=Spherical(1,az1,el1).asCartesian;
-
-	rot1=[sph1.x,sph1.y,sph1.z];
-
-	i1=Quaternion(0, rot1.[0], 0, 0);
-	j1=Quaternion(0, 0, rot1.[1], 0);
-	k1=Quaternion(0, 0, 0, rot1.[2]);
-
-q1=(cos(angle.degrad)+(sin(angle.degrad)*(i1+j1+k1)));
-v1=q1*v1*q1.conjugate;
-
-raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).phi;
-};
-
-~el_y=(360*~time).collect{
-
-	az2=~az.[pl2];el2=~el.[pl2];
-	pl2=pl2+1;
-sph2=Spherical(1,az2,el2).asCartesian;
-
-	rot2=[sph2.x,sph2.y,sph2.z];
-
-	i2=Quaternion(0, rot2.[0], 0, 0);
-	j2=Quaternion(0, 0, rot2.[1], 0);
-	k2=Quaternion(0, 0, 0, rot2.[2]);
-
-q2=(cos(angle.degrad)+(sin(angle.degrad)*(i2+j2+k2)));
-v2=q2*v2*q2.conjugate;
-
-raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).phi;
-};
-
-~el_z=(360*~time).collect{
-
-	az3=~az.[pl3];el3=~el.[pl3];
-	pl3=pl3+1;
-sph3=Spherical(1,az3,el3).asCartesian;
-
-	rot3=[sph3.x,sph3.y,sph3.z];
-
-	i3=Quaternion(0, rot3.[0], 0, 0);
-	j3=Quaternion(0, 0, rot3.[1], 0);
-	k3=Quaternion(0, 0, 0, rot3.[2]);
-
-q3=(cos(angle.degrad)+(sin(angle.degrad)*(i3+j3+k3)));
-v3=q3*v3*q3.conjugate;
-
-raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi;
-};
-
-)
 /////////////////notes and durs
 
-(
-var dur=1,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=12;
-var mag1,mag2,mag3;
-
-~phase2 = (360*~time).collect{
-	ph1=~magx.[pl1];
-	pl1=pl1+1;
-	ph1=(ph1/dur).round(1/32);
-	};
-
-~phase3 = (360*~time).collect{
-	ph2=~magy.[pl2];
-	pl2=pl2+1;
-	ph2=(ph2/dur).round(1/32);
-	};
-
-~phase4 = (360*~time).collect{
-	ph3=~magz.[pl3];
-	pl3=pl3+1;
-	ph3=(ph3/dur).round((1/32));
-	};
-)
 
 )
 /////////////////synth
@@ -299,9 +215,9 @@ var mag1,mag2,mag3;
 
 (
 SynthDef.new(\o1, {
-	arg n=1,decay=2,az1,el1,az2,el2;
-    var in1, chainx,b=0;
-	var chainxx,pitch,env;
+	var az1,el1,az2,el2;
+    var in1,in2,chainx,chainy,b=0;
+	var chainxx,chainyy;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -310,366 +226,41 @@ SynthDef.new(\o1, {
 
 	pitch=2.pow(n/12);
 
-	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2);
-
-	in1 = PitchShift.ar(SoundIn.ar(0),pitchRatio:pitch,mul:env);
+	in1 = SoundIn.ar(0);
+	in2 = SoundIn.ar(1);
 
 	chainx = FFT(LocalBuf(1024), in1);
+	chainy = FFT(LocalBuf(1024), in2);
 
-   250.do{
+   360.do{
 
-az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180);
-el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90);
-
-~azim1=16.collect{az1=(az1+(360-(360/1.6180339887499))).wrap(180.neg,180)};
-~elev1=16.collect{el1=(el1+(360-(360/1.6180339887499))).wrap(90.neg,90)};
+		az1=~az.[pl];
+		el1=~el.[pl];
+		az2=~az.reverse.[pl];
+		el2=~el.reverse.[pl];
 
    chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+
 	b=b+1;
-	wrappedOut1.value(out,VBAP.ar(4,IFFT(chainxx),~b.bufnum,EnvGen.ar(Env(~azim1,[1/2])),EnvGen.ar(Env(~elev1,[1/2])))*env);
+
+		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
+
+		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
+		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
+
+		pl=pl+1;
 	}
 }).add;
 );
 
 
-Scale.directory
-
-//////////pattern for mobius strib of sequential or parallel play of directions
 (
-b=Pdef(\2, Pbind(\instrument, \o1,
-	\dur,Pseq(~phase2.abs,1),
-\n1,PdegreeToKey(Pseq(~n2,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1,inf),
-	\el1,Pseq(~el1,inf),
-	\az2,Pseq(~az1.reverse,inf),
-	\el2,Pseq(~el1.reverse,inf),
-		\buffer1,Pseq([0,1,2,3],inf),
-	\buffer2,Pseq([0,1,2,3],inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-c=Pdef(\3, Pbind(\instrument, \o2,
-	\dur,Pseq(~phase3.abs,1),
-\n1,PdegreeToKey(Pseq(~n3,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az2,inf),
-	\el1,Pseq(~el2,inf),
-	\az2,Pseq(~az2.reverse,inf),
-	\el2,Pseq(~el2.reverse,inf),
-		\buffer1,Pseq([0,1,2,3],inf),
-	\buffer2,Pseq([0,1,2,3],inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-d=Pdef(\4, Pbind(\instrument, \o3,
-	\dur,Pseq(~phase4.abs,1),
-\n1,PdegreeToKey(Pseq(~n4,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az3,inf),
-	\el1,Pseq(~el3,inf),
-	\az2,Pseq(~az3.reverse,inf),
-	\el2,Pseq(~el3.reverse,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-z=Pdef(\5, Pbind(\instrument, \o4,
-	\dur,Pseq(~phase4.abs,1),
-\n1,PdegreeToKey(Pseq(~n4,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az3,inf),
-	\el1,Pseq(~el3,inf),
-	\az2,Pseq(~az3.reverse,inf),
-	\el2,Pseq(~el3.reverse,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-)
-
-(
-e=Pdef(\22, Pbind(\instrument, \o1,
-	\dur,Pseq(~phase2.abs.reverse,1),
-\n1,PdegreeToKey(Pseq(~n2.reverse,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.reverse,inf),
-	\el1,Pseq(~el2.reverse,inf),
-	\az2,Pseq(~az1,inf),
-	\el2,Pseq(~el2,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-f=Pdef(\33, Pbind(\instrument, \o2,
-	\dur,Pseq(~phase3.abs.reverse,1),
-\n1,PdegreeToKey(Pseq(~n3.reverse,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az2.reverse,inf),
-	\el1,Pseq(~el2.reverse,inf),
-	\az2,Pseq(~az2,inf),
-	\el2,Pseq(~el2,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-g=Pdef(\44, Pbind(\instrument, \o3,
-	\dur,Pseq(~phase4.abs.reverse,1),
-\n1,PdegreeToKey(Pseq(~n4.reverse,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\az1,Pseq(~az3.reverse,inf),
-	\el1,Pseq(~el3.reverse,inf),
-	\az2,Pseq(~az3,inf),
-	\el2,Pseq(~el3,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-k=Pdef(\55, Pbind(\instrument, \o4,
-	\dur,Pseq(~phase4.abs.reverse,1),
-\n1,PdegreeToKey(Pseq(~n4.reverse,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\az1,Pseq(~az3.reverse,inf),
-	\el1,Pseq(~el3.reverse,inf),
-	\az2,Pseq(~az3,inf),
-	\el2,Pseq(~el3,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-)
-
-(
-Tdef.new(\h,{loop({
-
-	b.play;
-c.play;
-d.play;
-	(1).wait;
-		bb.play;
-cc.play;
-dd.play;
-
-
-	}
-)})
-)
-
-
-Tdef(\h).stop;
-Tdef(\h).play;
-Tdef(\h).clear;
-
-////////////////pattern for web of directions
-
-(
-
-~phase22=~phase2.reverse.mirror;
-~n22=~n2.reverse.mirror;
-~phase33=~phase3.reverse.mirror;
-~n33=~n3.reverse.mirror;
-~phase44=~phase4.reverse.mirror;
-~n44=~n4.reverse.mirror;
-
-~phase2=~phase2.mirror;
-~n2=~n2.mirror;
-~phase3=~phase3.mirror;
-~n3=~n3.mirror;
-~phase4=~phase4.mirror;
-~n4=~n4.mirror;
-
-)
-
-(
-b=Pdef(\2, Pbind(\instrument, \o1,
-	\dur,Ppatlace([Pseq(~phase2.abs,1),Pseq(~phase22.abs,1)],inf),
-	\n1,PdegreeToKey(Ppatlace([Pseq(~n2,inf),Pseq(~n22,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az1.reverse.mirror,inf),Pseq(~az1.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el1.reverse.mirror,inf),Pseq(~el1.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az1.mirror,inf),Pseq(~az1.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el1.mirror,inf),Pseq(~el1.reverse.mirror,inf)],inf),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\decay,Pbrown(2,8,1,inf);
-));
-c=Pdef(\3, Pbind(\instrument, \o2,
-	\dur,Ppatlace([Pseq(~phase3.abs,1),Pseq(~phase33.abs,1)],inf),
-	\n1,PdegreeToKey(Ppatlace([Pseq(~n3,inf),Pseq(~n33,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az2.reverse.mirror,inf),Pseq(~az2.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el2.reverse.mirror,inf),Pseq(~el2.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az2.mirror,inf),Pseq(~az2.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el2.mirror,inf),Pseq(~el2.reverse.mirror,inf)],inf),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\decay,Pbrown(2,8,1,inf);
-));
-d=Pdef(\4, Pbind(\instrument, \o3,
-	\dur,Ppatlace([Pseq(~phase4.abs,1),Pseq(~phase44.abs,1)],inf),
-	\n1,PdegreeToKey(Ppatlace([Pseq(~n4,inf),Pseq(~n44,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az3.reverse.mirror,inf),Pseq(~az3.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el3.reverse.mirror,inf),Pseq(~el3.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az3.mirror,inf),Pseq(~az3.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el3.mirror,inf),Pseq(~el3.reverse.mirror,inf)],inf),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\decay,Pbrown(2,8,1,inf);
-));
-z=Pdef(\5, Pbind(\instrument, \o4,
-	\dur,Ppatlace([Pseq(~phase4.abs,1),Pseq(~phase44.abs,1)],inf),
-	\n1,PdegreeToKey(Ppatlace([Pseq(~n4,inf),Pseq(~n44,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az3.reverse.mirror,inf),Pseq(~az3.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el3.reverse.mirror,inf),Pseq(~el3.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az3.mirror,inf),Pseq(~az3.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el3.mirror,inf),Pseq(~el3.reverse.mirror,inf)],inf),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\decay,Pbrown(2,8,1,inf);
-));
-)
-
-
-(
-b.play;
-//s.record(numChannels:4)
-//)
-//(
-c.play;
-//s.record(numChannels:4)
-//)
-//(
-d.play;
+Synth(\o1);
 s.record(numChannels:4)
 )
-
-
-/////////////////////////////////in one pattern
-(
-
-~phase22=~phase2.reverse.mirror;
-~n22=~n2.reverse.mirror;
-~phase33=~phase3.reverse.mirror;
-~n33=~n3.reverse.mirror;
-~phase44=~phase4.reverse.mirror;
-~n44=~n4.reverse.mirror;
-
-~phase2=~phase2.mirror;
-~n2=~n2.mirror;
-~phase3=~phase3.mirror;
-~n3=~n3.mirror;
-~phase4=~phase4.mirror;
-~n4=~n4.mirror;
-
-)
-(
-b=Pdef(\2, Pbind(\instrument, \o1,
-	\dur,Pseq(~phase2.abs,1),
-\n1,PdegreeToKey(Pseq(~n2,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.reverse.mirror,inf),
-	\el1,Pseq(~el1.reverse.mirror,inf),
-	\az2,Pseq(~az2.mirror,inf),
-	\el2,Pseq(~el2.mirror,inf),
-	\buffer1,Pseq([0,1,2,3],inf),
-	\buffer2,Pseq([0,1,2,3],inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-c=Pdef(\3, Pbind(\instrument, \o2,
-	\dur,Pseq(~phase3.abs,1),
-\n1,PdegreeToKey(Pseq(~n3,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.reverse.mirror,inf),
-	\el1,Pseq(~el1.reverse.mirror,inf),
-	\az2,Pseq(~az2.mirror,inf),
-	\el2,Pseq(~el2.mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-d=Pdef(\4, Pbind(\instrument, \o3,
-
-	\dur,Pseq(~phase4.abs,1),
-\n1,PdegreeToKey(Pseq(~n4,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.reverse.mirror,inf),
-	\el1,Pseq(~el1.reverse.mirror,inf),
-	\az2,Pseq(~az2.mirror,inf),
-	\el2,Pseq(~el2.mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-z=Pdef(\5, Pbind(\instrument, \o4,
-
-	\dur,Pseq(~phase4.abs,1),
-\n1,PdegreeToKey(Pseq(~n4,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.reverse.mirror,inf),
-	\el1,Pseq(~el1.reverse.mirror,inf),
-	\az2,Pseq(~az2.mirror,inf),
-	\el2,Pseq(~el2.mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-)
-(
-e=Pdef(\22, Pbind(\instrument, \o1,
-
-	\dur,Pseq(~phase22.abs,1),
-\n1,PdegreeToKey(Pseq(~n22,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.mirror,inf),
-	\el1,Pseq(~el1.mirror,inf),
-	\az2,Pseq(~az2.reverse.mirror,inf),
-	\el2,Pseq(~el2.reverse..mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-f=Pdef(\33, Pbind(\instrument, \o2,
-	\dur,Pseq(~phase33.abs,1),
-\n1,PdegreeToKey(Pseq(~n33,inf),Scale.mixolydian),
-		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az1,Pseq(~az1.mirror,inf),
-	\el1,Pseq(~el1.mirror,inf),
-	\az2,Pseq(~az2.reverse.mirror,inf),
-	\el2,Pseq(~el2.reverse.mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-g=Pdef(\44, Pbind(\instrument, \o3,
-	\dur,Pseq(~phase44.abs,1),
-\n1,PdegreeToKey(Pseq(~n44,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\az1,Pseq(~az1.mirror,inf),
-	\el1,Pseq(~el1.mirror,inf),
-	\az2,Pseq(~az2.reverse.mirror,inf),
-	\el2,Pseq(~el2.reverse.mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-k=Pdef(\55, Pbind(\instrument, \o4,
-	\dur,Pseq(~phase44.abs,1),
-\n1,PdegreeToKey(Pseq(~n44,inf),Scale.mixolydian),
-	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\az1,Pseq(~az1.mirror,inf),
-	\el1,Pseq(~el1.mirror,inf),
-	\az2,Pseq(~az2.reverse.mirror,inf),
-	\el2,Pseq(~el2.reverse.mirror,inf),
-	\decay,Pbrown(2,8,1,inf);
-));
-)
-(
-b.play;
-//s.record(numChannels:4)
-//)
-//(
-c.play;
-//s.record(numChannels:4)
-//)
-//(
-d.play;
-e.play;
-//s.record(numChannels:4)
-//)
-//(
-f.play;
-//s.record(numChannels:4)
-//)
-//(
-g.play;
-s.record(numChannels:4)
-)
-
-(
-Tdef.new(\h,{loop({
-
-	b.play;
-c.play;
-d.play;
-	(1).wait;
-		bb.play;
-cc.play;
-dd.play;
-
-
-	}
-)})
-)
-
-
-Tdef(\h).stop;
-Tdef(\h).play;
-Tdef(\h).clear;
