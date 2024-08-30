@@ -185,12 +185,12 @@ SynthDef.new(\o1, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -222,12 +222,12 @@ SynthDef.new(\o2, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -259,12 +259,12 @@ SynthDef.new(\o3, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -296,12 +296,12 @@ SynthDef.new(\o4, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -333,12 +333,12 @@ SynthDef.new(\o5, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -370,12 +370,12 @@ SynthDef.new(\o6, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -407,12 +407,12 @@ SynthDef.new(\o7, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
@@ -444,12 +444,12 @@ SynthDef.new(\o8, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*(Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho/(2.sqrt)));
+		*(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}

@@ -69,8 +69,6 @@ var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 //mag_x=(Complex(cos((sphx.theta.round(0.000000001)*m_x).wrap(pi.neg,pi)),cos((sphx.theta.round(0.000000001)*m_x).wrap(pi.neg,pi))).rho*
 //Complex(sin((sphx.phi.round(0.000000001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sphx.phi.round(0.000000001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sphx.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2))),cos((sphx.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2)))).rho)*sphx.rho;
-
-	mag_x=mag_x/(2.sqrt);
 	};
 
 ~magy = (360*~time).collect{
@@ -88,7 +86,6 @@ var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 //Complex(sin((sphy.phi.round(0.000000001)*(m_y-1)).wrap((pi/2).neg,(pi/2))),sin((sphy.phi.round(0.000000001)*(m_y-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sphy.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2))),cos((sphy.phi.round(0.000000001)).wrap((pi/2).neg,(pi/2)))).rho)*sphy.rho;
 
-mag_y=mag_y/(2.sqrt);
 	};
 
 ~magz = (360*~time).collect{
@@ -104,7 +101,6 @@ m_z.even,
 mag_z=Complex(cos((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sphz.rho,
 mag_z=Complex(sin((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sphz.phi.round(0.000000001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sphz.rho
 	);
-	mag_z=mag_z/(2.sqrt);
 	};
 
 )
@@ -285,12 +281,12 @@ SynthDef.new(\o1, {
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
 		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
+		*(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt)));
 		//
 		// Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
 		// 	Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 		// 	Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
-		// *Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
+		// *(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt)));
 
 		pl=pl+1;
 	}
