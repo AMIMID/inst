@@ -2,7 +2,7 @@
 
 
 (
-var  sph1,sph2,sph3,sph4,sph5,m_x=4,m_y=1,m_z=3;
+var  sph1,sph2,sph3,sph4,sph5,m_x=9,m_y=8,m_z=6;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0;
 
@@ -87,12 +87,12 @@ var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
 var r1,harm1,r2,harm2,rad;
 
-data = (360*100).collect{
+data = (360*10).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
 	//mag=~magz.[pl];
-	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt);
+	mag=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 	pl=pl+1;
 
 	sph=Spherical(mag,az,el).asCartesian.asArray;
