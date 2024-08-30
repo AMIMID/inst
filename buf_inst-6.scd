@@ -186,13 +186,13 @@ SynthDef.new(\o1, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -223,13 +223,13 @@ SynthDef.new(\o2, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -260,13 +260,13 @@ SynthDef.new(\o3, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -297,13 +297,13 @@ SynthDef.new(\o4, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -334,13 +334,13 @@ SynthDef.new(\o5, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -371,13 +371,13 @@ SynthDef.new(\o6, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -408,13 +408,13 @@ SynthDef.new(\o7, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
@@ -445,13 +445,13 @@ SynthDef.new(\o8, {
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az1.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el1.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho);
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,1/2,phase:az2.[pl].linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,1/2,phase:el2.[pl].linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
+		Osc.ar(~t,1/2,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,1/2,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90))
 		*Cartesian(~magx.reverse.[pl],~magy.reverse.[pl],~magz.reverse.[pl]).rho);
 
 		pl=pl+1;
