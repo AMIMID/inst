@@ -29,6 +29,21 @@ wt = signal.asWavetable;
 signal.plot;
 )
 
+//////////phase shift
+~c1 = Buffer.readChannel(s,,channels:0 );
+(
+(
+SynthDef("help-phaseShift", { arg out=0;
+        var in, chain;
+        in = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0);
+        chain = FFT(LocalBuf(2048), in);
+        chain = PV_PhaseShift(chain,90.degrad);
+        Out.ar(out, 0.1 * IFFT(chain));
+}).play(s);
+);
+)
+
+
 ////////////////buffers
 (
 ~c1 = Buffer.readChannel(s,,channels:0 );
