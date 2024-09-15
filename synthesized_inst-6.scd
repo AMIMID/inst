@@ -297,21 +297,21 @@ var mag1,mag2,mag3;
 
 ~n2 = (360*~time).collect{
 	mag1=Cartesian(~magx[pl4]/(2.sqrt),~magy[pl4]/(2.sqrt),~magz[pl4]/(2.sqrt)).rho/(2.sqrt);
-	sph1=Spherical(mag1*mult,~az_x.[pl4],~el_x.[pl4]).x;
+	sph1=Spherical(mag1*mult,~az.[pl4],~el.[pl4]).x;
 	pl4=pl4+1;
 	n1=(sph1).round(1);
 	};
 
 ~n3 = (360*~time).collect{
 	mag2=Cartesian(~magx[pl5]/(2.sqrt),~magy[pl5]/(2.sqrt),~magz[pl5]/(2.sqrt)).rho/(2.sqrt);
-	sph2=Spherical(mag2*mult,~az_y.[pl5],~el_y.[pl5]).y;
+	sph2=Spherical(mag2*mult,~az.[pl5],~el.[pl5]).y;
 	pl5=pl5+1;
 	n2=(sph2).round(1);
 	};
 
 ~n4 = (360*~time).collect{
 	mag3=Cartesian(~magx[pl6]/(2.sqrt),~magy[pl6]/(2.sqrt),~magz[pl6]/(2.sqrt)).rho/(2.sqrt);
-	sph3=Spherical(mag3*mult,~az_z.[pl6],~el_z.[pl6]).z;
+	sph3=Spherical(mag3*mult,~az.[pl6],~el.[pl6]).z;
 	pl6=pl6+1;
 	n3=(sph3).round(1);
 	};
