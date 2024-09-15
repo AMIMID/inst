@@ -1,5 +1,5 @@
 ServerOptions.devices
-s.options.device_("USB Sound Device");
+s.options.device_("ASIO : ASIO4ALL v2");
 ////server setup
 (
 s.options.numWireBufs = 1024*16;
