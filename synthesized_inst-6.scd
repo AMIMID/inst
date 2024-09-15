@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/30);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -13,8 +13,10 @@ s.waitForBoot
 
 /////wavetables
 Buffer.freeAll
+(
 ~w= Buffer.alloc(s,2048);
 ~t= Buffer.alloc(s,2048);
+)
 
 (
 var env,sig,wt,angle=0,level,levels;
@@ -23,7 +25,7 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((1/3)/1.6180339887499)).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((1/6)/1.6180339887499)).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
