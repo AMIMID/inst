@@ -1,4 +1,5 @@
-
+ServerOptions.devices
+s.options.device_("USB Sound Device");
 ////server setup
 (
 s.options.numWireBufs = 1024*16;
