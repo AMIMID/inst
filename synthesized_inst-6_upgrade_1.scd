@@ -276,7 +276,7 @@ rel3=Cartesian(v3.b.round(0.0000001),v3.c.round(0.0000001),v3.d.round(0.0000001)
 /////////////////notes and durs
 
 (
-var dur=4,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=10;
+var dur=10,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=10;
 var mag1,mag2,mag3;
 
 ~phase2 = (360*~time).collect{
@@ -363,7 +363,8 @@ rot=[rr.x,rr.y,rr.z];
 i=Quaternion(0, rot.[0], 0, 0);
 j=Quaternion(0, 0, rot.[1], 0);
 k=Quaternion(0, 0, 0, rot.[2]);
-q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+
+q=(cos(ang.degrad)+(sin(ang.degrad)*(i+j+k)));
 v=q*v*q.conjugate;
 pl=pl+1;
 
@@ -424,7 +425,7 @@ rot=[rr.x,rr.y,rr.z];
 i=Quaternion(0, rot.[0], 0, 0);
 j=Quaternion(0, 0, rot.[1], 0);
 k=Quaternion(0, 0, 0, rot.[2]);
-q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+q=(cos(ang.degrad)+(sin(ang.degrad)*(i+j+k)));
 v=q*v*q.conjugate;
 pl=pl+1;
 
@@ -485,7 +486,7 @@ rot=[rr.x,rr.y,rr.z];
 i=Quaternion(0, rot.[0], 0, 0);
 j=Quaternion(0, 0, rot.[1], 0);
 k=Quaternion(0, 0, 0, rot.[2]);
-q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
+q=(cos(ang.degrad)+(sin(ang.degrad)*(i+j+k)));
 v=q*v*q.conjugate;
 pl=pl+1;
 
@@ -522,7 +523,7 @@ Scale.directory
 
 
 //////////pattern for mobius strib of sequential or parallel play of directions
-
+(
 (
 b=Pdef(\2, Pbind(\instrument, \ob,
 	\dur,Pseq(~phase2,1),
@@ -563,7 +564,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
-)
+);
 
 (
 e=Pdef(\22, Pbind(\instrument, \ob,
@@ -605,6 +606,7 @@ g=Pdef(\44, Pbind(\instrument, \od,
 	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
+)
 )
 
 (
