@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=8;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/80);
+TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -344,7 +344,7 @@ SynthDef.new(\ob, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3,4,5,6,7]);  // multiple buses!
 
-bank=16;
+bank=32;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -395,7 +395,7 @@ SynthDef.new(\oc, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3,4,5,6,7]);  // multiple buses!
 
-bank=16;
+bank=32;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -446,7 +446,7 @@ SynthDef.new(\od, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3,4,5,6,7]);  // multiple buses!
 
-bank=16;
+bank=32;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
