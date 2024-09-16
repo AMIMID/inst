@@ -366,10 +366,10 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:sphere.rho/(2.sqrt));
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:m.reciprocal,phase:phase),
+Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
 ~b.bufnum,
-Osc.ar(~t,1/4,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/4,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,1/4,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,1/4,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -413,10 +413,10 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:sphere.rho/(2.sqrt));
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:m.reciprocal,phase:phase),
+Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
 ~b.bufnum,
-Osc.ar(~t,1/4,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/4,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,1/4,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,1/4,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -460,10 +460,10 @@ sphere=Cartesian(v.b,v.c,v.d);
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:sphere.rho/(2.sqrt));
 
 osc=VBAP.ar(4,
-Osc.ar(~w,(freq*m),mul:m.reciprocal,phase:phase),
+Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
 ~b.bufnum,
-Osc.ar(~t,1/4,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t,1/4,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,1/4,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,1/4,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
