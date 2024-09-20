@@ -2,7 +2,7 @@
 
 
 (
-var  sph1,sph2,sph3,sph4,sph5,m_x=9,m_y=8,m_z=6;
+var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=4;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
 var az4=0,el4=0,az5=0,el5=0;
 
@@ -36,14 +36,13 @@ var az4=0,el4=0,az5=0,el5=0;
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
-
-	mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
-	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+//mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
+//	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
 ////for between harmonics multiply sin(phi) after cos, when m is 2 then harm 3/2 is formed in oder 3, when m is 3 harm 4/3 is formed in oder 4 and when m is 3 for theta and 2 for phi harm 4/2 is formed for order4
-//	mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
-//Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
-//Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
+mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
+Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
+Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 	///x axis   ambi/// for order0 for sphere phi*0 else torus, same in y
 };
 ~magy = (360*100).collect{
@@ -87,7 +86,7 @@ var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
 var r1,harm1,r2,harm2,rad;
 
-data = (360*10).collect{
+data = (360*100).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
@@ -138,11 +137,11 @@ i=Quaternion(0, r.[0], 0, 0);
 j=Quaternion(0, 0, r.[1], 0);
 k=Quaternion(0, 0, 0, r.[2]);
 
-data = (360*100).collect{
+data = (360*32).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
-	mag=~mag.[pl];
+	mag=~magx.[pl];
 	pl=pl+1;
 
 	sph=Spherical(mag,az,el);

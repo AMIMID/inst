@@ -1,10 +1,9 @@
 
 
 
+
 (
-var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=4;
-var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
-var az4=0,el4=0,az5=0,el5=0;
+var  sph1,sph2, az1=0,el1=0,az2=0,el2=0;
 
 ~az = (360*100).collect{
 
@@ -26,6 +25,10 @@ var az4=0,el4=0,az5=0,el5=0;
 
 	};
 
+~x = Routine.new({
+var sph3,m_x=1,az3=0,el3=0,mag,mag_x;
+{
+m_x=1.rrand(5);
 ~magx = (360*100).collect{
 
 	az3=(az3+(1)).wrap(180.neg,180);
@@ -34,17 +37,20 @@ var az4=0,el4=0,az5=0,el5=0;
 
 	sph3=Spherical(500,az3.degrad,el3.degrad);
 
-	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
+mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),
+	cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
+Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/
+	2)))).rho)*sph3.rho;
 
-//mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
-//	Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
 
-////for between harmonics multiply sin(phi) after cos, when m is 2 then harm 3/2 is formed in oder 3, when m is 3 harm 4/3 is formed in oder 4 and when m is 3 for theta and 2 for phi harm 4/2 is formed for order4
-mag_x=(Complex(cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph3.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
-Complex(sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sph3.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
-Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph3.rho;
-	///x axis   ambi/// for order0 for sphere phi*0 else torus, same in y
 };
+1.wait;}.loop;
+};).play;
+
+~y = Routine.new({
+var sph4,m_y=1,az4=0,el4=0,mag_y;
+{
+m_y=1.rrand(5);
 ~magy = (360*100).collect{
 
 	az4=(az4+(1)).wrap(180.neg,180);
@@ -53,15 +59,21 @@ Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.rou
 
 	sph4=Spherical(500,az4.degrad,el4.degrad);
 
-	mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
-		Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
+	mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),
+		sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 /////y axis  ambi
 
 //		mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
 //Complex(sin((sph4.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2))),sin((sph4.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
 };
+1.wait;}.loop;
+}).play;
 
+~z = Routine.new({
+var sph5,m_z=1,az5=0,el5=0,mag_z;
+{
+m_z=1.rrand(5);
 ~magz = (360*100).collect{
 
 	az5=(az5+(1)).wrap(180.neg,180);
@@ -77,7 +89,12 @@ mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 	);
 ////z axis   ambi..  sin for odd numbers, cos for even
 	};
+1.wait;}.loop;
+};).play;
+
 )
+
+	///////////////////////////////////
 
 
 (
@@ -85,15 +102,13 @@ var data;
 var az=0,el=0;
 var m=600,sph,az1,el1,pl=0,daz,del,harm,mag,r;
 var r1,harm1,r2,harm2,rad;
-var run = true;
-var ot=0.degrad;
 
 data = (360*32).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
 	//mag=~magz.[pl];
-	mag=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
+	mag=~magy.[pl]/(2.sqrt);
 	pl=pl+1;
 
 	sph=Spherical(mag,az,el).asCartesian.asArray;
@@ -101,31 +116,29 @@ data = (360*32).collect{
 
 };
 
-w = Window.new("3D Scatterplot", Rect(40,40, 800, 800)).front;
-
-~v = UserView.new(w,Rect(0,0,800,800)).background_(Color.black);
-a = ScatterView3d(~v, Rect(0,0, 800,800), data, [-1000, 1000].asSpec,[-1000, 1000].asSpec,[-1000, 1000].asSpec);
+w = Window.new("3D Scatterplot", Rect(40,40, 1000, 800)).front;
+a = ScatterView3d(w, Rect(0,0, 800,800), data, [-1000, 1000].asSpec,[-1000, 1000].asSpec,[-1000, 1000].asSpec);
 a.drawMethod = \fillRect;
 a.symbolSize = 1;
 a.symbolColor = Color.white;
 a.background = Color.black;
 
-~v.animate;
-~v.drawFunc ={
-Pen.translate(400,400);
-
-		a.rot(ot,ot,ot);
-    ~v.refresh;
-
-		ot=ot+1.degrad;
-
+// Y Slider
+Slider(w, Rect(820, 10, 10, 450)).action_{|me|
+    a.rotY = me.value * 2pi;
+    w.refresh;
 };
-{ while { run } {~v.background_(Color.black); ~v.refresh; (1/1000).wait } }.fork(AppClock);
-
+// X Slider
+Slider(w, Rect(870, 10, 10, 450)).action_{|me|
+    a.rotX = me.value * 2pi;
+    w.refresh;
+};
+// Z Slider
+Slider(w, Rect(920, 10, 10, 450)).action_{|me|
+    a.rotZ = me.value * 2pi;
+    w.refresh;
+};
 )
-
-
-
 
 /////////////////////////////////choas
 
