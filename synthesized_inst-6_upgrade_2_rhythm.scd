@@ -14,9 +14,10 @@ s.waitForBoot
 /////wavetables
 Buffer.freeAll
 (
+(
 ~w= Buffer.alloc(s,2048);
 ~t= Buffer.alloc(s,2048);
-)
+);
 
 (
 var env,sig,wt,angle=0,level,levels;
@@ -32,7 +33,7 @@ sig=env.asSignal(1024);
 wt = sig.asWavetable;
 ~w.loadCollection(wt);
 sig.plot;
-)
+);
 
 (
 var signal,wt,m=0,amp;
@@ -44,6 +45,7 @@ signal=Signal.sineFill(1024,~level,~phase);
 wt = signal.asWavetable;
 ~t.loadCollection(wt);
 signal.plot;
+)
 )
 
 
@@ -221,7 +223,7 @@ raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta;
 var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
 var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
 var pl3=0,az3,el3,sph3,rot3,i3,j3,k3,q3,raz3,rel3;
-var r1=[0,0,1],r2=[0,0,1],r3=[0,0,1];
+var r1=[0,0,1],r2=[0,1,0],r3=[1,0,0];
 var v1=Quaternion(0,r1.[0],r1.[1],r1.[2]),v2=Quaternion(0,r2.[0],r2.[1],r2.[2]),v3=Quaternion(0,r3.[0],r3.[1],r3.[2]);
 var angle=(360-(360/1.6180339887499));
 
