@@ -370,8 +370,8 @@ pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
 ang=(360-(360/1.6180339887499));
-az_o = az.round(0.0001);
-el_o = el.round(0.0001);
+az_o = az;
+el_o = el;
 cr=Spherical(mag,az,el);
 v=Quaternion(0,cr.x,cr.y,cr.z);
 
@@ -434,8 +434,8 @@ pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
 ang=(360-(360/1.6180339887499));
-az_o = az.round(0.0001);
-el_o = el.round(0.0001);
+az_o = az;
+el_o = el;
 cr=Spherical(mag,az,el);
 v=Quaternion(0,cr.x,cr.y,cr.z);
 
@@ -497,8 +497,8 @@ pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
 ang=(360-(360/1.6180339887499));
-az_o = az.round(0.0001);
-el_o = el.round(0.0001);
+az_o = az;
+el_o = el;
 cr=Spherical(mag,az,el);
 v=Quaternion(0,cr.x,cr.y,cr.z);
 
