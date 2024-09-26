@@ -74,7 +74,7 @@ signal.plot;
 //////////arrays
 //////////////////////basis
 (
-~time=1;
+~time=1/2;
 ///1= about 15:30 min in normal*reverse sequence
 (
 var  sph1,sph2,m_x=2,m_y=1,m_z=3,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
@@ -357,8 +357,7 @@ rythm=[2,1,1];
 (
 SynthDef.new(\ob, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,m_x=1,m_y=1,m_z=1;
-	var phase,scale=4,pl=0,ang,osc,sph,sphere,az_o,el_o;
-	var mag_x,mag_y,mag_z,mag_o,v,q,rot,cr,i,j,k,rr;
+	var phase,scale=4,pl=0,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -369,37 +368,13 @@ bank=18;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
-ang=(360-(360/1.6180339887499));
-az_o = az;
-el_o = el;
-cr=Spherical(mag,az,el);
-v=Quaternion(0,cr.x,cr.y,cr.z);
-
 bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-rr=Spherical(1,~az.[pl],~el.[pl]);
-rot=[rr.x,rr.y,rr.z];
-i=Quaternion(0, rot.[0], 0, 0);
-j=Quaternion(0, 0, rot.[1], 0);
-k=Quaternion(0, 0, 0, rot.[2]);
+mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-q=(cos(ang.degrad)+(sin(ang.degrad)*(i+j+k)));
-v=q*v*q.conjugate;
-pl=pl+1;
-
-sph=Cartesian(v.b,v.c,v.d);
-
-mag_x=(Complex(cos((sph.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho);
-
-mag_y=(Complex(sin((sph.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho);
-
-mag_z=Complex(cos((sph.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho;
-
-mag_o=Cartesian(mag_x/(2.sqrt),mag_y/(2.sqrt),mag_z/(2.sqrt)).rho/(2.sqrt);
-
-sphere=Spherical(mag_o,sph.theta,sph.phi);
+sphere=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
@@ -421,8 +396,7 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 (
 SynthDef.new(\oc, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,m_x=1,m_y=1,m_z=1;
-	var phase,scale=4,pl=0,ang,osc,sph,sphere,az_o,el_o;
-	var mag_x,mag_y,mag_z,mag_o,v,q,rot,cr,i,j,k,rr;
+	var phase,scale=4,pl=0,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -433,36 +407,13 @@ bank=18;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
-ang=(360-(360/1.6180339887499));
-az_o = az;
-el_o = el;
-cr=Spherical(mag,az,el);
-v=Quaternion(0,cr.x,cr.y,cr.z);
-
 bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-rr=Spherical(1,~az.[pl],~el.[pl]);
-rot=[rr.x,rr.y,rr.z];
-i=Quaternion(0, rot.[0], 0, 0);
-j=Quaternion(0, 0, rot.[1], 0);
-k=Quaternion(0, 0, 0, rot.[2]);
-q=(cos(ang.degrad)+(sin(ang.degrad)*(i+j+k)));
-v=q*v*q.conjugate;
-pl=pl+1;
+mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-sph=Cartesian(v.b,v.c,v.d);
-
-mag_x=(Complex(cos((sph.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho);
-
-mag_y=(Complex(sin((sph.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho);
-
-mag_z=Complex(cos((sph.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho;
-
-mag_o=Cartesian(mag_x/(2.sqrt),mag_y/(2.sqrt),mag_z/(2.sqrt)).rho/(2.sqrt);
-
-sphere=Spherical(mag_o,sph.theta,sph.phi);
+sphere=Spherical(mag_o,~az_y.[pl],~el_y.[pl]);
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
@@ -484,8 +435,7 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 (
 SynthDef.new(\od, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,m_x=1,m_y=1,m_z=1;
-	var phase,scale=4,pl=0,ang,osc,sph,sphere,az_o,el_o;
-	var mag_x,mag_y,mag_z,mag_o,v,q,rot,cr,i,j,k,rr;
+	var phase,scale=4,pl=0,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -496,36 +446,13 @@ bank=18;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
-ang=(360-(360/1.6180339887499));
-az_o = az;
-el_o = el;
-cr=Spherical(mag,az,el);
-v=Quaternion(0,cr.x,cr.y,cr.z);
-
 bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-rr=Spherical(1,~az.[pl],~el.[pl]);
-rot=[rr.x,rr.y,rr.z];
-i=Quaternion(0, rot.[0], 0, 0);
-j=Quaternion(0, 0, rot.[1], 0);
-k=Quaternion(0, 0, 0, rot.[2]);
-q=(cos(ang.degrad)+(sin(ang.degrad)*(i+j+k)));
-v=q*v*q.conjugate;
-pl=pl+1;
+mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-sph=Cartesian(v.b,v.c,v.d);
-
-mag_x=(Complex(cos((sph.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sph.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho);
-
-mag_y=(Complex(sin((sph.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*Complex(cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho);
-
-mag_z=Complex(cos((sph.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sph.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho;
-
-mag_o=Cartesian(mag_x/(2.sqrt),mag_y/(2.sqrt),mag_z/(2.sqrt)).rho/(2.sqrt);
-
-sphere=Spherical(mag_o,sph.theta,sph.phi);
+sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
@@ -560,9 +487,6 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\az,Pseq(~az_x,inf),
 	\el,Pseq(~el_x,inf),
 	\mag,Pseq(~magx,inf),
-	\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -573,9 +497,6 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\az,Pseq(~az_y,inf),
 	\el,Pseq(~el_y,inf),
 	\mag,Pseq(~magy,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -586,9 +507,6 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\az,Pseq(~az_z,inf),
 	\el,Pseq(~el_z,inf),
 	\mag,Pseq(~magz,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 );
@@ -602,9 +520,9 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 \az,Pseq(~az_x.reverse,inf),
 	\el,Pseq(~el_x.reverse,inf),
 	\mag,Pseq(~magx.reverse,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
+		\m_x,Prand([2,4],inf),
+	\m_y,Prand([2,4],inf),
+	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
@@ -615,9 +533,9 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 	\az,Pseq(~az_y.reverse,inf),
 	\el,Pseq(~el_y.reverse,inf),
 	\mag,Pseq(~magy.reverse,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
+		\m_x,Prand([2,4],inf),
+	\m_y,Prand([2,4],inf),
+	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
@@ -628,9 +546,9 @@ g=Pdef(\44, Pbind(\instrument, \od,
 \az,Pseq(~az_z.reverse,inf),
 	\el,Pseq(~el_z.reverse,inf),
 	\mag,Pseq(~magz.reverse,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
+		\m_x,Prand([2,4],inf),
+	\m_y,Prand([2,4],inf),
+	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 )
@@ -702,9 +620,6 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\az,Ppatlace([Pseq(~azz,inf),Pseq(~azzz,inf)],inf),
 	\el,Ppatlace([Pseq(~ell,inf),Pseq(~elll,inf)],inf),
 	\mag,Ppatlace([Pseq(~magxx,inf),Pseq(~magxxx,inf)],inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
@@ -715,9 +630,6 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 		\az,Ppatlace([Pseq(~azz,inf),Pseq(~azzz,inf)],inf),
 	\el,Ppatlace([Pseq(~ell,inf),Pseq(~elll,inf)],inf),
 	\mag,Ppatlace([Pseq(~magyy,inf),Pseq(~magyyy,inf)],inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
@@ -728,9 +640,6 @@ d=Pdef(\4, Pbind(\instrument, \od,
 		\az,Ppatlace([Pseq(~azz,inf),Pseq(~azzz,inf)],inf),
 	\el,Ppatlace([Pseq(~ell,inf),Pseq(~elll,inf)],inf),
 	\mag,Ppatlace([Pseq(~magzz,inf),Pseq(~magzzz,inf)],inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
@@ -793,9 +702,6 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 		\az,Pseq(~azz,inf),
 	\el,Pseq(~ell,inf),
 	\mag,Pseq(~magxx,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -806,9 +712,6 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\az,Pseq(~azz,inf),
 	\el,Pseq(~ell,inf),
 	\mag,Pseq(~magyy,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -820,9 +723,6 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\az,Pseq(~azz,inf),
 	\el,Pseq(~ell,inf),
 	\mag,Pseq(~magzz,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -836,9 +736,6 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 		\az,Pseq(~azzz,inf),
 	\el,Pseq(~elll,inf),
 	\mag,Pseq(~magxxx,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
@@ -849,9 +746,6 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 	\az,Pseq(~azzz,inf),
 	\el,Pseq(~elll,inf),
 	\mag,Pseq(~magyyy,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
@@ -862,9 +756,6 @@ g=Pdef(\44, Pbind(\instrument, \od,
 	\az,Pseq(~azzz,inf),
 	\el,Pseq(~elll,inf),
 	\mag,Pseq(~magzzz,inf),
-		\m_x,Prand([2,4,6],inf),
-	\m_y,Prand([2,4,6],inf),
-	\m_z,Prand([2,4,6],inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
