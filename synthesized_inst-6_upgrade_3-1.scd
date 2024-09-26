@@ -383,8 +383,8 @@ sphere=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
 osc=VBAP.ar(4,
 Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
 ~b.bufnum,
-Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -422,8 +422,8 @@ sphere=Spherical(mag_o,~az_y.[pl],~el_y.[pl]);
 osc=VBAP.ar(4,
 Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
 ~b.bufnum,
-Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -461,8 +461,8 @@ sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 osc=VBAP.ar(4,
 Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
 ~b.bufnum,
-Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
