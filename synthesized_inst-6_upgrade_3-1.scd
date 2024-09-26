@@ -374,14 +374,14 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
+sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
-Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
+			LeakDC.ar(Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -413,14 +413,14 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_y.[pl],~el_y.[pl]);
+sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
-Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
+			LeakDC.ar(Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -459,7 +459,7 @@ sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 
 
 osc=VBAP.ar(4,
-Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase),
+			LeakDC.ar(Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
