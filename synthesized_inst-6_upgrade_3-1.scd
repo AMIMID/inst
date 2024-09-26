@@ -74,10 +74,10 @@ signal.plot;
 //////////arrays
 //////////////////////basis
 (
-~time=1/2;
+~time=1;
 ///1= about 15:30 min in normal*reverse sequence
 (
-var  sph1,sph2,m_x=2,m_y=1,m_z=3,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
+var  sph1,sph2,m_x=2,m_y=2,m_z=2,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
 var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 
 ~az = (360*~time).collect{
@@ -383,8 +383,8 @@ sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 osc=VBAP.ar(4,
 			LeakDC.ar(Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -414,16 +414,15 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
 sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
-
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
 			LeakDC.ar(Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
@@ -454,15 +453,15 @@ mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho
 
 sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
 			LeakDC.ar(Osc.ar(~w.bufnum,(freq*m),mul:m.reciprocal,phase:phase)),
 ~b.bufnum,
-Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-Osc.ar(~t.bufnum,sphere.rho/(2.sqrt),phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
+Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
 
