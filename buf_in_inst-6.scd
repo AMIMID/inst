@@ -1,11 +1,11 @@
 (
-s.options.numWireBufs = 1024*16;
+s.options.numWireBufs = 1024*2*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
-s.options.maxNodes = 1024 * 64;
+s.options.maxNodes = 1024*2 * 64;
 s.waitForBoot
 )
 
@@ -22,7 +22,7 @@ var signal,wt,m=0,amp;
 
 ~level=360.collect{m=m+1;amp=m.reciprocal};
 ~phase=360.collect{pi};
-signal=Signal.sineFill(1024,~level,~phase);
+signal=Signal.sineFill(1024*2,~level,~phase);
 // .
 wt = signal.asWavetable;
 ~t.loadCollection(wt);
@@ -46,8 +46,8 @@ SynthDef("help-phaseShift", { arg out=0;
 
 ////////////////buffers
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Dokuments/EXTERNAL/music/piece of my heart Intermission.wav",channels:1 );
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Downloads/Q͟5 ͟W͟h͟e͟n͟ ͟t͟he͟ ͟M͟i͟r͟r͟or͟ ͟C͟r͟a͟ck͟s͟_remaster_amimid.wav",channels:0 );
+~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Downloads/Q͟5 ͟W͟h͟e͟n͟ ͟t͟he͟ ͟M͟i͟r͟r͟or͟ ͟C͟r͟a͟ck͟s͟_remaster_amimid.wav",channels:1 );
 ~c3 = Buffer.readChannel(s,,channels:0 );
 ~c4 = Buffer.readChannel(s,,channels:1 );
 ~c5 = Buffer.readChannel(s,,channels:0 );
@@ -366,8 +366,8 @@ SynthDef.new(\o1, {
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2);
 
-	chainx = FFT(LocalBuf(1024), in1);
-	chainy = FFT(LocalBuf(1024), in2);
+	chainx = FFT(LocalBuf(1024*2), in1);
+	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
 
@@ -378,8 +378,8 @@ SynthDef.new(\o1, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
@@ -403,8 +403,8 @@ SynthDef.new(\o2, {
     in1 = PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2);
 
-	chainx = FFT(LocalBuf(1024), in1);
-	chainy = FFT(LocalBuf(1024), in2);
+	chainx = FFT(LocalBuf(1024*2), in1);
+	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
 
@@ -415,8 +415,8 @@ SynthDef.new(\o2, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
@@ -440,8 +440,8 @@ SynthDef.new(\o3, {
     in1 = PlayBuf.ar(1, ~c5.bufnum, BufRateScale.kr(~c5), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c6.bufnum, BufRateScale.kr(~c6), loop: 0, doneAction:2);
 
-	chainx = FFT(LocalBuf(1024), in1);
-	chainy = FFT(LocalBuf(1024), in2);
+	chainx = FFT(LocalBuf(1024*2), in1);
+	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
 
@@ -452,8 +452,8 @@ SynthDef.new(\o3, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
@@ -487,8 +487,8 @@ SynthDef.new(\o1, {
 	in1 = SoundIn.ar(0);
 	 in2 = SoundIn.ar(1);
 
-	chainx = FFT(LocalBuf(1024), in1);
-	chainy = FFT(LocalBuf(1024), in2);
+	chainx = FFT(LocalBuf(1024*2), in1);
+	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
 
@@ -499,8 +499,8 @@ SynthDef.new(\o1, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
