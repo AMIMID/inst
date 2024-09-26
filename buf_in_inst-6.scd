@@ -361,7 +361,7 @@ rythm=[2,1,1];
 (
 SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0;
-	var chainxx,chainyy,pl=0,amp1,amp2;
+	var chainxx,chainyy,pl=0,amp1,amp2,phase,angle=0;
 
     in1 = PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2);
@@ -370,6 +370,8 @@ SynthDef.new(\o1, {
 	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
+		phase=exp(Complex(0,1)*angle.degrad).theta;
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_x.[pl];
 		el1=~el_x.[pl];
@@ -378,8 +380,8 @@ SynthDef.new(\o1, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag*amp1, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag*amp2, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
@@ -398,7 +400,7 @@ SynthDef.new(\o1, {
 (
 SynthDef.new(\o2, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0;
-	var chainxx,chainyy,pl=0,amp1,amp2;
+	var chainxx,chainyy,pl=0,amp1,amp2,phase,angle=0;
 
     in1 = PlayBuf.ar(1, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2);
@@ -407,6 +409,8 @@ SynthDef.new(\o2, {
 	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
+		phase=exp(Complex(0,1)*angle.degrad).theta;
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_y.[pl];
 		el1=~el_y.[pl];
@@ -415,8 +419,8 @@ SynthDef.new(\o2, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag*amp1, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag*amp2, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
@@ -435,7 +439,7 @@ SynthDef.new(\o2, {
 (
 SynthDef.new(\o3, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0;
-	var chainxx,chainyy,pl=0,amp1,amp2;
+	var chainxx,chainyy,pl=0,amp1,amp2,phase,angle=0;
 
     in1 = PlayBuf.ar(1, ~c5.bufnum, BufRateScale.kr(~c5), loop: 0, doneAction:2);
 	 in2 = PlayBuf.ar(1, ~c6.bufnum, BufRateScale.kr(~c6), loop: 0, doneAction:2);
@@ -444,6 +448,8 @@ SynthDef.new(\o3, {
 	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
+		phase=exp(Complex(0,1)*angle.degrad).theta;
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_z.[pl];
 		el1=~el_z.[pl];
@@ -452,8 +458,8 @@ SynthDef.new(\o3, {
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
-   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024*2, {|mag*amp1, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024*2, {|mag*amp2, phase, index| [mag, phase]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
@@ -471,18 +477,20 @@ SynthDef.new(\o3, {
 );
 );
 
+(
 Synth(\o1);
 s.record(numChannels:4)
 Synth(\o2);
 s.record(numChannels:4)
 Synth(\o3);
 )
+////xp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta
 //////////////////////////////////////IN
 
 (
 SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0;
-	var chainxx,chainyy,pl=0,amp1,amp2;
+	var chainxx,chainyy,pl=0,amp1,amp2,phase,angle=0;
 
 	in1 = SoundIn.ar(0);
 	 in2 = SoundIn.ar(1);
@@ -491,6 +499,8 @@ SynthDef.new(\o1, {
 	chainy = FFT(LocalBuf(1024*2), in2);
 
    360.do{
+				phase=exp(Complex(0,1)*angle.degrad).theta;
+angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_z.[pl];
 		el1=~el_z.[pl];
