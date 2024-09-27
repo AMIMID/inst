@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/80);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -356,8 +356,8 @@ rythm=[2,1,1];
 (
 (
 SynthDef.new(\ob, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
-	var phase,scale=4,osc,sphere,mag_o,pl=0;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,pl=0;
+	var phase,scale=4,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -372,7 +372,7 @@ bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
+mag_o=Cartesian(~magx.[pl.asIn]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
 sphere=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
 
@@ -521,9 +521,6 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 \az,Pseq(~az_x.reverse,inf),
 	\el,Pseq(~el_x.reverse,inf),
 	\mag,Pseq(~magx.reverse,inf),
-		\m_x,Prand([2,4],inf),
-	\m_y,Prand([2,4],inf),
-	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
@@ -534,9 +531,6 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 	\az,Pseq(~az_y.reverse,inf),
 	\el,Pseq(~el_y.reverse,inf),
 	\mag,Pseq(~magy.reverse,inf),
-		\m_x,Prand([2,4],inf),
-	\m_y,Prand([2,4],inf),
-	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
@@ -547,9 +541,6 @@ g=Pdef(\44, Pbind(\instrument, \od,
 \az,Pseq(~az_z.reverse,inf),
 	\el,Pseq(~el_z.reverse,inf),
 	\mag,Pseq(~magz.reverse,inf),
-		\m_x,Prand([2,4],inf),
-	\m_y,Prand([2,4],inf),
-	\m_z,Prand([2,4],inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 )
