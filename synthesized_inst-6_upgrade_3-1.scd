@@ -356,15 +356,15 @@ rythm=[2,1,1];
 (
 (
 SynthDef.new(\ob, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,m_x=1,m_y=1,m_z=1;
-	var phase,scale=4,pl=0,osc,sphere,mag_o;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
+	var phase,scale=4,osc,sphere,mag_o,pl=0;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=18;
+bank=180;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -374,10 +374,10 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
+sphere=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -387,7 +387,7 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul
 Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
-
+pl=pl+1;
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 //Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
@@ -395,7 +395,7 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 );
 (
 SynthDef.new(\oc, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,m_x=1,m_y=1,m_z=1;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
 	var phase,scale=4,pl=0,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
@@ -403,7 +403,7 @@ SynthDef.new(\oc, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=18;
+bank=180;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -413,7 +413,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
+sphere=Spherical(mag_o,~az_y.[pl],~el_y.[pl]);
 		env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 		//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
@@ -425,6 +425,7 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul
 Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
+pl=pl+1;
 
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 //Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
@@ -433,7 +434,7 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 );
 (
 SynthDef.new(\od, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,m_x=1,m_y=1,m_z=1;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
 	var phase,scale=4,pl=0,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
@@ -441,7 +442,7 @@ SynthDef.new(\od, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=18;
+bank=180;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -464,6 +465,7 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul
 Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
+		pl=pl+1;
 
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 //Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
@@ -553,15 +555,20 @@ g=Pdef(\44, Pbind(\instrument, \od,
 )
 )
 
-(
+
 b.play;
+s.record(numChannels:4,duration:90)
 c.play;
+s.record(numChannels:4,duration:90)
 d.play;
+s.record(numChannels:4,duration:90)
 e.play;
+s.record(numChannels:4,duration:90)
 f.play;
+s.record(numChannels:4,duration:90)
 g.play;
-s.record(numChannels:4)
-)
+s.record(numChannels:4,duration:90)
+
 
 (
 Tdef.new(\h,{loop({

@@ -65,6 +65,15 @@ SynthDef("help-phaseShift", { arg out=0;
 )
 
 (
+// 3D///cube
+~a = VBAPSpeakerArray.new(3, [[45, 45], [135, 45], [135.neg, 45], [45.neg, 45],[45, 45.neg], [135, 45.neg], [135.neg, 45.neg], [45.neg, 45.neg]]);
+//0 up fl, 1 up bl, 2 up br, 3 up fr, 4 down fl, 5 down bl, 6 down br, 7 down fr
+~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
+///furhter on speaker setup can be geodesic octahedron 2nd order torus with 16 channels, and Rhombic triacontahedron with 32 vertices as 32 speaker channels
+)
+
+/////////tetrahedron
+(
 // 3D
 ~a = VBAPSpeakerArray.new(3, [[0, 45], [180, 45], [90, 45.neg], [90.neg, 45.neg]]);
 ~b = Buffer.loadCollection(s, ~a.getSetsAndMatrices);
@@ -484,7 +493,7 @@ Synth(\o2);
 s.record(numChannels:4)
 Synth(\o3);
 )
-////xp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta
+////exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta
 //////////////////////////////////////IN
 
 (
