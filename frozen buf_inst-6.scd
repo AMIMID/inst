@@ -412,7 +412,7 @@ rythm=[2,1,1];
 (
 (
 SynthDef.new(\o1, {
-	arg n=1,decay=2,buffer1=0,buffer2=0.pl=0;
+	arg n=1,decay=2,buffer1=0,buffer2=0,pl=0;
     var in1,in2, chainx,chainy,b=0,dex=0;
 	var chainxx,chainyy,pitch,env1,env2;
 	var phase1,phase2,mag_o1,mag_2,pl=0,sphere1,sphere2;
@@ -466,10 +466,10 @@ sphere2=Spherical(mag_o,~az_x.reverse.[pl],~el_x.reverse.[pl]);
 );
 (
 SynthDef.new(\o2, {
-	arg n=1,decay=2,buffer1=0,buffer2=0;
+	arg n=1,decay=2,buffer1=0,buffer2=0,pl=0;
     var in1,in2, chainx,chainy,b=0;
 	var chainxx,chainyy,pitch,env1,env2;
-	var phase1,phase2,mag_o1,mag_2,pl=0,sphere1,sphere2;
+	var phase1,phase2,mag_o1,mag_2,sphere1,sphere2;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -519,10 +519,10 @@ sphere2=Spherical(mag_o,~az_y.reverse.[pl],~el_y.reverse.[pl]);
 );
 (
 SynthDef.new(\o3, {
-	arg n=1,decay=2,buffer1=0,buffer2=0;
+	arg n=1,decay=2,buffer1=0,buffer2=0,pl=0;
     var in1,in2, chainx,chainy,b=0;
 	var chainxx,chainyy,pitch,env1,env2;
-	var phase1,phase2,mag_o1,mag_2,pl=0,sphere1,sphere2;
+	var phase1,phase2,mag_o1,mag_2,sphere1,sphere2;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -548,11 +548,11 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 phase2=exp(Complex(0,1)*angle2.degrad).theta;
 angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o1=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
-mag_o2=Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt);
+mag_o1=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
+mag_o2=Cartesian(Select.kr(pl,~magx.reverse)/(2.sqrt),Select.kr(pl,~magy.reverse)/(2.sqrt),Select.kr(pl,~magz.reverse)/(2.sqrt)).rho/(2.sqrt);
 
-sphere1=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
-sphere2=Spherical(mag_o,~az_z.reverse.[pl],~el_z.reverse.[pl]);
+sphere1=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+sphere2=Spherical(mag_o,Select.kr(pl,~az_z.reverse),Select.kr(pl,~el_z.reverse));
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o1);
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);
@@ -584,6 +584,7 @@ b=Pdef(\2, Pbind(\instrument, \o1,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \o2,
@@ -592,6 +593,7 @@ c=Pdef(\3, Pbind(\instrument, \o2,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \o3,
@@ -600,6 +602,7 @@ d=Pdef(\4, Pbind(\instrument, \o3,
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -611,6 +614,7 @@ e=Pdef(\22, Pbind(\instrument, \o1,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \o2,
@@ -619,6 +623,7 @@ f=Pdef(\33, Pbind(\instrument, \o2,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 			\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \o3,
@@ -628,6 +633,7 @@ g=Pdef(\44, Pbind(\instrument, \o3,
 	\el2,Pseq(~el3,inf),
 			\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -677,30 +683,21 @@ Tdef(\h).clear;
 b=Pdef(\2, Pbind(\instrument, \ob,
 	\dur,Ppatlace([Pseq(~phase2.abs,1),Pseq(~phase22.abs,1)],inf),
 	\n1,PdegreeToKey(Ppatlace([Pseq(~n2,inf),Pseq(~n22,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az1.reverse.mirror,inf),Pseq(~az1.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el1.reverse.mirror,inf),Pseq(~el1.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az1.mirror,inf),Pseq(~az1.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el1.mirror,inf),Pseq(~el1.reverse.mirror,inf)],inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
 	\dur,Ppatlace([Pseq(~phase3.abs,1),Pseq(~phase33.abs,1)],inf),
 	\n1,PdegreeToKey(Ppatlace([Pseq(~n3,inf),Pseq(~n33,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az2.reverse.mirror,inf),Pseq(~az2.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el2.reverse.mirror,inf),Pseq(~el2.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az2.mirror,inf),Pseq(~az2.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el2.mirror,inf),Pseq(~el2.reverse.mirror,inf)],inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	\dur,Ppatlace([Pseq(~phase4.abs,1),Pseq(~phase44.abs,1)],inf),
 	\n1,PdegreeToKey(Ppatlace([Pseq(~n4,inf),Pseq(~n44,inf)],inf),Scale.mixolydian),
-	\az1,Ppatlace([Pseq(~az3.reverse.mirror,inf),Pseq(~az3.mirror,inf)],inf),
-	\el1,Ppatlace([Pseq(~el3.reverse.mirror,inf),Pseq(~el3.mirror,inf)],inf),
-	\az2,Ppatlace([Pseq(~az3.mirror,inf),Pseq(~az3.reverse.mirror,inf)],inf),
-	\el2,Ppatlace([Pseq(~el3.mirror,inf),Pseq(~el3.reverse.mirror,inf)],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
 ));
@@ -746,6 +743,7 @@ b=Pdef(\2, Pbind(\instrument, \o1,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \o2,
@@ -754,6 +752,7 @@ c=Pdef(\3, Pbind(\instrument, \o2,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \o3,
@@ -763,6 +762,7 @@ d=Pdef(\4, Pbind(\instrument, \o3,
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -774,6 +774,7 @@ e=Pdef(\22, Pbind(\instrument, \o1,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \o2,
@@ -782,6 +783,7 @@ f=Pdef(\33, Pbind(\instrument, \o2,
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \o3,
@@ -790,6 +792,7 @@ g=Pdef(\44, Pbind(\instrument, \o3,
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\buffer1,Pseq([0,1,2,3],inf),
 	\buffer2,Pseq([0,1,2,3],inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )

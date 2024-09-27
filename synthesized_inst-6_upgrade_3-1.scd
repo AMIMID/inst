@@ -372,9 +372,9 @@ bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o=Cartesian(~magx.[pl.asIn]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
+		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
+		sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~elx));
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
@@ -395,8 +395,8 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 );
 (
 SynthDef.new(\oc, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
-	var phase,scale=4,pl=0,osc,sphere,mag_o;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,pl=0;
+	var phase,scale=4,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -411,11 +411,12 @@ bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
+		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_y.[pl],~el_y.[pl]);
-		env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~elx));
+
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -426,7 +427,6 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 //Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
@@ -434,8 +434,8 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 );
 (
 SynthDef.new(\od, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1;
-	var phase,scale=4,pl=0,osc,sphere,mag_o;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,pl=0;
+	var phase,scale=4,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -450,12 +450,12 @@ bank.do{
 phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
+		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-sphere=Spherical(mag_o,~az_z.[pl],~el_z.[pl]);
+		sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~elx));
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -465,8 +465,7 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul
 Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 m=m+1;
-		pl=pl+1;
-
+pl=pl+1;
 wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 //Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
@@ -485,9 +484,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 \n1,PdegreeToKey(Pseq(~n2,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~az_x,inf),
-	\el,Pseq(~el_x,inf),
-	\mag,Pseq(~magx,inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -495,9 +492,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 \n1,PdegreeToKey(Pseq(~n3,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~az_y,inf),
-	\el,Pseq(~el_y,inf),
-	\mag,Pseq(~magy,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -505,9 +500,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 \n1,PdegreeToKey(Pseq(~n4,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~az_z,inf),
-	\el,Pseq(~el_z,inf),
-	\mag,Pseq(~magz,inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 );
@@ -518,9 +511,7 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 \n1,PdegreeToKey(Pseq(~n2.reverse,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\az,Pseq(~az_x.reverse,inf),
-	\el,Pseq(~el_x.reverse,inf),
-	\mag,Pseq(~magx.reverse,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
@@ -528,9 +519,7 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 \n1,PdegreeToKey(Pseq(~n3.reverse,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~az_y.reverse,inf),
-	\el,Pseq(~el_y.reverse,inf),
-	\mag,Pseq(~magy.reverse,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
@@ -538,9 +527,7 @@ g=Pdef(\44, Pbind(\instrument, \od,
 \n1,PdegreeToKey(Pseq(~n4.reverse,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\az,Pseq(~az_z.reverse,inf),
-	\el,Pseq(~el_z.reverse,inf),
-	\mag,Pseq(~magz.reverse,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,4,1,inf);
 ));
 )
@@ -614,9 +601,7 @@ Tdef(\h).clear;
 b=Pdef(\2, Pbind(\instrument, \ob,
 	\dur,Ppatlace([Pseq(~phase2,1),Pseq(~phase22,1)],inf),
 	\n1,PdegreeToKey(Ppatlace([Pseq(~n2,inf),Pseq(~n22,inf)],inf),Scale.phrygian),
-	\az,Ppatlace([Pseq(~azz,inf),Pseq(~azzz,inf)],inf),
-	\el,Ppatlace([Pseq(~ell,inf),Pseq(~elll,inf)],inf),
-	\mag,Ppatlace([Pseq(~magxx,inf),Pseq(~magxxx,inf)],inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
@@ -624,9 +609,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 c=Pdef(\3, Pbind(\instrument, \oc,
 	\dur,Ppatlace([Pseq(~phase3,1),Pseq(~phase33,1)],inf),
 	\n1,PdegreeToKey(Ppatlace([Pseq(~n3,inf),Pseq(~n33,inf)],inf),Scale.phrygian),
-		\az,Ppatlace([Pseq(~azz,inf),Pseq(~azzz,inf)],inf),
-	\el,Ppatlace([Pseq(~ell,inf),Pseq(~elll,inf)],inf),
-	\mag,Ppatlace([Pseq(~magyy,inf),Pseq(~magyyy,inf)],inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
@@ -634,9 +617,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 d=Pdef(\4, Pbind(\instrument, \od,
 	\dur,Ppatlace([Pseq(~phase4,1),Pseq(~phase44,1)],inf),
 	\n1,PdegreeToKey(Ppatlace([Pseq(~n4,inf),Pseq(~n44,inf)],inf),Scale.phrygian),
-		\az,Ppatlace([Pseq(~azz,inf),Pseq(~azzz,inf)],inf),
-	\el,Ppatlace([Pseq(~ell,inf),Pseq(~elll,inf)],inf),
-	\mag,Ppatlace([Pseq(~magzz,inf),Pseq(~magzzz,inf)],inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\decay,Pbrown(2,8,1,inf);
@@ -696,9 +677,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 \n1,PdegreeToKey(Pseq(~n2,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\az,Pseq(~azz,inf),
-	\el,Pseq(~ell,inf),
-	\mag,Pseq(~magxx,inf),
+	\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -706,9 +685,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 \n1,PdegreeToKey(Pseq(~n3,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~azz,inf),
-	\el,Pseq(~ell,inf),
-	\mag,Pseq(~magyy,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -717,9 +694,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 \n1,PdegreeToKey(Pseq(~n4,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~azz,inf),
-	\el,Pseq(~ell,inf),
-	\mag,Pseq(~magzz,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
@@ -730,9 +705,7 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 \n1,PdegreeToKey(Pseq(~n22,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-		\az,Pseq(~azzz,inf),
-	\el,Pseq(~elll,inf),
-	\mag,Pseq(~magxxx,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
@@ -740,9 +713,7 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 \n1,PdegreeToKey(Pseq(~n33,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~azzz,inf),
-	\el,Pseq(~elll,inf),
-	\mag,Pseq(~magyyy,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
@@ -750,9 +721,7 @@ g=Pdef(\44, Pbind(\instrument, \od,
 \n1,PdegreeToKey(Pseq(~n44,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\az,Pseq(~azzz,inf),
-	\el,Pseq(~elll,inf),
-	\mag,Pseq(~magzzz,inf),
+\pl,Prand(Array.fill(180,{arg i; i=i+1}),inf),
 	\decay,Pbrown(2,8,1,inf);
 ));
 )
