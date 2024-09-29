@@ -416,6 +416,7 @@ SynthDef.new(\o1, {
     var in1,in2, chainx,chainy,b=0,dex=0;
 	var chainxx,chainyy,pitch,env1,env2;
 	var phase1,phase2,mag_o1,mag_2,pl=0,sphere1,sphere2;
+	var angle1=0,angle2=90;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -454,8 +455,8 @@ sphere2=Spherical(mag_o,~az_x.reverse.[pl],~el_x.reverse.[pl]);
 		env2=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);
 
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag*mag_o1, exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag*mag_o2, exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+  chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag*mag_o1, exp(Complex(0,1)*(phase+SinOsc.ar(mag_o1.reciprocal,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag*mag_o2, exp(Complex(0,1)*(phase+SinOsc.ar(mag_o2.reciprocal,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 	pl=pl+1;
@@ -470,6 +471,7 @@ SynthDef.new(\o2, {
     var in1,in2, chainx,chainy,b=0;
 	var chainxx,chainyy,pitch,env1,env2;
 	var phase1,phase2,mag_o1,mag_2,sphere1,sphere2;
+	var angle1=0,angle2=90;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -507,8 +509,8 @@ sphere2=Spherical(mag_o,~az_y.reverse.[pl],~el_y.reverse.[pl]);
 		env2=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);
 
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag*mag_o1, exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag*mag_o2, exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag*mag_o1, exp(Complex(0,1)*(phase+SinOsc.ar(mag_o1.reciprocal,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag*mag_o2, exp(Complex(0,1)*(phase+SinOsc.ar(mag_o2.reciprocal,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 	pl=pl+1;
@@ -523,6 +525,7 @@ SynthDef.new(\o3, {
     var in1,in2, chainx,chainy,b=0;
 	var chainxx,chainyy,pitch,env1,env2;
 	var phase1,phase2,mag_o1,mag_2,sphere1,sphere2;
+	var angle1=0,angle2=90;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -560,8 +563,9 @@ sphere2=Spherical(mag_o,Select.kr(pl,~az_z.reverse),Select.kr(pl,~el_z.reverse))
 		env2=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);
 
 
-   chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag*mag_o1, exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag*mag_o2, exp(Complex(0,1)*(phase+SinOsc.ar(mg,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+  chainxx = chainx.pvcollect(1024, {|mag, phase, index| [mag*mag_o1, exp(Complex(0,1)*(phase+SinOsc.ar(mag_o1.reciprocal,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+   chainyy = chainy.pvcollect(1024, {|mag, phase, index| [mag*mag_o2, exp(Complex(0,1)*(phase+SinOsc.ar(mag_o2.reciprocal,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+
 
 	b=b+1;
 	pl=pl+1;
