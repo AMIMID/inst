@@ -379,8 +379,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~el_x));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -419,8 +419,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_y,Select.kr(pl,~el_y));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -459,8 +459,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 			//sphere=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -490,7 +490,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 	\pl,Pseq(Array.series(90*~time,0,1),inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
 	\dur,Pseq(~phase3,1),
@@ -498,7 +498,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 \pl,Pseq(Array.series(90*~time,0,1),inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
 	\dur,Pseq(~phase4,1),
@@ -506,7 +506,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 \pl,Pseq(Array.series(90*~time,0,1),inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 );
 
@@ -517,7 +517,7 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 \pl,Pseq(Array.series(90*~time,0,1).reverse,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
 	\dur,Pseq(~phase3.reverse,1),
@@ -525,7 +525,7 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 \pl,Pseq(Array.series(90*~time,0,1).reverse,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
 	\dur,Pseq(~phase4.reverse,1),
@@ -533,7 +533,7 @@ g=Pdef(\44, Pbind(\instrument, \od,
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 \pl,Pseq(Array.series(90*~time,0,1).reverse,inf),
-	\decay,Pbrown(1,4,1,inf);
+	\decay,Pbrown(2,8,1,inf);
 ));
 )
 )
@@ -551,7 +551,9 @@ f.play;
 g.play;
 s.record(numChannels:4)
 
-TempoClock.default.tempo_(120/90);
+TempoClock.default.tempo_(120/160)
+
+);
 
 (
 Tdef.new(\h,{loop({
