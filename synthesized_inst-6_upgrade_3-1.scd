@@ -110,6 +110,7 @@ var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 
 	mag_x=(Complex(cos((sphx.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sphx.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
 	Complex(cos((sphx.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sphx.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sphx.rho;
+	mag_x.round(0.00001);
 
 //mag_x=(Complex(cos((sphx.theta.round(0.00001)*m_x).wrap(pi.neg,pi)),cos((sphx.theta.round(0.00001)*m_x).wrap(pi.neg,pi))).rho*
 //Complex(sin((sphx.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2))),sin((sphx.phi.round(0.00001)*(m_x-1)).wrap((pi/2).neg,(pi/2)))).rho*
@@ -127,7 +128,7 @@ var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 
 	mag_y=(Complex(sin((sphy.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sphy.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
 		Complex(cos((sphy.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sphy.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sphy.rho;
-
+mag_y.round(0.00001);
 //	mag_y=(Complex(sin((sphy.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sphy.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
 //Complex(sin((sphy.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2))),sin((sphy.phi.round(0.00001)*(m_y-1)).wrap((pi/2).neg,(pi/2)))).rho*
 //Complex(cos((sphy.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sphy.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sphy.rho;
@@ -147,6 +148,7 @@ m_z.even,
 mag_z=Complex(cos((sphz.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),cos((sphz.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sphz.rho,
 mag_z=Complex(sin((sphz.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sphz.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2)))).rho*sphz.rho
 	);
+	mag_z.round(0.00001);
 	};
 
 )
@@ -177,7 +179,7 @@ sph1=Spherical(1,az1,el1).asCartesian;
 q1=(cos(angle.degrad)+(sin(angle.degrad)*(i1+j1+k1)));
 v1=q1*v1*q1.conjugate;
 
-raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).theta;
+raz1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).theta.round(0.00001);
 };
 
 ~az_y=(90*~time).collect{
@@ -195,7 +197,7 @@ sph2=Spherical(1,az2,el2).asCartesian;
 q2=(cos(angle.degrad)+(sin(angle.degrad)*(i2+j2+k2)));
 v2=q2*v2*q2.conjugate;
 
-raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).theta;
+raz2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).theta.round(0.00001);
 };
 
 ~az_z=(90*~time).collect{
@@ -213,7 +215,7 @@ sph3=Spherical(1,az3,el3).asCartesian;
 q3=(cos(angle.degrad)+(sin(angle.degrad)*(i3+j3+k3)));
 v3=q3*v3*q3.conjugate;
 
-raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta;
+raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta.round(0.00001);
 };
 
 )
@@ -242,7 +244,7 @@ sph1=Spherical(1,az1,el1).asCartesian;
 q1=(cos(angle.degrad)+(sin(angle.degrad)*(i1+j1+k1)));
 v1=q1*v1*q1.conjugate;
 
-rel1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).phi;
+rel1=Cartesian(v1.b.round(0.0001),v1.c.round(0.0001),v1.d.round(0.0001)).phi.round(0.00001);
 };
 
 ~el_y=(90*~time).collect{
@@ -260,7 +262,7 @@ sph2=Spherical(1,az2,el2).asCartesian;
 q2=(cos(angle.degrad)+(sin(angle.degrad)*(i2+j2+k2)));
 v2=q2*v2*q2.conjugate;
 
-rel2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).phi;
+rel2=Cartesian(v2.b.round(0.0001),v2.c.round(0.0001),v2.d.round(0.0001)).phi.round(0.00001);
 };
 
 ~el_z=(90*~time).collect{
@@ -278,7 +280,7 @@ sph3=Spherical(1,az3,el3).asCartesian;
 q3=(cos(angle.degrad)+(sin(angle.degrad)*(i3+j3+k3)));
 v3=q3*v3*q3.conjugate;
 
-rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi;
+rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.round(0.00001);
 };
 
 )
@@ -414,11 +416,11 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-			//sphere=Spherical(mag_o,Select.kr(pl,~az_y,Select.kr(pl,~el_y));
+		//sphere=Spherical(mag_o,Select.kr(pl,~az_y,Select.kr(pl,~el_y));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
