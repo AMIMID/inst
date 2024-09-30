@@ -77,7 +77,7 @@ signal.plot;
 ~time=1;
 ///1= about 15:30 min in normal*reverse sequence
 (
-var  sph1,sph2,m_x=2,m_y=2,m_z=2,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
+var  sph1,sph2,m_x=3,m_y=3,m_z=1,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
 var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 
 ~az = (90*~time).collect{
@@ -374,7 +374,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-		sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~elx));
+		//sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~el_x));
+		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
@@ -413,7 +414,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-		sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~elx));
+			//sphere=Spherical(mag_o,Select.kr(pl,~az_y,Select.kr(pl,~el_y));
+		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
@@ -452,7 +454,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
-		sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~elx));
+			//sphere=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
 env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
