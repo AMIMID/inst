@@ -377,10 +377,10 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~el_x));
-		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
+		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 
 
 osc=VBAP.ar(4,
@@ -417,10 +417,10 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_y,Select.kr(pl,~el_y));
-		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
+		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 
 
 osc=VBAP.ar(4,
@@ -457,10 +457,10 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
 			//sphere=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
-		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
+		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 
 
 osc=VBAP.ar(4,
@@ -551,7 +551,7 @@ f.play;
 g.play;
 s.record(numChannels:4)
 
-TempoClock.default.tempo_(120/160)
+TempoClock.default.tempo_(120/180)
 
 );
 
