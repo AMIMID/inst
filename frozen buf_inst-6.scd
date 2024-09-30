@@ -443,11 +443,11 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 phase2=exp(Complex(0,1)*angle2.degrad).theta;
 angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o1=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
-mag_o2=Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt);
+mag_o1=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
+mag_o2=Cartesian(Select.kr(pl,~magx.reverse)/(2.sqrt),Select.kr(pl,~magy.reverse)/(2.sqrt),Select.kr(pl,~magz.reverse)/(2.sqrt)).rho/(2.sqrt);
 
-sphere1=Spherical(mag_o,~az_x.[pl],~el_x.[pl]);
-sphere2=Spherical(mag_o,~az_x.reverse.[pl],~el_x.reverse.[pl]);
+sphere1=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+sphere2=Spherical(mag_o,Select.kr(pl,~az_z.neg),Select.kr(pl,~el_z.neg));
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o1);
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);
@@ -497,11 +497,11 @@ angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
 phase2=exp(Complex(0,1)*angle2.degrad).theta;
 angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
-mag_o1=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
-mag_o2=Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt);
+mag_o1=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
+mag_o2=Cartesian(Select.kr(pl,~magx.reverse)/(2.sqrt),Select.kr(pl,~magy.reverse)/(2.sqrt),Select.kr(pl,~magz.reverse)/(2.sqrt)).rho/(2.sqrt);
 
-sphere1=Spherical(mag_o,~az_y.[pl],~el_y.[pl]);
-sphere2=Spherical(mag_o,~az_y.reverse.[pl],~el_y.reverse.[pl]);
+sphere1=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+sphere2=Spherical(mag_o,Select.kr(pl,~az_z.neg),Select.kr(pl,~el_z.neg));
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o1);
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);
@@ -555,7 +555,7 @@ mag_o1=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)(2.sqrt),Select
 mag_o2=Cartesian(Select.kr(pl,~magx.reverse)/(2.sqrt),Select.kr(pl,~magy.reverse)/(2.sqrt),Select.kr(pl,~magz.reverse)/(2.sqrt)).rho/(2.sqrt);
 
 sphere1=Spherical(mag_o,Select.kr(pl,~az_z),Select.kr(pl,~el_z));
-sphere2=Spherical(mag_o,Select.kr(pl,~az_z.reverse),Select.kr(pl,~el_z.reverse));
+sphere2=Spherical(mag_o,Select.kr(pl,~az_z.neg),Select.kr(pl,~el_z.neg));
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o1);
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o2);

@@ -387,8 +387,8 @@ angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_x.[pl];
 		el1=~el_x.[pl];
-		az2=~az_x.reverse.[pl];
-		el2=~el_x.reverse.[pl];
+		az2=~az_x.neg.[pl];
+		el2=~el_x.neg.[pl];
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
@@ -430,8 +430,8 @@ angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_y.[pl];
 		el1=~el_y.[pl];
-		az2=~az_y.reverse.[pl];
-		el2=~el_y.reverse.[pl];
+		az2=~az_y.neg.[pl];
+		el2=~el_y.neg.[pl];
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
@@ -473,8 +473,8 @@ angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_z.[pl];
 		el1=~el_z.[pl];
-		az2=~az_z.reverse.[pl];
-		el2=~el_z.reverse.[pl];
+		az2=~az_z.neg.[pl];
+		el2=~el_z.neg.[pl];
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
@@ -528,8 +528,8 @@ angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
 
 		az1=~az_x.[pl];
 		el1=~el_x.[pl];
-		az2=~az_x.reverse.[pl];
-		el2=~el_x.reverse.[pl];
+		az2=~az_x.neg.[pl];
+		el2=~el_x.neg.[pl];
 		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
 		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
 
