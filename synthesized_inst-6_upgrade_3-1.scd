@@ -26,7 +26,7 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((1/6)/1.6180339887499)).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((1/2)/1.6180339887499)).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
@@ -298,7 +298,7 @@ rythm=[2,1,1];
 	pl7=pl7+1;
 	pl1=pl1+1;
 	ph1=(ph1*dur).round(1/256);
-	t1=ph1+index1;
+	t1=ph1*index1;
 
 	};
 
@@ -308,7 +308,7 @@ rythm=[2,1,1];
 	pl8=pl8+1;
 	pl2=pl2+1;
 	ph2=(ph2*dur).round(1/256);
-	t2=ph2+index2;
+	t2=ph2*index2;
 	};
 
 ~phase4 = (90*~time).collect{
@@ -317,7 +317,7 @@ rythm=[2,1,1];
 	pl9=pl9+1;
 	pl3=pl3+1;
 	ph3=(ph3*dur).round((1/256));
-	t3=ph3+index3;
+	t3=ph3*index3;
 	};
 
 ~n2 = (90*~time).collect{
@@ -358,7 +358,7 @@ rythm=[2,1,1];
 (
 (
 SynthDef.new(\ob, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,pl=0;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
 	var phase,scale=4,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
@@ -379,8 +379,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~el_x));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -398,7 +398,7 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 );
 (
 SynthDef.new(\oc, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,pl=0;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
 	var phase,scale=4,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
@@ -419,8 +419,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_y,Select.kr(pl,~el_y));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -438,7 +438,7 @@ wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
 );
 (
 SynthDef.new(\od, {
-	arg  n1=1,cutt=440,decay=6,t=2,attack=0.01,az=0,el=0,mag=1,pl=0;
+	arg  n1=1,cutt=440,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
 	var phase,scale=4,osc,sphere,mag_o;
 	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
@@ -489,7 +489,7 @@ b=Pdef(\2, Pbind(\instrument, \ob,
 \n1,PdegreeToKey(Pseq(~n2,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\pl,Prand(Array.fill(90*~time,{arg i; i=i+1}),inf),
+	\pl,Pseq(Array.series(90*~time,0,1),inf),
 	\decay,Pbrown(1,4,1,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \oc,
@@ -497,7 +497,7 @@ c=Pdef(\3, Pbind(\instrument, \oc,
 \n1,PdegreeToKey(Pseq(~n3,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\pl,Prand(Array.fill(90*~time,{arg i; i=i+1}),inf),
+\pl,Pseq(Array.series(90*~time,0,1),inf),
 	\decay,Pbrown(1,4,1,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \od,
@@ -505,7 +505,7 @@ d=Pdef(\4, Pbind(\instrument, \od,
 \n1,PdegreeToKey(Pseq(~n4,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-	\pl,Prand(Array.fill(90*~time,{arg i; i=i+1}),inf),
+\pl,Pseq(Array.series(90*~time,0,1),inf),
 	\decay,Pbrown(1,4,1,inf);
 ));
 );
@@ -516,7 +516,7 @@ e=Pdef(\22, Pbind(\instrument, \ob,
 \n1,PdegreeToKey(Pseq(~n2.reverse,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\pl,Prand(Array.fill(90*~time,{arg i; i=i+1}),inf),
+\pl,Pseq(Array.series(90*~time,0,1).reverse,inf),
 	\decay,Pbrown(1,4,1,inf);
 ));
 f=Pdef(\33, Pbind(\instrument, \oc,
@@ -524,7 +524,7 @@ f=Pdef(\33, Pbind(\instrument, \oc,
 \n1,PdegreeToKey(Pseq(~n3.reverse,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\pl,Prand(Array.fill(90*~time,{arg i; i=i+1}),inf),
+\pl,Pseq(Array.series(90*~time,0,1).reverse,inf),
 	\decay,Pbrown(1,4,1,inf);
 ));
 g=Pdef(\44, Pbind(\instrument, \od,
@@ -532,12 +532,11 @@ g=Pdef(\44, Pbind(\instrument, \od,
 \n1,PdegreeToKey(Pseq(~n4.reverse,inf),Scale.phrygian),
 	\cutt,Pbrown(220*2,220*8,100,inf),
 	\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
-\pl,Prand(Array.fill(90*~time,{arg i; i=i+1}),inf),
+\pl,Pseq(Array.series(90*~time,0,1).reverse,inf),
 	\decay,Pbrown(1,4,1,inf);
 ));
 )
 )
-
 
 b.play;
 //s.record(numChannels:4,duration:90)
@@ -552,7 +551,7 @@ f.play;
 g.play;
 s.record(numChannels:4)
 
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/90);
 
 (
 Tdef.new(\h,{loop({
