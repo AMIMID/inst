@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/240);
+TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -32,7 +32,7 @@ env = Env(~levels,[1]);
 sig=env.asSignal(1024);
 wt = sig.asWavetable;
 ~w.loadCollection(wt);
-//sig.plot;
+sig.plot;
 );
 
 (
@@ -377,8 +377,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		//sphere=Spherical(mag_o,Select.kr(pl,~az_x),Select.kr(pl,~el_x));
 		sphere=Spherical(mag_o,Select.kr(pl,~az),Select.kr(pl,~el));
 
-env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
-	//	env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
+		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o);
 
 
 osc=VBAP.ar(4,
@@ -548,7 +548,7 @@ e.play;
 f.play;
 //s.record(numChannels:4,duration:90)
 g.play;
-s.record(numChannels:4,duration:90)
+s.record(numChannels:4)
 
 TempoClock.default.tempo_(120/120);
 
