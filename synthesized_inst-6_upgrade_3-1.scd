@@ -26,7 +26,7 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((45/1)/1.6180339887499).degrad).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+(45-(45/1.6180339887499)).degrad).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
@@ -77,7 +77,7 @@ signal.plot;
 ~time=1;
 ///1= about 15:30 min in normal*reverse sequence
 (
-var  sph1,sph2,m_x=3,m_y=3,m_z=1,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
+var  sph1,sph2,m_x=5,m_y=5,m_z=5,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
 var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 
 ~az = (90*~time).collect{
@@ -287,7 +287,7 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.rou
 /////////////////notes and durs
 
 (
-var dur=4,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=10;
+var dur=4,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=8;
 var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
 
 rythm=[2,1,1];
@@ -391,8 +391,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
-Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
+//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
+Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
 }).add;
 );
@@ -431,8 +431,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
-Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
+//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
+Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
 }).add;
 );
@@ -471,8 +471,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
-Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
+//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt))
+Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
 	};
 }).add;
 )
@@ -549,7 +549,7 @@ e.play;
 f.play;
 //s.record(numChannels:4,duration:90)
 g.play;
-s.record(numChannels:4)
+s.record(numChannels:4,duration:180)
 
 TempoClock.default.tempo_(120/160)
 
