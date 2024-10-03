@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/180);
+TempoClock.default.tempo_(120/160);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -26,7 +26,7 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((1/1)/1.6180339887499)).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((45/1)/1.6180339887499).degrad).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
@@ -360,13 +360,13 @@ rythm=[2,1,1];
 SynthDef.new(\ob, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
 	var phase,scale=4,osc,sphere,mag_o;
-	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
+	var freq, env,m=1,bank,pitch,fund=110, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=45;
+bank=32;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -400,13 +400,13 @@ Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
 SynthDef.new(\oc, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
 	var phase,scale=4,osc,sphere,mag_o;
-	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
+	var freq, env,m=1,bank,pitch,fund=110, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=45;
+bank=32;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -440,13 +440,13 @@ Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
 SynthDef.new(\od, {
 	arg  n1=1,cutt=440,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
 	var phase,scale=4,osc,sphere,mag_o;
-	var freq, env,m=1,bank,pitch,fund=55, angle=0,rad;
+	var freq, env,m=1,bank,pitch,fund=110, angle=0,rad;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=45;
+bank=32;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -455,6 +455,7 @@ phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
+
 		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
@@ -550,7 +551,7 @@ f.play;
 g.play;
 s.record(numChannels:4)
 
-TempoClock.default.tempo_(120/180)
+TempoClock.default.tempo_(120/160)
 
 );
 
