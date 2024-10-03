@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+TempoClock.default.tempo_(120/180);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -26,7 +26,7 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.linrand(exp(Complex(0,1)*angle+((1/1)/1.6180339887499)).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((1/1)/1.6180339887499)).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
@@ -391,8 +391,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
-//Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
+//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
+Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
 	};
 }).add;
 );
@@ -417,7 +417,7 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
 
 		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
-//sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
+		//sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
@@ -431,8 +431,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
-//Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
+//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
+Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
 	};
 }).add;
 );
@@ -455,8 +455,7 @@ phase=exp(Complex(0,1)*angle.degrad).theta;
 angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 
 		mag_o=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).rho/(2.sqrt);
-
-sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
 //env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
@@ -471,8 +470,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 m=m+1;
 pl=pl+1;
-wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
-//Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.1),cutt));
+//wrappedOut1.value(out,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt))
+Out.ar(0,LPF.ar(LeakDC.ar((osc)*env*0.2),cutt));
 	};
 }).add;
 )
@@ -551,7 +550,7 @@ f.play;
 g.play;
 s.record(numChannels:4)
 
-TempoClock.default.tempo_(120/240)
+TempoClock.default.tempo_(120/180)
 
 );
 
