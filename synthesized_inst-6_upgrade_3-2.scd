@@ -556,7 +556,7 @@ f.play;
 g.play;
 s.record(numChannels:4,duration:360)
 
-TempoClock.default.tempo_(120/120)
+TempoClock.default.tempo_(120/160)
 
 );
 
