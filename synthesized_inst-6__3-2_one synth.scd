@@ -4,7 +4,7 @@
 s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/160);
+TempoClock.default.tempo_(1/8);
 s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
 s.options.maxNodes = 1024 * 64;
@@ -344,7 +344,7 @@ rythm=[1,1,1/2,1/2,1];
 (
 var ang=0,level,levels,env;
 ~levels=180.collect{ level=exp(Complex(0,1)*ang).imag; ang=ang+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*ang+((360/32)-((360/32)/1.6180339887499)).degrad).imag);};
+	levels=level.rrand(exp(Complex(0,1)*ang+((360/16)-((360/16)/1.6180339887499)).degrad).imag);};
 )
 
 Env(~levels,[8/180]).plot;
@@ -371,7 +371,7 @@ SynthDef.new(\ob, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=12;
+bank=64;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -502,7 +502,7 @@ s.record(numChannels:4,duration:90)
 g.play;
 s.record(numChannels:4,duration:90)
 
-TempoClock.default.tempo_(120/(160))
+TempoClock.default.tempo_(1/8)
 
 );
 
