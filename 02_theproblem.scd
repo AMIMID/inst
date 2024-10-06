@@ -77,7 +77,7 @@ var phase,angle=0,mag,phase1,angle1=0,mag1,m1=2,m2=2;
 	phase=exp(Complex(0,1)*angle.degrad).theta;
 	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	//mag=(Complex(cos(phase.round(0.000000001)*3),0).rho*Complex(cos(phase.round(0.000000001)*0),0).rho).round(0.000000001);
-	mag=Complex(cos(phase.round(0.000000001)*m1),cos(phase.round(0.000000001)*m1)).rho.round(0.000000001)*Complex(cos(phase.round(0.000000001)*m1),cos(phase.round(0.000000001)*m1)).rho.round(0.000000001);
+	mag=Complex(cos(phase.round(0.000000001)*m1),cos(phase.round(0.000000001)*m1)).rho.round(0.000000001)*Complex(sin(phase.round(0.000000001)*m1),sin(phase.round(0.000000001)*m1)).rho.round(0.000000001);
 	};
 
 ~magR = 720.collect{
@@ -95,8 +95,9 @@ var phase,angle=0,mag,phase1,angle1=0,mag1,m1=2,m2=2;
 {
 var signal1,signal2,env1,env2,pl=89,m=1,fund=55;
 var pos1,pos2,phase1,phase2,ph1,ph2,mag;
+var chainx,chainy;
 
-90.do{
+360.do{
 
 		pos1=~posL.[pl]/(2.sqrt);
 		pos2=~posR.[pl]/(2.sqrt);
@@ -107,8 +108,8 @@ var pos1,pos2,phase1,phase2,ph1,ph2,mag;
 		ph1=SinOsc.ar(mag,phase1);
 		ph2=SinOsc.ar(mag,phase2);
 
-		env1=EnvGen.ar(Env([1,1],[240]),doneAction:2,levelScale:0.1);
-		env2=EnvGen.ar(Env([1,1],[240]),doneAction:2,levelScale:0.1);
+		env1=EnvGen.ar(Env([1,1],[240]),doneAction:2,levelScale:m.reciprocal);
+		env2=EnvGen.ar(Env([1,1],[240]),doneAction:2,levelScale:m.reciprocal);
 
 		signal1=LPF.ar(Osc.ar(~b.bufnum,fund*m,ph1,m.reciprocal),3000,env1);
 		signal2=LPF.ar(Osc.ar(~b.bufnum,fund*m,ph2,m.reciprocal),3000,env2);
@@ -116,8 +117,9 @@ var pos1,pos2,phase1,phase2,ph1,ph2,mag;
 	m=m+1;
 
 pl=pl+1;
-		Out.ar(0,Pan2.ar(LeakDC.ar(signal1),pos1,magg));
-		Out.ar(0,Pan2.ar(LeakDC.ar(signal2),pos2,magg));
+
+		Out.ar(0,Pan2.ar(LeakDC.ar(signal1),pos1,mag));
+		Out.ar(0,Pan2.ar(LeakDC.ar(signal2),pos2,mag));
 
 }
 }.play

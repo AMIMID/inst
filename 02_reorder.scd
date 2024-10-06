@@ -1,28 +1,46 @@
 (
-s.options.numWireBufs = 1024*1;
+s.options.numWireBufs = 1024*16;
 s.options.numOutputBusChannels=2;
-s.options.numInputBusChannels=1;
+s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/120);
-s.options.memSize = 8192*4;
+s.options.memSize = 8192*64;
 //s.options.blockSize = 64/4;
-s.options.maxNodes = 1024 * 1;
+s.options.maxNodes = 1024 * 64;
 s.waitForBoot
 )
 
-Server.killAll
 
-/////////arrays
+Buffer.freeAll
+~b= Buffer.alloc(s,2048);
+
+(
+var env,sig,wt,angle=0,level,levels;
+
+~levels=360.collect{
+
+	level=exp(Complex(0,1)*angle).imag;
+		angle=angle+1.degrad;
+	levels=level.rrand(exp(Complex(0,1)*angle+(45-(45/1.6180339887499)).degrad).imag);
+};
+env = Env(~levels,[1]);
+sig=env.asSignal(1024);
+wt = sig.asWavetable;
+~b.loadCollection(wt);
+sig.plot;
+)
+
+////////arrays
 (
 (
 var phase,angle=0,phase1,angle1=90;
 
-~phase1=720.collect{
+~phase1=1440.collect{
 
 	phase=exp(Complex(0,1)*angle.degrad).theta;
 	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	phase.round(0.0001)
 };
-~phase2=720.collect{
+~phase2=1440.collect{
 
 	phase1=exp(Complex(0,1)*angle1.degrad).theta;
 	angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
@@ -32,9 +50,9 @@ var phase,angle=0,phase1,angle1=90;
 )
 
 (
-var phase1,phase2,angle1=0,angle2=0,m1=4,m2=4;
+var phase1,phase2,angle1=0,angle2=0,m1=5,m2=5;
 
-~posL=720.collect{
+~posL=1440.collect{
 
 	phase1=exp(Complex(0,1)*angle1.degrad).theta;
 	angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
@@ -42,7 +60,7 @@ var phase1,phase2,angle1=0,angle2=0,m1=4,m2=4;
 
 };
 
-~posR=720.collect{
+~posR=1440.collect{
 
 	phase2=exp(Complex(0,1)*angle2.degrad).theta;
 	angle2=(angle2+(360-(360/1.6180339887499))).wrap(0,360);
@@ -52,16 +70,16 @@ var phase1,phase2,angle1=0,angle2=0,m1=4,m2=4;
 )
 
 (
-var phase,angle=0,mag,phase1,angle1=0,mag1,m1=2,m2=2;
+var phase,angle=0,mag,phase1,angle1=0,mag1,m1=5,m2=5;
 
-~magL = 720.collect{
+~magL = 1440.collect{
 
 	phase=exp(Complex(0,1)*angle.degrad).theta;
 	angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 	mag=Complex(cos(phase.round(0.0001)*m1),cos(phase.round(0.0001)*m1)).rho.round(0.0001)*Complex(cos(phase.round(0.0001)*m1),cos(phase.round(0.0001)*m1)).rho.round(0.0001);
 	};
 
-~magR = 720.collect{
+~magR = 1440.collect{
 
 	phase1=exp(Complex(0,1)*angle1.degrad).theta;
 	angle1=(angle1+(360-(360/1.6180339887499))).wrap(0,360);
@@ -70,21 +88,13 @@ var phase,angle=0,mag,phase1,angle1=0,mag1,m1=2,m2=2;
 )
 )
 
+////////////////////osc
 
-//////////////synth
 (
 {
-var signal1,signal2,env1,env2,pl=89;
-var pos1,pos2,phase1,phase2,ph1,ph2;
-var in1,in2, chainx,chainy,b=0;
-var chainxx,chainyy,mg;
-var frames= 2048;
-
-	in1 = SoundIn.ar(0);
-	// in2 =  SoundIn.ar(0);
-
-	chainx = FFT(LocalBuf(frames), in1);
-	//chainy = FFT(LocalBuf(frames), in2);
+var signal1,signal2,env1,env2,pl=89,m=1,fund=110;
+var pos1,pos2,phase1,phase2,ph1,ph2,mag;
+var chainx,chainy;
 
 360.do{
 
@@ -92,30 +102,26 @@ var frames= 2048;
 		pos2=~posR.[pl]/(2.sqrt);
 		phase1=~phase1.[pl];
 		phase2=~phase2.[pl];
-		mg=Complex(~magL.[pl]/(2.sqrt),~magR.[pl]/(2.sqrt)).rho/(2.sqrt);
+			mag=Complex(~magL.[pl]/(2.sqrt),~magR.[pl]/(2.sqrt)).rho/(2.sqrt);
 
+		ph1=SinOsc.ar(mag.reciprocal,phase1,mag);
+		ph2=SinOsc.ar(mag.reciprocal,phase2,mag);
 
-	//env1=EnvGen.ar(Env([1,1],[360]),doneAction:2);
-	//env2=EnvGen.ar(Env([1,1],[360]),doneAction:2);
+env1=EnvGen.ar(Env.sine(45,0.1),doneAction:2);
+env2=EnvGen.ar(Env.sine(45,0.1),doneAction:2);
 
-chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*mg, exp(Complex(0,1)*(phase+SinOsc.ar(mg.reciprocal,phase1))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-//chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*mg, exp(Complex(0,1)*(phase+SinOsc.ar(mg.reciprocal,phase2))).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+		signal1=LPF.ar(Osc.ar(~b.bufnum,fund*m,ph1,m.reciprocal),mag.reciprocal*fund*2,env1);
+		signal2=LPF.ar(Osc.ar(~b.bufnum,fund*m,ph2,m.reciprocal),mag.reciprocal*fund*2,env2);
 
+	m=m+1;
 
-
-		signal1=Pan2.ar(IFFT(chainxx),pos1,mg);
-		//signal2=Pan2.ar(IFFT(chainyy),pos2,mag);
-b=b+1;
 pl=pl+1;
-		Out.ar(0,signal1);
-		//Out.ar(0,signal2);
+
+		Out.ar(0,Pan2.ar(LeakDC.ar(signal1),pos1,mag));
+		Out.ar(0,Pan2.ar(LeakDC.ar(signal2),pos2,mag));
 
 }
-}.play
+}.play;
+s.record
 )
-
-
-
-
-
 
