@@ -73,7 +73,7 @@ signal.plot;
 //////////arrays
 //////////////////////basis
 (
-~time=3;
+~time=1;
 ///1= about 15:30 min in normal*reverse sequence
 (
 var  sph1,sph2,m_x=2,m_y=2,m_z=2,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
