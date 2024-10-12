@@ -689,7 +689,7 @@ var ang=0,level,levels,env,pl;
 (
 SynthDef.new(\ospace1, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,cutt=1000;
+	var phase,octave=8,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,cutt=1000;
 	var freq,m=3,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -728,8 +728,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 pl1=pl1+1;
 
-			wrappedOut1.value(out,LeakDC.ar(BPF.ar((osc),cutt,reson,env)*1))
-//Out.ar(0,LeakDC.ar(LPF.ar(osc,2200),mul:env));
+		//	wrappedOut1.value(out,LeakDC.ar(BPF.ar((osc),cutt,reson,env)*1))
+Out.ar(0,LeakDC.ar(LPF.ar(osc,2200),mul:env));
 
 		};
 		pl2=pl2+1;
@@ -740,7 +740,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace2, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,cutt=1000;
+	var phase,octave=8,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,cutt=1000;
 	var freq,m=3,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -779,8 +779,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 pl1=pl1+1;
 
-			wrappedOut1.value(out,LeakDC.ar(BPF.ar((osc),cutt,reson,env)*1))
-//Out.ar(0,LeakDC.ar(LPF.ar(osc,2200),mul:env));
+		//	wrappedOut1.value(out,LeakDC.ar(BPF.ar((osc),cutt,reson,env)*1))
+Out.ar(0,LeakDC.ar(LPF.ar(osc,2200),mul:env));
 
 		};
 		pl2=pl2+1;
@@ -791,7 +791,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace3, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,cutt=1000;
+	var phase,octave=8,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,cutt=1000;
 	var freq,m=3,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -830,8 +830,8 @@ Osc.ar(~t.bufnum,sphere.rho,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2p
 		);
 pl1=pl1+1;
 
-			wrappedOut1.value(out,LeakDC.ar(BPF.ar((osc),cutt,reson,env)*1))
-//Out.ar(0,LeakDC.ar(LPF.ar(osc,2200),mul:env));
+			//wrappedOut1.value(out,LeakDC.ar(BPF.ar((osc),cutt,reson,env)*1))
+Out.ar(0,LeakDC.ar(LPF.ar(osc,2200),mul:env));
 
 		};
 		pl2=pl2+1;
@@ -903,9 +903,9 @@ d.play;
 e.play;
 f.play;
 g.play;
-s.record(numChannels:4,duration:90)
+s.record(numChannels:4,duration:180)
 
-TempoClock.default.tempo_(120/240)
+TempoClock.default.tempo_(0.1)
 
 );
 
