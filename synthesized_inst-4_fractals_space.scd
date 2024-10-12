@@ -571,7 +571,7 @@ rel3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).phi.rou
 )
 /////////////////notes and durs
 (
-var dur=4,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=12;
+var dur=4,ph1,ph2,ph3,pl1=0,pl2=0,pl3=0,pl4=0,pl5=0,pl6=0,sph1,sph2,sph3,n1,n2,n3,mult=8;
 var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
 
 ////L-system algae variable a,b rules:a=ab b=a , n3 for n0=a
@@ -713,8 +713,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			    ~magz_array.[pl2].[pl1]/(2.sqrt)).rho/(2.sqrt);
 rq=mag_o.round(0.001);
 
-		phase=exp(Complex(0,1)*(mag_o.phi));
-		amp=m.reciprocal*ton.reciprocal;
+		phase=exp(Complex(0,1)*(mag_o.theta));
+		amp=m.reciprocal*ton.reciprocal*phase.rho;
 		pitch=freq*amp.reciprocal;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
@@ -766,8 +766,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			    ~magz_array.[pl2].[pl1]/(2.sqrt)).rho/(2.sqrt);
 rq=mag_o.round(0.001);
 
-		phase=exp(Complex(0,1)*(mag_o.phi));
-		amp=m.reciprocal*ton.reciprocal;
+		phase=exp(Complex(0,1)*(mag_o.theta));
+		amp=m.reciprocal*ton.reciprocal*phase.rho;
 		pitch=freq*amp.reciprocal;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
@@ -819,8 +819,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			    ~magz_array.[pl2].[pl1]/(2.sqrt)).rho/(2.sqrt);
 			rq=mag_o.round(0.001);
 
-			phase=exp(Complex(0,1)*(mag_o.phi));
-		amp=m.reciprocal*ton.reciprocal;
+			phase=exp(Complex(0,1)*(mag_o.theta));
+			amp=m.reciprocal*ton.reciprocal*phase.rho;
 		pitch=freq*amp.reciprocal;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
@@ -918,7 +918,7 @@ d.play;
 e.play;
 //s.record(numChannels:4,duration:180)
 f.play;
-//s.record(numChannels:4,duration:180)
+s.record(numChannels:4,duration:180)
 
 );
 
