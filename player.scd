@@ -1,12 +1,26 @@
+
+////server setup
 (
-~c1 = Buffer.read(s,);
-~c2 = Buffer.read(s,);
-~c3 = Buffer.read(s,);
-~c4 = Buffer.read(s,);
-~c5 = Buffer.read(s,);
-~c6 = Buffer.read(s,);
-~c7 = Buffer.read(s,);
-~c8 = Buffer.read(s,);
+s.options.numWireBufs = 1024*16;
+s.options.numOutputBusChannels=4;
+s.options.numInputBusChannels=0;
+TempoClock.default.tempo_(0.1);
+s.options.memSize = 8192*64;
+//s.options.blockSize = 64/4;
+s.options.maxNodes = 1024 * 64;
+s.waitForBoot
+)
+
+/////wavetables
+Buffer.freeAll
+
+(
+~c1 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_241013_180252.wav");
+~c2 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_241013_180341.wav");
+~c3 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_241013_180440.wav");
+~c4 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_241013_180528.wav");
+~c5 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_241013_180616.wav");
+~c6 = Buffer.read(s,"/Users/petrostatsiopoulos/Desktop/SC_241013_180718.wav");
 )
 
 (
@@ -18,17 +32,15 @@
 	Out.ar(4,PlayBuf.ar(4, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2));
 	Out.ar(4,PlayBuf.ar(4, ~c5.bufnum, BufRateScale.kr(~c5), loop: 0, doneAction:2));
 	Out.ar(4,PlayBuf.ar(4, ~c6.bufnum, BufRateScale.kr(~c6), loop: 0, doneAction:2));
-	Out.ar(4,PlayBuf.ar(4, ~c7.bufnum, BufRateScale.kr(~c8), loop: 0, doneAction:2));
-	Out.ar(4,PlayBuf.ar(4, ~c8.bufnum, BufRateScale.kr(~c7), loop: 0, doneAction:2));
 
 }.play;
-s.record(numChannels:8)
+//s.record(numChannels:8,duration:90)
 )
 
 
 (
 s.options.numWireBufs = 1024*16;
-s.options.numOutputBusChannels=8;
+s.options.numOutputBusChannels=4;
 s.options.numInputBusChannels=0;
 TempoClock.default.tempo_(120/120);
 s.options.memSize = 8192*64;
