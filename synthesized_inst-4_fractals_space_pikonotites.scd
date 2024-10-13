@@ -775,8 +775,8 @@ var ang=0,level,levels,env,pl;
 (
 SynthDef.new(\ospace1, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
-	var freq,m=1,bank1,bank2,pitch=1,fund=6, angle=360,rad,env;
+	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -828,8 +828,8 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace2, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
-	var freq,m=1,bank1,bank2,pitch=1,fund=6, angle=360,rad,env;
+	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -881,8 +881,8 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace3, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
-	var freq,m=1,bank1,bank2,pitch=1,fund=6, angle=360,rad,env;
+	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
 		Out.ar(pair[0], pair[1])}};
@@ -983,7 +983,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace3,
 ));
 )
 
-TempoClock.default.tempo_(0.3)
+TempoClock.default.tempo_(0.2)
 a.play;
 //s.record(numChannels:4,duration:45)
 b.play;
