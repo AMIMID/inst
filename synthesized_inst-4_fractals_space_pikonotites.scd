@@ -747,7 +747,7 @@ sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
 env=EnvGen.ar(Env(~levels,[decay/180],4.neg),doneAction:2);
 
 	cutt=pitch*Select.kr(pl,~cutt1).reciprocal;
-	rq=Select.kr(pl,~cutt1)/100;
+	rq=Select.kr(pl,~cutt1)/10;
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp,phase:phase.theta)),
