@@ -29,12 +29,12 @@ Buffer.freeAll
 	Out.ar(0,PlayBuf.ar(4, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2));
 	Out.ar(0,PlayBuf.ar(4, ~c2.bufnum, BufRateScale.kr(~c2), loop: 0, doneAction:2));
 	Out.ar(0,PlayBuf.ar(4, ~c3.bufnum, BufRateScale.kr(~c3), loop: 0, doneAction:2));
-	Out.ar(4,PlayBuf.ar(4, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2));
-	Out.ar(4,PlayBuf.ar(4, ~c5.bufnum, BufRateScale.kr(~c5), loop: 0, doneAction:2));
-	Out.ar(4,PlayBuf.ar(4, ~c6.bufnum, BufRateScale.kr(~c6), loop: 0, doneAction:2));
+	Out.ar(0,PlayBuf.ar(4, ~c4.bufnum, BufRateScale.kr(~c4), loop: 0, doneAction:2));
+	Out.ar(0,PlayBuf.ar(4, ~c5.bufnum, BufRateScale.kr(~c5), loop: 0, doneAction:2));
+	Out.ar(0,PlayBuf.ar(4, ~c6.bufnum, BufRateScale.kr(~c6), loop: 0, doneAction:2));
 
 }.play;
-//s.record(numChannels:8,duration:90)
+s.record(numChannels:4,duration:45)
 )
 
 
