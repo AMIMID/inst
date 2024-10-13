@@ -635,20 +635,20 @@ var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
 
 
 ~cutt1 = (90*~time).collect{
-	ph1=Cartesian(~magx.[pl1]/(2.sqrt),~magy.[pl1]/(2.sqrt),~magz.[pl1]/(2.sqrt)).rho/(2.sqrt);
+	ph1=Cartesian(~magx.[pl1]/(2.sqrt),~magy.[pl1]/(2.sqrt),~magz.[pl1]/(2.sqrt)).rho;
 	pl1=pl1+1;
 	ph1=(ph1/(2.sqrt)).round(0.000001);
 
 	};
 
 ~cutt2 = (90*~time).collect{
-ph2=Cartesian(~magx.[pl2]/(2.sqrt),~magy.[pl2]/(2.sqrt),~magz.[pl2]/(2.sqrt)).rho/(2.sqrt);
+ph2=Cartesian(~magx.[pl2]/(2.sqrt),~magy.[pl2]/(2.sqrt),~magz.[pl2]/(2.sqrt)).rho;
 	pl2=pl2+1;
 	ph2=(ph2/(2.sqrt)).round(0.000001);
 	};
 
 ~cutt3= (90*~time).collect{
-ph3=Cartesian(~magx.[pl3]/(2.sqrt),~magy.[pl3]/(2.sqrt),~magz.[pl3]/(2.sqrt)).rho/(2.sqrt);
+ph3=Cartesian(~magx.[pl3]/(2.sqrt),~magy.[pl3]/(2.sqrt),~magz.[pl3]/(2.sqrt)).rho;
 	pl3=pl3+1;
 	ph3=(ph3/(2.sqrt)).round(0.000001);
 	};
@@ -715,7 +715,7 @@ var ang=0,level,levels,env,pl;
 (
 SynthDef.new(\ospace1, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
 	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -735,10 +735,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			    ~magy_array.[pl2].[pl1]/(2.sqrt),
 			    ~magz_array.[pl2].[pl1]/(2.sqrt));
 
-			rq=mag_o.round(0.001).rho/(2.sqrt);
-
 			phase=exp(Complex(0,1)*(mag_o.theta*mag_o.phi));
-			amp=m.reciprocal*ton.reciprocal;
+			amp=m.reciprocal*ton.reciprocal*mag_o.rho/(2.sqrt);
 		pitch=freq*amp.reciprocal;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
@@ -770,7 +768,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace2, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
 	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -789,10 +787,9 @@ bank2.do{
 mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			    ~magy_array.[pl2].[pl1]/(2.sqrt),
 			    ~magz_array.[pl2].[pl1]/(2.sqrt));
-		rq=mag_o.round(0.001).rho/(2.sqrt);
 
 			phase=exp(Complex(0,1)*(mag_o.theta*mag_o.phi));
-			amp=m.reciprocal*ton.reciprocal;
+			amp=m.reciprocal*ton.reciprocal*mag_o.rho/(2.sqrt);
 		pitch=freq*amp.reciprocal;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
@@ -824,7 +821,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace3, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
 	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -843,10 +840,9 @@ bank2.do{
 mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			    ~magy_array.[pl2].[pl1]/(2.sqrt),
 			    ~magz_array.[pl2].[pl1]/(2.sqrt));
-			rq=mag_o.round(0.001).rho/(2.sqrt);
 
 			phase=exp(Complex(0,1)*(mag_o.theta*mag_o.phi));
-			amp=m.reciprocal*ton.reciprocal;
+			amp=m.reciprocal*ton.reciprocal*mag_o.rho/(2.sqrt);
 		pitch=freq*amp.reciprocal;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
