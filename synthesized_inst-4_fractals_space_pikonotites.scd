@@ -808,7 +808,7 @@ env=EnvGen.ar(Env(~levels,[decay/180],4.neg),doneAction:2);
 	rq=Select.kr(pl,~cutt1)/1;
 
 osc=VBAP.ar(4,
-LeakDC.ar(Osc.ar(~w.bufnum,pitch*sphere.rho.reciprocal,mul:amp*sphere.rho,phase:phase.theta)),
+LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,sphere.rho.reciprocal,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,sphere.rho.reciprocal,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -861,7 +861,7 @@ cutt=496*Select.kr(pl,~cutt2).reciprocal;
 rq=Select.kr(pl,~cutt2)/1;
 
 osc=VBAP.ar(4,
-LeakDC.ar(Osc.ar(~w.bufnum,pitch*sphere.rho.reciprocal,mul:amp*sphere.rho,phase:phase.theta)),
+LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,sphere.rho.reciprocal,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,sphere.rho.reciprocal,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -914,7 +914,7 @@ cutt=496*Select.kr(pl,~cutt3).reciprocal;
 rq=Select.kr(pl,~cutt3)/1;
 
 osc=VBAP.ar(4,
-LeakDC.ar(Osc.ar(~w.bufnum,pitch*sphere.rho.reciprocal,mul:amp*sphere.rho,phase:phase.theta)),
+LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,sphere.rho.reciprocal,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,sphere.rho.reciprocal,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -983,7 +983,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace3,
 ));
 )
 
-TempoClock.default.tempo_(0.5)
+TempoClock.default.tempo_(0.1)
 a.play;
 //s.record(numChannels:4,duration:45)
 b.play;
