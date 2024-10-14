@@ -702,7 +702,7 @@ var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 bank1=2;
 	bank2=8;
 ton=2.pow(n1/(2*6));
-freq=(fund*octave)*ton;
+freq=(fund*octave);
 
 bank1.do{
 
@@ -756,7 +756,7 @@ var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 bank1=2;
 	bank2=8;
 ton=2.pow(n1/(2*6));
-freq=(fund*octave)*ton;
+freq=(fund*octave);
 
 bank1.do{
 
@@ -809,7 +809,7 @@ var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 bank1=2;
 	bank2=8;
 ton=2.pow(n1/(2*6));
-freq=(fund*octave)*ton;
+freq=(fund*octave);
 
 bank1.do{
 
