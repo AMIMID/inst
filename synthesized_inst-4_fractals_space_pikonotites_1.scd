@@ -785,8 +785,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			amp=m.reciprocal*ton.reciprocal;
 		pitch=freq*amp.reciprocal;
 
-sphere=Spherical(mag_o.rho.round(0.00001),~az_x.[pl1],~el_x.[pl1]);
-			//sphere=Spherical(mag_o.rho/(2.sqrt),~az.[pl1],~el.[pl1]);
+//sphere=Spherical(mag_o.rho.round(0.00001),~az_x.[pl1],~el_x.[pl1]);
+			sphere=Spherical(mag_o.rho/(2.sqrt),~az.[pl1],~el.[pl1]);
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
@@ -794,7 +794,7 @@ env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 	rq=~cutt.[pl1]/(freq*ton);
 
 osc=VBAP.ar(4,
-LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
+LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp,phase:phase.theta)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -837,8 +837,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			amp=m.reciprocal*ton.reciprocal;
 		pitch=freq*amp.reciprocal;
 
-sphere=Spherical(mag_o.rho.round(0.00001),~az_y.[pl1],~el_y.[pl1]);
-			//sphere=Spherical(mag_o.rho/(2.sqrt),~az.[pl1],~el.[pl1]);
+//sphere=Spherical(mag_o.rho.round(0.00001),~az_y.[pl1],~el_y.[pl1]);
+			sphere=Spherical(mag_o.rho/(2.sqrt),~az.[pl1],~el.[pl1]);
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
@@ -846,7 +846,7 @@ env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 	rq=~cutt.[pl1]/(freq*ton);
 
 osc=VBAP.ar(4,
-LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
+LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp,phase:phase.theta)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -889,8 +889,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			amp=m.reciprocal*ton.reciprocal;
 		pitch=freq*amp.reciprocal;
 
-			sphere=Spherical(mag_o.rho.round(0.00001),~az_z.[pl1],~el_z.[pl1]);
-			//sphere=Spherical(mag_o.rho/(2.sqrt),~az.[pl1],~el.[pl1]);
+			//sphere=Spherical(mag_o.rho.round(0.00001),~az_z.[pl1],~el_z.[pl1]);
+			sphere=Spherical(mag_o.rho/(2.sqrt),~az.[pl1],~el.[pl1]);
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
@@ -898,7 +898,7 @@ env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 	rq=~cutt.[pl1]/(freq*ton);
 
 osc=VBAP.ar(4,
-LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
+LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp,phase:phase.theta)),
 ~b.bufnum,
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
@@ -983,7 +983,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace3,
 	\decay,Pbrown(8,8,0.25,inf);
 ));
 	);
-	TempoClock.default.tempo_(0.5)
+	TempoClock.default.tempo_(0.8)
 (
 		(
 a.play;
@@ -1011,7 +1011,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
 		\cutt,Pbrown(1,8,0.25,inf),
-	\decay,Pbrown(8,8,0.25,inf);
+	\decay,Pbrown(6,8,0.25,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~phase3,1),
@@ -1021,7 +1021,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace2,
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
 		\cutt,Pbrown(1,8,0.25,inf),
-	\decay,Pbrown(8,8,0.25,inf);
+	\decay,Pbrown(6,8,0.25,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~phase4,1),
@@ -1031,7 +1031,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace3,
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
 		\cutt,Pbrown(1,8,0.25,inf),
-	\decay,Pbrown(8,8,0.25,inf);
+	\decay,Pbrown(6,8,0.25,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~phase2.reverse,1),
@@ -1041,7 +1041,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
 		\cutt,Pbrown(1,8,0.25,inf),
-	\decay,Pbrown(8,8,0.25,inf);
+	\decay,Pbrown(6,8,0.25,inf);
 ));
 e=Pdef(\5, Pbind(\instrument, \ospace2,
 	\dur,Pseq(~phase3.reverse,1),
@@ -1051,17 +1051,17 @@ e=Pdef(\5, Pbind(\instrument, \ospace2,
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
 		\cutt,Pbrown(1,8,0.25,inf),
-	\decay,Pbrown(8,8,0.25,inf);
+	\decay,Pbrown(6,8,0.25,inf);
 ));
 f=Pdef(\6, Pbind(\instrument, \ospace3,
 	\dur,Pseq(~phase4.reverse,1),
 \n1,PdegreeToKey(Pseq(~n4.reverse,inf),Scale.majorPentatonic),
 		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
 		\octave,Prand([8,16],inf),
-	\rotation_speed,Pbrown(4.sqrt/10,4.sqrt,4.sqrt/10,inf),
+	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
 		\cutt,Pbrown(1,2,0.25,inf),
-	\decay,Pbrown(8,8,0.25,inf);
+	\decay,Pbrown(6,8,0.25,inf);
 ));
 	);
 
