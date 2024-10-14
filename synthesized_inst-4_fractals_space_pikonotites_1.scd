@@ -790,8 +790,8 @@ sphere=Spherical(mag_o.rho.round(0.00001),~az_x.[pl1],~el_x.[pl1]);
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
-	cutt_freq=cutt*~cutt.[pl1].reciprocal*freq*m*ton;
-	rq=~cutt.[pl1]/10;
+	cutt_freq=cutt*~cutt.[pl1]*freq*m*ton;
+	rq=~cutt.[pl1]/(freq*ton);
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
@@ -800,7 +800,7 @@ Osc.ar(~t.bufnum,rotation_speed,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi)
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-				wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))*0.1));
+				wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))));
 			//Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt,rq,env)*0.1)));
 pl1=pl1+1;
 
@@ -842,8 +842,8 @@ sphere=Spherical(mag_o.rho.round(0.00001),~az_y.[pl1],~el_y.[pl1]);
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
-	cutt_freq=cutt*~cutt.[pl1].reciprocal*freq*m*ton;
-	rq=~cutt.[pl1]/10;
+	cutt_freq=cutt*~cutt.[pl1]*freq*m*ton;
+	rq=~cutt.[pl1]/(freq*ton);
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
@@ -852,7 +852,7 @@ Osc.ar(~t.bufnum,rotation_speed,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi)
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-				wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))*0.1));
+				wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))));
 			//Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt,rq,env)*0.1)));
 pl1=pl1+1;
 
@@ -894,8 +894,8 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
-	cutt_freq=cutt*~cutt.[pl1].reciprocal*freq*m*ton;
-	rq=~cutt.[pl1]/10;
+	cutt_freq=cutt*~cutt.[pl1]*freq*m*ton;
+	rq=~cutt.[pl1]/(freq*ton);
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
@@ -904,7 +904,7 @@ Osc.ar(~t.bufnum,rotation_speed,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi)
 Osc.ar(~t.bufnum,rotation_speed,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-				wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))*0.1));
+				wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))));
 			//Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt,rq,env)*0.1)));
 pl1=pl1+1;
 
@@ -920,8 +920,7 @@ pl1=pl1+1;
 Scale.directory
 
 //////////pattern for mobius strib of sequential or parallel play of directions
-(
-Tdef.new(\alages,{
+
 (
 a=Pdef(\1, Pbind(\instrument, \ospace1,
 	\dur,Pseq(~phase2,1),
@@ -930,7 +929,7 @@ a=Pdef(\1, Pbind(\instrument, \ospace1,
 		\octave,Prand([4,8],inf),
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
-		\cutt,Pbrown(1,4,0.25,inf),
+		\cutt,Pbrown(1,8,0.25,inf),
 	\decay,Pbrown(8,8,0.25,inf);
 ));
 b=Pdef(\2, Pbind(\instrument, \ospace2,
@@ -940,7 +939,7 @@ b=Pdef(\2, Pbind(\instrument, \ospace2,
 			\octave,Prand([4,8],inf),
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
-		\cutt,Pbrown(1,4,0.25,inf),
+		\cutt,Pbrown(1,8,0.25,inf),
 	\decay,Pbrown(8,8,0.25,inf);
 ));
 c=Pdef(\3, Pbind(\instrument, \ospace3,
@@ -950,7 +949,7 @@ c=Pdef(\3, Pbind(\instrument, \ospace3,
 			\octave,Prand([4,8],inf),
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
-		\cutt,Pbrown(1,4,0.25,inf),
+		\cutt,Pbrown(1,8,0.25,inf),
 	\decay,Pbrown(8,8,0.25,inf);
 ));
 d=Pdef(\4, Pbind(\instrument, \ospace1,
@@ -960,7 +959,7 @@ d=Pdef(\4, Pbind(\instrument, \ospace1,
 			\octave,Prand([4,8],inf),
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
-		\cutt,Pbrown(1,4,0.25,inf),
+		\cutt,Pbrown(1,8,0.25,inf),
 	\decay,Pbrown(8,8,0.25,inf);
 ));
 e=Pdef(\5, Pbind(\instrument, \ospace2,
@@ -970,7 +969,7 @@ e=Pdef(\5, Pbind(\instrument, \ospace2,
 		\octave,Prand([4,8],inf),
 	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
 	\fund,Prand([6,8,9,12],inf),
-		\cutt,Pbrown(1,4,0.25,inf),
+		\cutt,Pbrown(1,8,0.25,inf),
 	\decay,Pbrown(8,8,0.25,inf);
 ));
 f=Pdef(\6, Pbind(\instrument, \ospace3,
@@ -983,19 +982,10 @@ f=Pdef(\6, Pbind(\instrument, \ospace3,
 		\cutt,Pbrown(1,2,0.25,inf),
 	\decay,Pbrown(8,8,0.25,inf);
 ));
-	)
-	(1).wait;
-	TempoClock.default.tempo_(1).postln;
-	})
-)
-
-Tdef(\h).stop;
-Tdef(\h).play;
-Tdef(\h).clear;
-
-TempoClock.default.tempo_(0.5)
+	);
+	TempoClock.default.tempo_(0.5)
 (
-(
+		(
 a.play;
 //s.record(numChannels:4,duration:45)
 b.play;
@@ -1009,7 +999,74 @@ e.play;
 //s.record(numChannels:4,duration:45)
 f.play;
 //s.record(numChannels:4,duration:45)
-)
+);
+
+
+	(
+a=Pdef(\1, Pbind(\instrument, \ospace1,
+	\dur,Pseq(~phase2,1),
+\n1,PdegreeToKey(Pseq(~n2,inf),Scale.majorPentatonic),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
+		\octave,Prand([8,16],inf),
+	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
+	\fund,Prand([6,8,9,12],inf),
+		\cutt,Pbrown(1,8,0.25,inf),
+	\decay,Pbrown(8,8,0.25,inf);
+));
+b=Pdef(\2, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~phase3,1),
+\n1,PdegreeToKey(Pseq(~n3,inf),Scale.majorPentatonic),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
+			\octave,Prand([8,16],inf),
+	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
+	\fund,Prand([6,8,9,12],inf),
+		\cutt,Pbrown(1,8,0.25,inf),
+	\decay,Pbrown(8,8,0.25,inf);
+));
+c=Pdef(\3, Pbind(\instrument, \ospace3,
+	\dur,Pseq(~phase4,1),
+\n1,PdegreeToKey(Pseq(~n4,inf),Scale.majorPentatonic),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
+			\octave,Prand([8,16],inf),
+	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
+	\fund,Prand([6,8,9,12],inf),
+		\cutt,Pbrown(1,8,0.25,inf),
+	\decay,Pbrown(8,8,0.25,inf);
+));
+d=Pdef(\4, Pbind(\instrument, \ospace1,
+	\dur,Pseq(~phase2.reverse,1),
+\n1,PdegreeToKey(Pseq(~n2.reverse,inf),Scale.majorPentatonic),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
+			\octave,Prand([8,16],inf),
+	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
+	\fund,Prand([6,8,9,12],inf),
+		\cutt,Pbrown(1,8,0.25,inf),
+	\decay,Pbrown(8,8,0.25,inf);
+));
+e=Pdef(\5, Pbind(\instrument, \ospace2,
+	\dur,Pseq(~phase3.reverse,1),
+\n1,PdegreeToKey(Pseq(~n3.reverse,inf),Scale.majorPentatonic),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
+		\octave,Prand([8,16],inf),
+	\rotation_speed,Pbrown(2.sqrt/10,2.sqrt,2.sqrt/10,inf),
+	\fund,Prand([6,8,9,12],inf),
+		\cutt,Pbrown(1,8,0.25,inf),
+	\decay,Pbrown(8,8,0.25,inf);
+));
+f=Pdef(\6, Pbind(\instrument, \ospace3,
+	\dur,Pseq(~phase4.reverse,1),
+\n1,PdegreeToKey(Pseq(~n4.reverse,inf),Scale.majorPentatonic),
+		\out,Pn(Pshuf([0, 1, 2, 3], 1), inf).clump(4).collect([_]),
+		\octave,Prand([8,16],inf),
+	\rotation_speed,Pbrown(4.sqrt/10,4.sqrt,4.sqrt/10,inf),
+	\fund,Prand([6,8,9,12],inf),
+		\cutt,Pbrown(1,2,0.25,inf),
+	\decay,Pbrown(8,8,0.25,inf);
+));
+	);
+
+
+TempoClock.default.tempo_(0.5)
 
 s.record(numChannels:4);
 
