@@ -26,25 +26,25 @@ var env,sig,wt,angle=0,level,levels;
 
 	level=exp(Complex(0,1)*angle).imag;
 		angle=angle+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*angle+((45/1.6180339887499)).degrad).imag);
+	levels=level.rrand(exp(Complex(0,1)*angle+((2/1.6180339887499)).degrad).imag);
 };
 env = Env(~levels,[1]);
 sig=env.asSignal(1024);
 wt = sig.asWavetable;
 ~w.loadCollection(wt);
-sig.plot;
+//sig.plot;
 );
 
 (
 var signal,wt,m=0,amp;
 
-~level=45.collect{m=m+1;amp=m.reciprocal};
-~phase=45.collect{pi};
+~level=90.collect{m=m+1;amp=m.reciprocal};
+~phase=90.collect{pi};
 signal=Signal.sineFill(1024,~level,~phase);
 
 wt = signal.asWavetable;
 ~t.loadCollection(wt);
-signal.plot;
+//signal.plot;
 )
 
 
@@ -71,7 +71,7 @@ signal.plot;
 )
 
 //////////arrays
-~time=8;
+~time=1;
 ///1= about 15:30 min in normal+reverse sequence
 ///fractal
 (
@@ -120,7 +120,7 @@ z=Complex(0,0);
 //////////////////////basis
 
 (
-var  sph1,sph2,m_x=3,m_y=2,m_z=1,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
+var  sph1,sph2,m_x=3,m_y=2,m_z=3,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
 var azx=0,elx=0,azy=0,ely=0,azz=0,elz=0,sphx,sphy,sphz,rad=1;
 var pl1=0,pl2=0,pl3=0,pl4=0,pl5=0;
 
@@ -719,7 +719,7 @@ ph3=Cartesian(~magx.[pl3]/(2.sqrt),~magy.[pl3]/(2.sqrt),~magz.[pl3]/(2.sqrt)).rh
 (
 var ang=0,level,levels,env,pl;
 ~levels=180.collect{ level=exp(Complex(0,1)*ang).imag; ang=ang+1.degrad;
-	levels=level.rrand(exp(Complex(0,1)*ang+((360/16)-((360/16)/1.6180339887499)).degrad).imag);};
+	levels=level.rrand(exp(Complex(0,1)*ang+((360/64)-((360/64)/1.6180339887499)).degrad).imag);};
 //env=Env(~levels,[8/180]);env.plot;
 )
 
@@ -775,7 +775,7 @@ var ang=0,level,levels,env,pl;
 (
 SynthDef.new(\ospace1, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
 	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -783,7 +783,7 @@ SynthDef.new(\ospace1, {
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
 bank1=3;
-	bank2=12;
+	bank2=6;
 ton=2.pow(n1/(2*6));
 freq=(fund*octave);
 
@@ -799,13 +799,13 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			amp=m.reciprocal*ton.reciprocal;
 		pitch=freq*amp.reciprocal;
 
-//sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
-sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
+sphere=Spherical(mag_o.rho.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
+//sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
-	cutt=freq*Select.kr(pl,~cutt1).reciprocal;
-	rq=Select.kr(pl,~cutt1)/2;
+	cutt=freq*m*ton;
+	rq=Select.kr(pl,~cutt1)/10000;
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
@@ -828,7 +828,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace2, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
 	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -836,7 +836,7 @@ SynthDef.new(\ospace2, {
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
 bank1=3;
-	bank2=12;
+	bank2=6;
 ton=2.pow(n1/(2*6));
 freq=(fund*octave);
 
@@ -852,13 +852,13 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			amp=m.reciprocal*ton.reciprocal;
 		pitch=freq*amp.reciprocal;
 
-//sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
-sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
+sphere=Spherical(mag_o.rho.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
+//sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
-cutt=freq*Select.kr(pl,~cutt2).reciprocal;
-rq=Select.kr(pl,~cutt2)/2;
+cutt=freq*m*ton;
+rq=Select.kr(pl,~cutt2)/10000;
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
@@ -881,7 +881,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace3, {
 	arg  n1=1,reson=1,decay=6,t=2,attack=0.02,az=0,el=0,mag=1,pl=0;
-	var phase,octave=4,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
+	var phase,octave=2,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt;
 	var freq,m=1,bank1,bank2,pitch=1,fund=55, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -889,7 +889,7 @@ SynthDef.new(\ospace3, {
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
 bank1=3;
-	bank2=12;
+	bank2=6;
 ton=2.pow(n1/(2*6));
 freq=(fund*octave);
 
@@ -905,13 +905,13 @@ mag_o=Cartesian(~magx_array.[pl2].[pl1]/(2.sqrt),
 			amp=m.reciprocal*ton.reciprocal;
 		pitch=freq*amp.reciprocal;
 
-//sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
-sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
+sphere=Spherical(mag_o.rho.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+//sphere=Spherical(mag_o.rho/(2.sqrt),Select.kr(pl,~az),Select.kr(pl,~el));
 
 env=EnvGen.ar(Env(~levels,[decay/360],4.neg),doneAction:2);
 
-cutt=freq*Select.kr(pl,~cutt3).reciprocal;
-rq=Select.kr(pl,~cutt3)/2;
+cutt=freq*m*ton;
+rq=Select.kr(pl,~cutt3)/10000;
 
 osc=VBAP.ar(4,
 LeakDC.ar(Osc.ar(~w.bufnum,pitch,mul:amp*sphere.rho,phase:phase.theta)),
@@ -983,7 +983,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace3,
 ));
 )
 
-TempoClock.default.tempo_(0.8)
+TempoClock.default.tempo_(0.5)
 a.play;
 //s.record(numChannels:4,duration:45)
 b.play;
