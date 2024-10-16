@@ -745,7 +745,7 @@ var mag1,mag2,mag3,rythm,index1,index2,index3,pl7=0,pl8=0,pl9=0,t1,t2,t3;
 (
 SynthDef.new(\ospace1, {
 	arg  n1=1,decay=6,fund=55,octave=2,cutt=10,rpr=1,speed=10;
-	var phase,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt_freq=1,fundamental=110;
+	var phase,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt_freq=1,fundamental=55/4;
 	var freq,m=1,bank1,bank2,pitch=1, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -782,8 +782,8 @@ Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-			//wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))));
-			Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt_freq,rq,env))));
+			//wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env*(1/rq.sqrt)))));
+			Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt_freq,rq,env*(1/rq.sqrt)))));
 pl1=pl1+1;
 
 		};
@@ -795,7 +795,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace2, {
 	arg  n1=1,decay=6,fund=55,octave=2,cutt=10,rpr=1,speed=10;
-	var phase,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt_freq=1,fundamental=110;
+	var phase,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt_freq=1,fundamental=55/4;
 	var freq,m=1,bank1,bank2,pitch=1, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -832,8 +832,8 @@ Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-			//wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))));
-			Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt_freq,rq,env))));
+			//wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env*(1/rq.sqrt)))));
+			Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt_freq,rq,env*(1/rq.sqrt)))));
 pl1=pl1+1;
 
 		};
@@ -845,7 +845,7 @@ pl1=pl1+1;
 (
 SynthDef.new(\ospace3, {
     arg  n1=1,decay=6,fund=55,octave=2,cutt=10,rpr=1,speed=10;
-	var phase,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt_freq=1,fundamental=110;
+	var phase,osc,sphere,mag_o,amp,ton,pl1=0,pl2=0,rq=1,cutt_freq=1,fundamental=55/4;
 	var freq,m=1,bank1,bank2,pitch=1, angle=360,rad,env;
 	var wrappedOut1 = { |busArray, signalArray|
 	[busArray, signalArray].flop.do { |pair|
@@ -882,8 +882,8 @@ Osc.ar(~t.bufnum,speed*rpr,phase:sphere.theta.linlin(pi.neg,pi,2pi.neg,2pi),mul:
 Osc.ar(~t.bufnum,speed*rpr,phase:sphere.phi.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)
 		);
 
-			//wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env))));
-			Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt_freq,rq,env))));
+			//wrappedOut1.value(out,LeakDC.ar((BPF.ar(osc,cutt_freq,rq,env*(1/rq.sqrt)))));
+			Out.ar(0,LeakDC.ar(LeakDC.ar(BPF.ar(osc,cutt_freq,rq,env*(1/rq.sqrt)))));
 pl1=pl1+1;
 
 		};
@@ -967,7 +967,7 @@ f=Pdef(\6, Pbind(\instrument, \ospace3,
 	\decay,Pbrown(8,8,2,inf);
 ));
 	)
-	TempoClock.default.tempo_(2)
+	TempoClock.default.tempo_(1)
 (
 		(
 a.play;
