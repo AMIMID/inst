@@ -1,6 +1,50 @@
 
 
 
+
+////server setup
+(
+s.options.numWireBufs = 1024*16;
+s.options.numOutputBusChannels=4;
+s.options.numInputBusChannels=0;
+TempoClock.default.tempo_(0.1);
+s.options.memSize = 8192*64;
+//s.options.blockSize = 64/4;
+s.options.maxNodes = 1024 * 64;
+s.waitForBoot
+)
+
+/////wavetables
+Buffer.freeAll
+
+(
+~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/pinotites2/SC_241016_065935.wav",channels:0);
+~c2 =Buffer.readChannel(s,"/Users/petrostatsiopoulos/Music/SuperCollider Recordings/pinotites2/SC_241016_065935.wav",channels:1);
+//~c3 = Buffer.read(s,);
+//~c4 = Buffer.read(s,);
+)
+
+(
+SynthDef.new(\player,{
+	arg tempo;
+	var env;
+	var sig1, sig2, sig3, sig4;
+
+	sig1=PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+	sig2=PlayBuf.ar(1, ~c1.bufnum, BufRateScale.kr(~c1), loop: 0, doneAction:2);
+
+	~a = Amplitude.ar(sig1, 0.01, 0.25).poll;SendReply.ar(Impulse.ar(100), '/a', ~a);
+	~b = Amplitude.ar(sig2, 0.01, 0.25);SendReply.ar(Impulse.ar(100), '/b', ~b);
+
+Out.ar(0,sig1*1);
+Out.ar(1,sig2*1);
+}).add;
+)
+Synth.new(\player);
+
+////////////////////////////////////////////
+
+
 (
 var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=2,m_z=1;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
@@ -32,7 +76,7 @@ var az4=0,el4=0,az5=0,el5=0;
 
 	el3=(el3+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph3=Spherical(1,az3.degrad,el3.degrad);
+	sph3=Spherical(500,az3.degrad,el3.degrad);
 
 	//mag=Complex(sph3.x,sph3.x).rho.round(0.00001);////0 and 1st order only x,y,z
 
@@ -51,7 +95,7 @@ Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.rou
 
 	el4=(el4+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph4=Spherical(1,az4.degrad,el4.degrad);
+	sph4=Spherical(500,az4.degrad,el4.degrad);
 
 	mag_y=(Complex(sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi)),sin((sph4.theta.round(0.00001)*m_y).wrap(pi.neg,pi))).rho*
 		Complex(cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph4.phi.round(0.00001)).wrap((pi/2).neg,(pi/2)))).rho)*sph4.rho;
@@ -68,7 +112,7 @@ Complex(cos((sph3.phi.round(0.00001)).wrap((pi/2).neg,(pi/2))),cos((sph3.phi.rou
 
 	el5=(el5+(360-(360/1.6180339887499))).wrap(90.neg,90);
 
-	sph5=Spherical(1,az5.degrad,el5.degrad);
+	sph5=Spherical(500,az5.degrad,el5.degrad);
 
 if(
 m_z.even,
@@ -78,11 +122,7 @@ mag_z=Complex(sin((sph5.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 ////z axis   ambi..  sin for odd numbers, cos for even
 	};
 )
-(
-~magx=~magx.normalize(0,1);
-~magy=~magy.normalize(0,1);
-~magz=~magz.normalize(0,1);
-)
+
 
 (
 var data;
@@ -92,15 +132,35 @@ var r1,harm1,r2,harm2,rad;
 var run = true;
 var ot=0.degrad;
 
+OSCdef(\amp1, { |msg|
+	~a = msg[3];
+	defer { ~v.refresh };
+}, '/a', s.addr);
+
+OSCdef(\amp2, { |msg|
+	~b = msg[3];
+	defer { ~v.refresh };
+}, '/b', s.addr);
+
+OSCdef(\amp3, { |msg|
+	~c = msg[3];
+	defer { ~v.refresh };
+}, '/c', s.addr);
+
+OSCdef(\amp4, { |msg|
+	~d = msg[3];
+	defer { ~v.refresh };
+}, '/d', s.addr);
+
 data = (360*16).collect{
 
 	az=~az.[pl];
 	el=~el.[pl];
 	//mag=~magz.[pl];
-	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho/(2.sqrt);
+	mag=Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt);
 	pl=pl+1;
 
-	sph=Spherical(mag*1000,az,el).asCartesian.asArray;
+	sph=Spherical(mag,az,el).asCartesian.asArray;
 
 
 };
@@ -126,72 +186,4 @@ Pen.translate(400,400);
 };
 { while { run } {~v.background_(Color.black); ~v.refresh; (1/1000).wait } }.fork(AppClock);
 
-)
-
-
-
-
-/////////////////////////////////choas
-
-(
-var data;
-var az=0,el=0,mag=0;
-var i = Quaternion(0, (1/3).sqrt, 0, 0),j = Quaternion(0, 0, (1/3).sqrt,0),k = Quaternion(0, 0, 0, (1/3).sqrt);
-var q,v,angle=0,r,d,m=1,rot,sph,pl=0,daz,del,harm,daz1;
-
-r=[0,0,1];
-v=Quaternion(0,r.[0],r.[1],r.[2]);
-angle=(360-(360/1.6180339887499));
-
-data = (360*10).collect{
-
-	az=~az.[pl];
-	el=~el.[pl];
-	//mag=~magx.[pl];
-	mag=Cartesian(~magx.[pl],~magy.[pl],~magz.[pl]).rho;
-	pl=pl+1;
-
-
-	sph=Spherical(1,az,el).asCartesian;
-
-	rot=[sph.x,sph.y,sph.z];
-
-	i=Quaternion(0, rot.[0], 0, 0);
-	j=Quaternion(0, 0, rot.[1], 0);
-	k=Quaternion(0, 0, 0, rot.[2]);
-
-q=(cos(angle.degrad)+(sin(angle.degrad)*(i+j+k)));
-	    v=q*v*q.conjugate;
-
-	daz=Cartesian(v.b.round(0.0001),v.c.round(0.0001),v.d.round(0.0001)).theta;
-
-	del=Cartesian(v.b.round(0.0001),v.c.round(0.0001),v.d.round(0.0001)).phi;
-
-	harm=Spherical(mag,daz,del).asCartesian.asArray
-
-
-};
-
-w = Window.new("3D Scatterplot", Rect(40,40, 1000, 800)).front;
-a = ScatterView3d(w, Rect(0,0, 800,800), data, [-1000, 1000].asSpec,[-1000, 1000].asSpec,[-1000, 1000].asSpec);
-a.drawMethod = \fillRect;
-a.symbolSize = 1;
-a.symbolColor = Color.white;
-a.background = Color.black;
-
-// Y Slider
-Slider(w, Rect(820, 10, 10, 450)).action_{|me|
-    a.rotY = me.value * 2pi;
-    w.refresh;
-};
-// X Slider
-Slider(w, Rect(870, 10, 10, 450)).action_{|me|
-    a.rotX = me.value * 2pi;
-    w.refresh;
-};
-// Z Slider
-Slider(w, Rect(920, 10, 10, 450)).action_{|me|
-    a.rotZ = me.value * 2pi;
-    w.refresh;
-};
 )
