@@ -1,11 +1,12 @@
 (
-s.options.numWireBufs = 1024*2*16;
+s.options.numWireBufs = 1024*4;
 s.options.numOutputBusChannels=4;
-s.options.numInputBusChannels=0;
-TempoClock.default.tempo_(120/120);
+s.options.numInputBusChannels=2;
+TempoClock.default.tempo_(0.5);
 s.options.memSize = 8192*64;
-//s.options.blockSize = 64/4;
-s.options.maxNodes = 1024*2 * 64;
+s.options.blockSize = 64/1;
+s.options.maxNodes = 1024 * 16;
+s.options.sampleRate= 48000;
 s.waitForBoot
 )
 
@@ -45,22 +46,12 @@ SynthDef("help-phaseShift", { arg out=0;
 
 ////////////////buffers
 (
-~c1 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/YouTube_BnlnKt5eRu8.mp3",channels:0 );
-~c2 = Buffer.readChannel(s,"/Users/petrostatsiopoulos/Desktop/YouTube_BnlnKt5eRu8.mp3",channels:1 );
+~c1 = Buffer.readChannel(s,,channels:0 );
+~c2 = Buffer.readChannel(s,,channels:1 );
 ~c3 = Buffer.readChannel(s,,channels:0 );
 ~c4 = Buffer.readChannel(s,,channels:1 );
 ~c5 = Buffer.readChannel(s,,channels:0 );
 ~c6 = Buffer.readChannel(s,,channels:1 );
-//~c7 = Buffer.readChannel(s,,channels:0 );
-//~c8 = Buffer.readChannel(s,,channels:1 );
-//~c9 = Buffer.readChannel(s,,channels:0 );
-//~c10 = Buffer.readChannel(s,,channels:1 );
-//~c11 = Buffer.readChannel(s,,channels:0 );
-//~c12 = Buffer.readChannel(s,,channels:1 );
-//~c13 = Buffer.readChannel(s,,channels:0 );
-//~c14 = Buffer.readChannel(s,,channels:1 );
-//~c15 = Buffer.readChannel(s,,channels:0 );
-//~c16 = Buffer.readChannel(s,,channels:1 );
 )
 
 /////wavetables
@@ -923,49 +914,56 @@ Synth(\o3);
 //////////////////////////////////////IN
 
 (
-SynthDef.new(\o1, {
-    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0;
-	var chainxx,chainyy,pl=0,amp1,amp2,phase,angle=0;
+SynthDef.new(\o_in, {
+    var in1,in2, chainx,chainy,b=0,az1=0,az2=0,el1=0,el2=0,rpr=1/2;
+	var chainxx,chainyy,pl1=0,pl2=0,pl=0,amp1,amp2,phase;
 	var angle1=0,angle2=90;
-	var phase1,phase2;
+	var phase1,phase2,bank1,bank2,frames=1024;
 
-	in1 = SoundIn.ar(0);
+	in1 =SoundIn.ar(0);
 	 in2 = SoundIn.ar(0);
 
-	chainx = FFT(LocalBuf(1024*2), in1);
-	chainy = FFT(LocalBuf(1024*2), in2);
+	chainx = FFT(LocalBuf(frames), in1);
+	chainy = FFT(LocalBuf(frames), in2);
 
-   360.do{
+	bank1=3;
+	bank2=360;
+
+	bank1.do{
+
+   bank2.do{
 
 		az1=~az_x.[pl];
 		el1=~el_x.[pl];
 		az2=~az_x.neg.[pl];
 		el2=~el_x.neg.[pl];
-		amp1=(Cartesian(~magx.[pl]/(2.sqrt),~magy.[pl]/(2.sqrt),~magz.[pl]/(2.sqrt)).rho/(2.sqrt));
-		amp2=(Cartesian(~magx.reverse.[pl]/(2.sqrt),~magy.reverse.[pl]/(2.sqrt),~magz.reverse.[pl]/(2.sqrt)).rho/(2.sqrt));
+amp1=Cartesian(~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1],~magx_array.[pl2].[pl1]);
+amp2=Cartesian(~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1],~magx_array.[pl2].reverse.[pl1]);
 
-		phase1=exp(Complex(0,1)*amp1.linlin(0,2.sqrt,0.2pi)*90.degrad).theta;
-		phase2=exp(Complex(0,1)*amp1.linlin(0,2.sqrt,0.2pi)).theta;
+		phase1=exp(Complex(0,1)*(amp1.theta*amp1.phi));
+		phase2=exp(Complex(0,1)*(amp2.theta*amp2.phi));
 
-
-   chainxx = chainx.pvcollect(1024*2, {|mag, phase, index| [mag*amp1, exp(Complex(0,1)*(phase+phase1).theta]; }, frombin: b, tobin: b, zeroothers: 1);
-   chainyy = chainy.pvcollect(1024*2, {|mag, phase, index| [mag*amp2, exp(Complex(0,1)*(phase+phase2).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chainxx = chainx.pvcollect(frames, {|mag, phase, index| [mag*amp1.rho(2/sqrt), exp(Complex(0,1)*(phase+phase1)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
+chainyy = chainy.pvcollect(frames, {|mag, phase, index| [mag*amp2.rho(2/sqrt), exp(Complex(0,1)*(phase+phase2)).theta]; }, frombin: b, tobin: b, zeroothers: 1);
 
 	b=b+1;
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainxx),~b.bufnum,
-		Osc.ar(~t,amp1.reciprocal,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,amp1.reciprocal,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
+		Osc.ar(~t,rpr,phase:az1.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,speed*rpr,phase:el1.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
 
 		Out.ar(0,VBAP.ar(4,IFFT(chainyy),~b.bufnum,
-		Osc.ar(~t,amp2.reciprocal,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
-			Osc.ar(~t,amp2.reciprocal,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
+		Osc.ar(~t,rpr,phase:az2.linlin(pi.neg,pi,2pi.neg,2pi),mul:180),
+			Osc.ar(~t,rpr,phase:el2.linlin((pi/2).neg,(pi/2),2pi.neg,2pi),mul:90)));
 
-		pl=pl+1;
-	}
+	pl1=pl1+1;
+
+		};
+		pl2=pl2+1;
+	};
 }).add;
 )
 
 
-Synth(\o1);
+Synth(\o_in);
 s.record(numChannels:4)
