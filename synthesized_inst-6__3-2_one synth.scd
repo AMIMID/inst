@@ -150,7 +150,7 @@ mag_z=Complex(sin((sphz.phi.round(0.00001)*m_z).wrap((pi/2).neg,(pi/2))),sin((sp
 
 )
 
-////////////////////////az
+////////////////////////az rot
 
 (
 var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
@@ -217,7 +217,7 @@ raz3=Cartesian(v3.b.round(0.0001),v3.c.round(0.0001),v3.d.round(0.0001)).theta.r
 
 )
 
-///////////////////////el
+///////////////////////el rot
 (
 var pl1=0,az1,el1,sph1,rot1,i1,j1,k1,q1,raz1,rel1;
 var pl2=0,az2,el2,sph2,rot2,i2,j2,k2,q2,raz2,rel2;
@@ -371,7 +371,7 @@ SynthDef.new(\ob, {
 		Out.ar(pair[0], pair[1])}};
 var out = NamedControl.kr(\out, [0, 1, 2, 3]);  // multiple buses!
 
-bank=64;
+bank=8;
 pitch=2.pow(n1/(2*6));
 freq=(fund*scale)*pitch;
 
@@ -385,16 +385,16 @@ mag2=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.
 mag3=Cartesian(Select.kr(pl,~magx)/(2.sqrt),Select.kr(pl,~magy)/(2.sqrt),Select.kr(pl,~magz)/(2.sqrt)).z;
 
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
-//sphere1=Spherical(mag1.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
-//sphere2=Spherical(mag2.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
-//sphere3=Spherical(mag3.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
-sphere1=Spherical(mag1.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
-sphere2=Spherical(mag2.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
-sphere3=Spherical(mag3.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
+sphere1=Spherical(mag1.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
+sphere2=Spherical(mag2.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
+sphere3=Spherical(mag3.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
+//sphere1=Spherical(mag1.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
+//sphere2=Spherical(mag2.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
+//sphere3=Spherical(mag3.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-env1=EnvGen.ar(Env(~levels*sphere1.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
-env2=EnvGen.ar(Env(~levels*sphere2.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
-env3=EnvGen.ar(Env(~levels*sphere3.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
+//env1=EnvGen.ar(Env(~levels*sphere1.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
+//env2=EnvGen.ar(Env(~levels*sphere2.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
+//env3=EnvGen.ar(Env(~levels*sphere3.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
 //env=EnvGen.ar(Env(~levels*sphere.rho.round(0.00001),[decay/180]),doneAction:2,levelScale:pitch.reciprocal);
 
 osc1=VBAP.ar(4,
@@ -490,11 +490,11 @@ g=Pdef(\44, Pbind(\instrument, \ob,
 )
 
 b.play;
-s.record(numChannels:4,duration:90)
+//s.record(numChannels:4,duration:90)
 c.play;
-s.record(numChannels:4,duration:90)
+//s.record(numChannels:4,duration:90)
 d.play;
-s.record(numChannels:4,duration:90)
+//s.record(numChannels:4,duration:90)
 e.play;
 s.record(numChannels:4,duration:90)
 f.play;
@@ -502,7 +502,7 @@ s.record(numChannels:4,duration:90)
 g.play;
 s.record(numChannels:4,duration:90)
 
-TempoClock.default.tempo_(1/8)
+TempoClock.default.tempo_(1/2)
 
 );
 

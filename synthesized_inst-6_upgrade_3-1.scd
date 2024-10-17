@@ -74,7 +74,7 @@ signal.plot;
 //////////arrays
 //////////////////////basis
 (
-~time=1;
+~time=3;
 ///1= about 15:30 min in normal*reverse sequence
 (
 var  sph1,sph2,m_x=5,m_y=5,m_z=5,az1=0,el1=0,az2=0,el2=0,mag_x,mag_y,mag_z;
@@ -379,8 +379,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_x),Select.kr(pl,~el_x));
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
-		env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+		//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 
 
 osc=VBAP.ar(4,
@@ -419,8 +419,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_y),Select.kr(pl,~el_y));
 		//sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
-env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 
 
 osc=VBAP.ar(4,
@@ -459,8 +459,8 @@ angle=(angle+(360-(360/1.6180339887499))).wrap(0,360);
 		sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az_z),Select.kr(pl,~el_z));
 //sphere=Spherical(mag_o.round(0.00001),Select.kr(pl,~az),Select.kr(pl,~el));
 
-//env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
-env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+env=EnvGen.ar(Env.perc(attack,decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
+//env=EnvGen.ar(Env.sine(decay,pitch.reciprocal),doneAction:2,levelScale:mag_o.round(0.00001));
 
 
 osc=VBAP.ar(4,
@@ -549,7 +549,7 @@ e.play;
 f.play;
 //s.record(numChannels:4,duration:90)
 g.play;
-s.record(numChannels:4,duration:180)
+s.record(numChannels:4,duration:360)
 
 TempoClock.default.tempo_(120/160)
 

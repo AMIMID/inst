@@ -16,7 +16,7 @@ var phase,angle=0,phase1,angle1=90;
 
 )
 (
-var phase,angle=0,mag,phase1,angle1=0,mag1,m=2;
+var phase,angle=0,mag,phase1,angle1=0,mag1,m=5;
 
 ~magL = (360*64).collect{
 
@@ -34,6 +34,7 @@ var phase,angle=0,mag,phase1,angle1=0,mag1,m=2;
 		mag1=Complex(sin(phase1.round(0.0001)*m),sin(phase1.round(0.0001)*m)).rho.round(0.0001)*Complex(cos(phase1.round(0.0001)*m),cos(phase1.round(0.0001)*m)).rho.round(0.0001);
 	};
 )
+////////////////////////////////////////
 (
 var  sph1,sph2,sph3,sph4,sph5,m_x=3,m_y=3,m_z=4;
 var az1=0,el1=0,az2=0,el2=0,az3=0,el3=0,mag,mag_x,mag_y,mag_z;
@@ -60,6 +61,20 @@ var az4=0,el4=0,az5=0,el5=0;
 	};
 )
 
+//////
+
+(
+var c,angle=0,c_real,c_imag,z;
+
+~az = (360*64).collect{
+ 	c_real=exp(Complex(0,1)*angle.degrad).real;
+	c_imag=exp(Complex(0,1)*angle.degrad).imag;
+ 	angle=(angle+1).wrap(0,360);
+ 	c=Complex(c_real,c_imag).theta;
+ };
+
+)
+
 ///////2d
 
 (
@@ -70,8 +85,8 @@ var r1,harm1,r2,harm2,rad,sph1;
 
 data = (360*32).collect{
 
-	az=~phase1.[pl];
-	el=~el.[pl];
+	az=~az.[pl];
+	//el=~el.[pl];
 	mag=Complex(~magL.[pl]/(2.sqrt),~magR.[pl]/(2.sqrt)).rho/(2.sqrt);
 	pl=pl+1;
 
