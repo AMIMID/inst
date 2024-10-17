@@ -38,7 +38,7 @@ w=Window.new("gui",Rect.new(750,50,200,200)).front.alwaysOnTop_(true);
 	["off",Color.black],Color.gray,["on",Color.white,Color.gray]]).action_({
 	arg obj;
 	if(
-		obj.value==1,{~synth=Synth.new(\inst4,[\gain,~gain.value,\lowpass,~lowpass.value.linexp(0,1,55,3520),\highpass,~highpass.value.linexp(0,1,3520,55)]).register;},
+		obj.value==1,{~synth=Synth.new(\inst4,[\gain,~gain.value,\lowpass,~lowpass.value.linexp(0,1,55,7040),\highpass,~highpass.value.linexp(0,1,7040,55)]).register;},
 		{~synth.free}
 )})
 );
@@ -56,7 +56,7 @@ w=Window.new("gui",Rect.new(750,50,200,200)).front.alwaysOnTop_(true);
 ~lowpass.action_({
 	arg obj;
 	var lowpass;
-	lowpass=obj.value.linexp(0,1,3520,55);
+	lowpass=obj.value.linexp(0,1,7040,55);
 	lowpass.value.postln;
 	if(~synth.isPlaying,{~synth.set(\lowpass,lowpass)});
 });
@@ -65,7 +65,7 @@ w=Window.new("gui",Rect.new(750,50,200,200)).front.alwaysOnTop_(true);
 ~highpass.action_({
 	arg obj;
 	var highpass;
-	highpass=obj.value.linexp(0,1,55,3520);
+	highpass=obj.value.linexp(0,1,55,7040);
 	highpass.value.postln;
 	if(~synth.isPlaying,{~synth.set(\highpass,highpass)});
 });
